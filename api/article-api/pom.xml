@@ -9,17 +9,12 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>user-api</artifactId>
+    <artifactId>article-api</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.hh</groupId>
             <artifactId>openfeign</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hh</groupId>
-            <artifactId>utils</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

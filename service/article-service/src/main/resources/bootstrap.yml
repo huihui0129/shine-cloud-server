@@ -6,7 +6,7 @@ nacos:
   group: DEFAULT_GROUP
 spring:
   application:
-    name: gateway
+    name: article-service
   cloud:
     nacos:
       discovery:
@@ -23,16 +23,4 @@ spring:
         group: ${nacos.group}
         prefix: ${spring.application.name}
         file-extension: yml
-    gateway:
-      routes:
-        - id: user
-          uri: http://localhost:9001
-          predicates:
-            - Path=/user/**
-        - id: article
-          uri: http://localhost:9002
-          predicates:
-            - Path=/article/**
-#          filters:
-#            - StripPrefix=1
 

@@ -1,4 +1,4 @@
-package com.hh.user;
+package com.hh.article;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,16 +8,17 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author huihui
- * @date 2024/10/31 16:49
- * @description UserApplication
+ * @date 2024/10/31 17:37
+ * @description ArticleApplication
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients(basePackages = "com.hh.user.feign")
 @RefreshScope
-public class UserApplication {
+public class ArticleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UserApplication.class, args);
+        SpringApplication.run(ArticleApplication.class, args);
     }
 
 }
