@@ -28,4 +28,9 @@ public class ArticleController {
         return user;
     }
 
+    @GetMapping("/getArticle")
+    public Result<String> getArticle() {
+        return Result.success("牛逼");
+    }
+
 }
