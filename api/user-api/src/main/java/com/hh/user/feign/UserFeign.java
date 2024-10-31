@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @date 2024/10/31 17:11
  * @description UserFeign
  */
-@FeignClient(name = FeignClientConstant.USER_NAME, contextId = FeignClientConstant.USER_CONTENT_ID)
+@FeignClient(name = FeignClientConstant.USER_NAME, contextId = FeignClientConstant.USER_CONTENT_ID, path = "/user")
 public interface UserFeign {
 
     @GetMapping("/getUser")

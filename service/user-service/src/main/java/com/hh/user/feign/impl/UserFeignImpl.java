@@ -3,7 +3,8 @@ package com.hh.user.feign.impl;
 import com.hh.user.feign.UserFeign;
 import com.hh.utils.response.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author huihui
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Component;
  * @description UserFeignImpl
  */
 @Slf4j
-@Component
+@RestController
+@RequestMapping("/user")
 public class UserFeignImpl implements UserFeign {
 
     @Override

@@ -2,6 +2,7 @@ package com.hh.utils.response;
 
 import com.hh.utils.status.HttpStatus;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author huihui
@@ -9,6 +10,7 @@ import lombok.Data;
  * @description Result
  */
 @Data
+@NoArgsConstructor
 public class Result<T> {
 
     private String code;

@@ -25,11 +25,11 @@ spring:
         file-extension: yml
     gateway:
       routes:
-        - id: user
+        - id: user-service
           uri: http://localhost:9001
           predicates:
             - Path=/user/**
-        - id: article
+        - id: article-service
           uri: http://localhost:9002
           predicates:
             - Path=/article/**
