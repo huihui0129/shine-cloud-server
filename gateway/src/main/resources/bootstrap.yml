@@ -24,15 +24,20 @@ spring:
         prefix: ${spring.application.name}
         file-extension: yml
     gateway:
+#      discovery:
+#        locator:
+#          enabled: true
       routes:
-        - id: user-service
-          uri: http://localhost:9001
+        - id: user
+          uri: lb://user-service
           predicates:
             - Path=/user/**
-        - id: article-service
-          uri: http://localhost:9002
+          filters:
+            - StripPrefix=1
+        - id: article
+          uri: lb://article-service
           predicates:
             - Path=/article/**
-#          filters:
-#            - StripPrefix=1
+          filters:
+            - StripPrefix=1
 

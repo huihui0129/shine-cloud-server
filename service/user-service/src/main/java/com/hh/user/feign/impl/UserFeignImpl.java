@@ -18,6 +18,7 @@ public class UserFeignImpl implements UserFeign {
 
     @Override
     public Result<String> getUser() {
+        log.info("远程调用我了");
         return Result.success("成功获取用户ID：666");
     }
 
