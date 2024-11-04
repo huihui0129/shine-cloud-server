@@ -10,7 +10,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>openfeign</artifactId>
+    <artifactId>openfeign-starter</artifactId>
 
     <dependencies>
         <dependency>

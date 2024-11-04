@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hh</groupId>
-            <artifactId>openfeign</artifactId>
+            <artifactId>openfeign-starter</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
