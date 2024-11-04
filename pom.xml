@@ -29,12 +29,17 @@
         <java.version>17</java.version>
         <spring-boot.version>3.0.0</spring-boot.version>
         <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
+        <fastjson2.version>2.0.30</fastjson2.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
     </dependencies>
 
@@ -59,6 +64,12 @@
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring-boot.version}</version>
                 <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.fastjson2</groupId>
+                <artifactId>fastjson2</artifactId>
+                <version>${fastjson2.version}</version>
                 <scope>import</scope>
             </dependency>
         </dependencies>

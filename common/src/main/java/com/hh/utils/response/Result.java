@@ -1,6 +1,6 @@
 package com.hh.utils.response;
 
-import com.hh.utils.status.HttpStatus;
+import com.hh.utils.status.ResponseStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,20 +25,36 @@ public class Result<T> {
         this.data = data;
     }
 
-    public static <T> Result<T> success(String code, String message, T data) {
+    public static <T> Result<T> exec(String code, String message, T data) {
         return new Result<>(code, message, data);
     }
 
-    public static <T> Result<T> success(HttpStatus status, T data) {
-        return success(status.getCode(), status.getMessage(), data);
+    public static <T> Result<T> exec(ResponseStatus status, T data) {
+        return exec(status.getCode(), status.getMessage(), data);
     }
 
     public static <T> Result<T> success(T data) {
-        return success(HttpStatus.SUCCESS, data);
+        return exec(ResponseStatus.SUCCESS, data);
     }
 
     public static <T> Result<T> success() {
         return success(null);
+    }
+
+    public static <T> Result<T> error(ResponseStatus status, T data) {
+        return exec(status, data);
+    }
+
+    public static <T> Result<T> error(T data) {
+        return exec(ResponseStatus.ERROR, data);
+    }
+
+    public static <T> Result<T> error(ResponseStatus status) {
+        return exec(status, null);
+    }
+
+    public static <T> Result<T> error() {
+        return exec(ResponseStatus.ERROR, null);
     }
 
 }
