@@ -1,9 +1,12 @@
 package com.hh.filter;
 
 import com.alibaba.fastjson2.JSON;
+import com.hh.properties.GatewayCustomizeProperties;
+import com.hh.util.PathMatchUtil;
 import com.hh.utils.constant.AuthorizationConstant;
 import com.hh.utils.response.Result;
 import com.hh.utils.status.ResponseStatus;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -29,6 +32,9 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class AuthorizationFilter implements GlobalFilter, Ordered {
 
+    @Resource
+    private GatewayCustomizeProperties gatewayCustomizeProperties;
+
     @Override
     public int getOrder() {
         return AuthorizationConstant.FILTER_ORDER_AUTHENTICATION;
@@ -38,10 +44,17 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
-        String token = request.getHeaders().getFirst(AuthorizationConstant.HEADER_TOKEN_KEY);
-        if (StringUtils.isBlank(token)) {
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
-            return getVoidMono(response, ResponseStatus.UNAUTHORIZED);
+        String path = request.getPath().value();
+        // 不需要认证的路径
+        if (PathMatchUtil.notMatch(gatewayCustomizeProperties.getAuthorizationExcludePath(), path)) {
+            log.info("请求地址：{}，需要验证Token", path);
+            String token = request.getHeaders().getFirst(AuthorizationConstant.HEADER_TOKEN_KEY);
+            if (StringUtils.isBlank(token)) {
+                response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                return getVoidMono(response, ResponseStatus.UNAUTHORIZED);
+            }
+        } else {
+            log.info("请求地址：{}，不需要验证Token", path);
         }
         return chain.filter(exchange);
     }
