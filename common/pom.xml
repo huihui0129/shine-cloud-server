@@ -10,11 +10,5 @@
     </parent>
 
     <artifactId>common</artifactId>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>openfeign</module>
-        <module>utils</module>
-    </modules>
 
 </project>

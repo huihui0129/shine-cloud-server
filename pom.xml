@@ -14,6 +14,7 @@
         <module>api</module>
         <module>common</module>
         <module>service</module>
+        <module>components</module>
     </modules>
 
     <properties>
