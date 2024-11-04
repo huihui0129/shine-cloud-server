@@ -28,6 +28,7 @@
         <maven.compiler.compilerVersion>17</maven.compiler.compilerVersion>
         <java.version>17</java.version>
         <spring-boot.version>3.0.0</spring-boot.version>
+        <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
     </properties>
 
     <dependencies>
