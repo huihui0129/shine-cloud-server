@@ -24,6 +24,4 @@ spring:
         prefix: ${spring.application.name}
         file-extension: yml
 
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
+

@@ -1,8 +1,10 @@
 package com.hh.swagger.config;
 
+import com.hh.swagger.properties.SwaggerProperties;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,17 +16,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
+    @Autowired
+    private SwaggerProperties swaggerProperties;
+
     @Bean
     public OpenAPI openAPI() {
         OpenAPI openAPI = new OpenAPI();
         Info info = new Info();
-        info.setTitle("Swagger接口文档");
-        info.setDescription("SpringBoot3集成Swagger3接口文档");
-        info.setVersion("1.0.0");
+        info.setTitle(swaggerProperties.getTitle());
+        info.setDescription(swaggerProperties.getDescription());
+        info.setVersion(swaggerProperties.getVersion());
 
         ExternalDocumentation documentation = new ExternalDocumentation();
-        documentation.setDescription("项目API文档");
-        documentation.setUrl("/");
+        documentation.setDescription(swaggerProperties.getDocumentationDescription());
+        documentation.setUrl(swaggerProperties.getUrl());
 
         openAPI.setInfo(info);
         openAPI.setExternalDocs(documentation);
