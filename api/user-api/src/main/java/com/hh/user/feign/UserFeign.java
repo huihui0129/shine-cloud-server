@@ -1,7 +1,7 @@
 package com.hh.user.feign;
 
 import com.hh.feign.constant.FeignClientConstant;
-import com.hh.utils.response.Result;
+import com.hh.response.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 

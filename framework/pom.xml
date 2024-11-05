@@ -11,6 +11,7 @@
 
     <artifactId>framework</artifactId>
     <packaging>pom</packaging>
+    <description>框架模块</description>
 
     <modules>
         <module>openfeign-starter</module>

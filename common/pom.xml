@@ -10,5 +10,6 @@
     </parent>
 
     <artifactId>common</artifactId>
+    <description>公共依赖模块</description>
 
 </project>

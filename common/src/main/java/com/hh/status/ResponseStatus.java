@@ -1,4 +1,4 @@
-package com.hh.utils.status;
+package com.hh.status;
 
 import lombok.Getter;
 

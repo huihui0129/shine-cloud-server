@@ -1,6 +1,6 @@
 package com.hh.article.controller;
 
-import com.hh.utils.response.Result;
+import com.hh.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

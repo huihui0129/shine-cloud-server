@@ -1,7 +1,7 @@
 package com.hh.article.controller;
 
 import com.hh.user.feign.UserFeign;
-import com.hh.utils.response.Result;
+import com.hh.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

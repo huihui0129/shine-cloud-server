@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>gateway</artifactId>
+    <description>网管模块</description>
 
     <dependencies>
         <dependency>

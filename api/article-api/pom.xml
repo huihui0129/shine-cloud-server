@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>article-api</artifactId>
+    <description>文章API</description>
 
     <dependencies>
         <dependency>

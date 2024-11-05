@@ -11,6 +11,7 @@
 
     <artifactId>components</artifactId>
     <packaging>pom</packaging>
+    <description>组件模块</description>
 
     <modules>
         <module>file-component</module>

@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>openfeign-starter</artifactId>
+    <description>远程调用</description>
 
     <dependencies>
         <dependency>

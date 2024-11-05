@@ -12,6 +12,7 @@
 
     <artifactId>service</artifactId>
     <packaging>pom</packaging>
+    <description>服务模块</description>
 
     <modules>
         <module>user-service</module>

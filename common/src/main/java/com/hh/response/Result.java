@@ -1,6 +1,6 @@
-package com.hh.utils.response;
+package com.hh.response;
 
-import com.hh.utils.status.ResponseStatus;
+import com.hh.status.ResponseStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

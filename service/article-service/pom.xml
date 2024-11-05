@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>article-service</artifactId>
+    <description>文章服务</description>
 
     <dependencies>
         <dependency>

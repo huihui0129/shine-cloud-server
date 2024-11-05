@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>user-api</artifactId>
+    <description>用户API</description>
 
     <dependencies>
         <dependency>

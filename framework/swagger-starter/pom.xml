@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>swagger-starter</artifactId>
+    <description>OpenAPI文档</description>
 
     <dependencies>
         <dependency>

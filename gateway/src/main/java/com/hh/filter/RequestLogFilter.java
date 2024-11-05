@@ -1,6 +1,6 @@
 package com.hh.filter;
 
-import com.hh.utils.constant.AuthorizationConstant;
+import com.hh.constant.AuthorizationConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;

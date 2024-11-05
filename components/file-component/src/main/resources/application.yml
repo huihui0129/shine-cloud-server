@@ -1,0 +1,10 @@
+server:
+  port: 8888
+cos:
+  secretId: AKIDvjKguxlcP5g9vXAdv45znNrFTTGveJlG
+  secretKey: maFnCh185pMglcGgtsdBV7f8PbwGVdge
+  appId: 1304742512
+  bucketName: hh-cloud-cos-1304742512
+  region: ap-shanghai
+  url: https://hh-cloud-cos-1304742512.cos.ap-shanghai.myqcloud.com
+  prefix: server

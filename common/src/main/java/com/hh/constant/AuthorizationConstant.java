@@ -1,4 +1,4 @@
-package com.hh.utils.constant;
+package com.hh.constant;
 
 /**
  * @author huihui

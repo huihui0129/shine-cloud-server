@@ -1,7 +1,7 @@
 package com.hh.user.feign.impl;
 
 import com.hh.user.feign.UserFeign;
-import com.hh.utils.response.Result;
+import com.hh.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
