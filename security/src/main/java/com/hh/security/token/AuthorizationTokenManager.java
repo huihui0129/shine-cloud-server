@@ -61,7 +61,7 @@ public class AuthorizationTokenManager {
     public static void main(String[] args) {
         AuthorityPrincipal authorityPrincipal = new AuthorityPrincipal();
         authorityPrincipal.setId(1L);
-        generate(authorityPrincipal, 100, )
+        generate(authorityPrincipal, 100, null);
     }
 
 }
