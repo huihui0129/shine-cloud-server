@@ -36,7 +36,9 @@
         <springdoc-openapi.version>2.2.0</springdoc-openapi.version>
         <fastjson2.version>2.0.30</fastjson2.version>
         <cos.version>5.6.227</cos.version>
-        <jwt.jjwt.version>0.9.0</jwt.jjwt.version>
+        <jwt-jjwt-api.version>0.11.2</jwt-jjwt-api.version>
+        <jwt-jjwt-impl.version>0.11.2</jwt-jjwt-impl.version>
+        <jwt-jjwt-jackson.version>0.11.2</jwt-jjwt-jackson.version>
     </properties>
 
     <dependencyManagement>
@@ -76,8 +78,21 @@
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jwt.jjwt.version}</version>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jwt-jjwt-api.version}</version>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt-jjwt-impl.version}</version>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jwt-jjwt-jackson.version}</version>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
