@@ -38,25 +38,25 @@ public class AuthorizationTokenManager {
      * @return
      * @throws Exception
      */
-    public static <T> T  getObjectFromToken(String token, PublicKey publicKey, Class<T> beanClass) throws Exception {
-        //1 获得解析后内容
-        Claims body = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token).getBody();
-        //2 将内容封装到对象JavaBean
-        T bean = beanClass.newInstance();
-        BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
-        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-            // 获得属性名
-            String name = propertyDescriptor.getName();
-            // 通过属性名，获得对应解析的数据
-            Object value = body.get(name);
-            if(value != null) {
-                // 将获得的数据封装到对应的JavaBean中
-                BeanUtils.setProperty(bean,name,value);
-            }
-        }
-        return bean;
-    }
+//    public static <T> T  getObjectFromToken(String token, PublicKey publicKey, Class<T> beanClass) throws Exception {
+//        //1 获得解析后内容
+//        Claims body = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token).getBody();
+//        //2 将内容封装到对象JavaBean
+//        T bean = beanClass.newInstance();
+//        BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
+//        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+//        for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
+//            // 获得属性名
+//            String name = propertyDescriptor.getName();
+//            // 通过属性名，获得对应解析的数据
+//            Object value = body.get(name);
+//            if(value != null) {
+//                // 将获得的数据封装到对应的JavaBean中
+//                BeanUtils.setProperty(bean,name,value);
+//            }
+//        }
+//        return bean;
+//    }
 
     public static void main(String[] args) {
         AuthorityPrincipal authorityPrincipal = new AuthorityPrincipal();
