@@ -14,9 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.hh.user.feign") // 必须配置
+@EnableFeignClients(basePackages = "com.hh.*.feign") // 必须配置
 @RefreshScope
-@ComponentScan(basePackages = { "com.hh.common", "com.hh.article" })
+@ComponentScan(basePackages = { "com.hh" })
 public class ArticleApplication {
 
     public static void main(String[] args) {
