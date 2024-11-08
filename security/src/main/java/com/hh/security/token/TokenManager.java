@@ -24,6 +24,11 @@ import java.util.Date;
 public class TokenManager {
 
     /**
+     * token默认过期时间 分钟
+     */
+    private static final Integer TOKEN_EXPIRE_MINUTES = 1440;
+
+    /**
      * 根据私钥生成token
      *
      * @param principal
@@ -31,12 +36,16 @@ public class TokenManager {
      * @param privateKey
      * @return
      */
-    public static String generate(AuthorityPrincipal principal, int expireMinutes, PrivateKey privateKey) {
+    public static String generate(AuthorityPrincipal principal, Integer expireMinutes, PrivateKey privateKey) {
         if (principal == null) {
             throw new AuthorityException(AuthorityStatus.ENC_DATA_NULL);
         }
+        if (expireMinutes == null) {
+            expireMinutes = TOKEN_EXPIRE_MINUTES;
+        }
         JwtBuilder jwtBuilder = Jwts.builder();
         jwtBuilder.claim("id", principal.getId());
+        jwtBuilder.claim("username", principal.getUsername());
         LocalDateTime expire = LocalDateTime.now().plusMinutes(expireMinutes);
         jwtBuilder.setExpiration(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()));
         jwtBuilder.signWith(privateKey);
@@ -54,8 +63,10 @@ public class TokenManager {
     public static AuthorityPrincipal parse(String token, PublicKey publicKey) throws Exception {
         Claims body = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token).getBody();
         Long id = body.get("id", Long.class);
+        String username = body.get("username", String.class);
         AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setId(id);
+        principal.setUsername(username);
         return principal;
     }
 
@@ -71,6 +82,7 @@ public class TokenManager {
         PrivateKey privateKey = RsaUtils.getPrivateKey(bytes);
         AuthorityPrincipal authorityPrincipal = new AuthorityPrincipal();
         authorityPrincipal.setId(101L);
+        authorityPrincipal.setUsername("张三");
         String token = TokenManager.generate(authorityPrincipal, 100, privateKey);
         System.out.println(token);
         return token;
@@ -83,6 +95,7 @@ public class TokenManager {
         PublicKey publicKey = RsaUtils.getPublicKey(bytes);
         AuthorityPrincipal principal = TokenManager.parse(token, publicKey);
         System.out.println(principal.getId());
+        System.out.println(principal.getUsername());
     }
 
 }

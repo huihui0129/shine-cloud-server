@@ -12,4 +12,6 @@ public class AuthorityPrincipal {
 
     private Long id;
 
+    private String username;
+
 }

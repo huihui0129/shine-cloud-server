@@ -41,6 +41,13 @@
         <jwt-jjwt-jackson.version>0.11.2</jwt-jjwt-jackson.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>

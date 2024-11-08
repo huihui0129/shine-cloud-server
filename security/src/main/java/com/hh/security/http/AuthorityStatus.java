@@ -1,7 +1,6 @@
 package com.hh.security.http;
 
 import com.hh.enums.IEnum;
-import com.hh.exception.IException;
 
 /**
  * @author huihui
@@ -14,13 +13,13 @@ public enum AuthorityStatus implements IEnum {
 
     ;
 
-    private String code;
+    private final String code;
 
-    private String message;
+    private final String name;
 
-    AuthorityStatus(String code, String message) {
+    AuthorityStatus(String code, String name) {
         this.code = code;
-        this.message = message;
+        this.name = name;
     }
 
     @Override
@@ -29,7 +28,7 @@ public enum AuthorityStatus implements IEnum {
     }
 
     @Override
-    public String getMessage() {
-        return message;
+    public String getName() {
+        return name;
     }
 }

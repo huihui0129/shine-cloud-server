@@ -12,18 +12,14 @@ public class AuthorityException extends RuntimeException implements IException {
 
     private final IEnum iEnum;
 
-    private final String message;
-
     public AuthorityException(IEnum iEnum) {
-        super(iEnum.getMessage());
+        super(iEnum.getName());
         this.iEnum = iEnum;
-        this.message = iEnum.getMessage();
     }
 
     public AuthorityException(IEnum iEnum, String message) {
         super(message);
         this.iEnum = iEnum;
-        this.message = message;
     }
 
     /**
@@ -38,7 +34,7 @@ public class AuthorityException extends RuntimeException implements IException {
 
     @Override
     public String getMessage() {
-        return message;
+        return super.getMessage();
     }
 
 }

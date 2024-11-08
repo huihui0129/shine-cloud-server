@@ -9,6 +9,6 @@ public interface IEnum {
 
     String getCode();
 
-    String getMessage();
+    String getName();
 
 }

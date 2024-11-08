@@ -16,4 +16,10 @@ public interface IException {
      */
     IEnum getEnum();
 
+    String getMessage();
+
+    default String formatMessage() {
+        return String.format("[%s] %s", getEnum().getCode(), getMessage());
+    }
+
 }
