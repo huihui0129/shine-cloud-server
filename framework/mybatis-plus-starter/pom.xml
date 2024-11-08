@@ -5,18 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hh</groupId>
-        <artifactId>hh-cloud-server</artifactId>
+        <artifactId>framework</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>framework</artifactId>
-    <packaging>pom</packaging>
-    <description>框架模块</description>
-
-    <modules>
-        <module>openfeign-starter</module>
-        <module>swagger-starter</module>
-        <module>mybatis-plus-starter</module>
-    </modules>
+    <artifactId>mybatis-plus-starter</artifactId>
 
 </project>
