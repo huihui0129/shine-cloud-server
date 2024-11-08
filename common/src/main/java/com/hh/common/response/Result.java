@@ -1,6 +1,6 @@
-package com.hh.response;
+package com.hh.common.response;
 
-import com.hh.status.ResponseStatus;
+import com.hh.common.status.ResponseStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +29,10 @@ public class Result<T> {
         return new Result<>(code, message, data);
     }
 
+    public static <T> Result<T> exec(String code, String message) {
+        return exec(code, message, null);
+    }
+
     public static <T> Result<T> exec(ResponseStatus status, T data) {
         return exec(status.getCode(), status.getName(), data);
     }
@@ -53,8 +57,8 @@ public class Result<T> {
         return exec(status, null);
     }
 
-    public static <T> Result<T> error() {
-        return exec(ResponseStatus.ERROR, null);
+    public static <T> Result<T> error(String code, String message) {
+        return exec(code, message);
     }
 
 }

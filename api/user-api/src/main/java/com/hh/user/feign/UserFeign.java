@@ -1,7 +1,7 @@
 package com.hh.user.feign;
 
 import com.hh.feign.constant.FeignClientConstant;
-import com.hh.response.Result;
+import com.hh.common.response.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -15,5 +15,8 @@ public interface UserFeign {
 
     @GetMapping("/getUser")
     Result<String> getUser();
+
+    @GetMapping("/getException")
+    Result<String> getException();
 
 }

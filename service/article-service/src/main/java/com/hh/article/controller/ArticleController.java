@@ -1,7 +1,7 @@
 package com.hh.article.controller;
 
 import com.hh.user.feign.UserFeign;
-import com.hh.response.Result;
+import com.hh.common.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +26,11 @@ public class ArticleController {
         Result<String> user = userFeign.getUser();
         log.info("远程调用获取到的信息：{}", user.getData());
         return user;
+    }
+
+    @GetMapping("/getUserException")
+    public Result<String> getUserException() {
+        return userFeign.getException();
     }
 
     @GetMapping("/getArticle")

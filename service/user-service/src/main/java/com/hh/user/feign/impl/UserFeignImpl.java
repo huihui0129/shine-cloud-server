@@ -1,7 +1,9 @@
 package com.hh.user.feign.impl;
 
+import com.hh.common.exception.BaseException;
+import com.hh.common.status.ResponseStatus;
 import com.hh.user.feign.UserFeign;
-import com.hh.response.Result;
+import com.hh.common.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,4 +24,9 @@ public class UserFeignImpl implements UserFeign {
         return Result.success("成功获取用户ID：666");
     }
 
+    @Override
+    public Result<String> getException() {
+        log.info("搞个异常");
+        throw new BaseException(ResponseStatus.UNAUTHORIZED);
+    }
 }

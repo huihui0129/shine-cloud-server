@@ -3,9 +3,9 @@ package com.hh.filter;
 import com.alibaba.fastjson2.JSON;
 import com.hh.properties.GatewayCustomizeProperties;
 import com.hh.util.PathMatchUtil;
-import com.hh.constant.AuthorizationConstant;
-import com.hh.response.Result;
-import com.hh.status.ResponseStatus;
+import com.hh.common.constant.AuthorizationConstant;
+import com.hh.common.response.Result;
+import com.hh.common.status.ResponseStatus;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +16,6 @@ import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -29,7 +28,7 @@ import java.nio.charset.StandardCharsets;
  * @description AuthorizationFilter
  */
 @Slf4j
-@Component
+//@Component
 public class AuthorizationFilter implements GlobalFilter, Ordered {
 
     @Resource

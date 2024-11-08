@@ -1,4 +1,4 @@
-package com.hh.enums;
+package com.hh.common.enums;
 
 /**
  * @author huihui

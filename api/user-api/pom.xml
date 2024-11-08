@@ -22,7 +22,6 @@
             <groupId>com.hh</groupId>
             <artifactId>openfeign-starter</artifactId>
             <version>1.0.0</version>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.hh</groupId>

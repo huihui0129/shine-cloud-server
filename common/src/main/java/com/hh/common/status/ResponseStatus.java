@@ -1,6 +1,6 @@
-package com.hh.status;
+package com.hh.common.status;
 
-import com.hh.enums.IEnum;
+import com.hh.common.enums.IEnum;
 import lombok.Getter;
 
 /**
@@ -13,9 +13,9 @@ public enum ResponseStatus implements IEnum {
 
     SUCCESS("000000", "成功"),
 
-    ERROR("999999", "系统异常"),
+    ERROR("999999", "服务器出错啦，请稍后重试~"),
 
-    UNAUTHORIZED("100000", "未授权"),
+    UNAUTHORIZED("200000", "你没有权限访问哦~"),
 
     ;
 

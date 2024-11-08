@@ -1,6 +1,6 @@
-package com.hh.exception;
+package com.hh.common.exception;
 
-import com.hh.enums.IEnum;
+import com.hh.common.enums.IEnum;
 
 /**
  * @author huihui

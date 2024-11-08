@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author huihui
@@ -13,8 +14,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.hh.user.feign")
+@EnableFeignClients(basePackages = "com.hh.user.feign") // 必须配置
 @RefreshScope
+@ComponentScan(basePackages = { "com.hh.common", "com.hh.article" })
 public class ArticleApplication {
 
     public static void main(String[] args) {

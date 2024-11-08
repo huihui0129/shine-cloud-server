@@ -1,6 +1,6 @@
 package com.hh.security.http;
 
-import com.hh.enums.IEnum;
+import com.hh.common.enums.IEnum;
 
 /**
  * @author huihui
