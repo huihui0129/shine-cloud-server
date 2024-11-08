@@ -1,7 +1,7 @@
 package com.hh.security.token;
 
+import com.hh.exception.BaseException;
 import com.hh.security.authorization.AuthorityPrincipal;
-import com.hh.security.exception.AuthorityException;
 import com.hh.security.http.AuthorityStatus;
 import com.hh.utils.RsaUtils;
 import io.jsonwebtoken.Claims;
@@ -38,7 +38,7 @@ public class TokenManager {
      */
     public static String generate(AuthorityPrincipal principal, Integer expireMinutes, PrivateKey privateKey) {
         if (principal == null) {
-            throw new AuthorityException(AuthorityStatus.ENC_DATA_NULL);
+            throw new BaseException(AuthorityStatus.ENC_DATA_NULL);
         }
         if (expireMinutes == null) {
             expireMinutes = TOKEN_EXPIRE_MINUTES;

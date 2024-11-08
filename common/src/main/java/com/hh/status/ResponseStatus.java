@@ -1,5 +1,6 @@
 package com.hh.status;
 
+import com.hh.enums.IEnum;
 import lombok.Getter;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Getter;
  * @description HttpStatus
  */
 @Getter
-public enum ResponseStatus {
+public enum ResponseStatus implements IEnum {
 
     SUCCESS("000000", "成功"),
 
@@ -18,12 +19,17 @@ public enum ResponseStatus {
 
     ;
 
-    private String code;
+    private final String code;
 
-    private String message;
+    private final String name;
 
-    ResponseStatus(String code, String message) {
+    ResponseStatus(String code, String name) {
         this.code = code;
-        this.message = message;
+        this.name = name;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

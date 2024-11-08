@@ -1,23 +1,22 @@
-package com.hh.security.exception;
+package com.hh.exception;
 
 import com.hh.enums.IEnum;
-import com.hh.exception.IException;
 
 /**
  * @author huihui
- * @date 2024/11/7 11:36
- * @description AuthorizationException
+ * @date 2024/11/8 14:04
+ * @description BaseException
  */
-public class AuthorityException extends RuntimeException implements IException {
+public class BaseException extends RuntimeException implements IException {
 
     private final IEnum iEnum;
 
-    public AuthorityException(IEnum iEnum) {
+    public BaseException(IEnum iEnum) {
         super(iEnum.getName());
         this.iEnum = iEnum;
     }
 
-    public AuthorityException(IEnum iEnum, String message) {
+    public BaseException(IEnum iEnum, String message) {
         super(message);
         this.iEnum = iEnum;
     }

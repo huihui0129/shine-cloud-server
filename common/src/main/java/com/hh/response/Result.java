@@ -30,7 +30,7 @@ public class Result<T> {
     }
 
     public static <T> Result<T> exec(ResponseStatus status, T data) {
-        return exec(status.getCode(), status.getMessage(), data);
+        return exec(status.getCode(), status.getName(), data);
     }
 
     public static <T> Result<T> success(T data) {
