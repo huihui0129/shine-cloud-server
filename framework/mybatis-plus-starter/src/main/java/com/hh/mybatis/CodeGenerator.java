@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import com.hh.mybatis.eneity.BaseEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author huihui
  * @date 2024/11/10 01:35
@@ -33,10 +36,16 @@ public class CodeGenerator {
                             ) // 设置需要生成的表名
                             .entityBuilder()
                             .enableLombok() // 启用 Lombok
-                            .superClass(BaseEntity.class)
+//                            .superClass(BaseEntity.class)
                             .enableTableFieldAnnotation() // 启用字段注解
                             .controllerBuilder()
                             .enableRestStyle(); // 启用 REST 风格
+                })
+                .injectionConfig(consumer -> {
+                    Map<String, String> customFile = new HashMap<>();
+                    // DTO
+                    customFile.put("Info.java", "/templates/entityInfo.java.ftl");
+                    consumer.customFile(customFile);
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用 Freemarker 模板引擎
                 .templateConfig(builder -> {
