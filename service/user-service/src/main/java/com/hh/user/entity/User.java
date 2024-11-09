@@ -1,5 +1,10 @@
 package com.hh.user.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.hh.mybatis.eneity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -8,12 +13,16 @@ import lombok.Data;
  * @description User
  */
 @Data
-public class User {
+@TableName(value = "user")
+public class User extends BaseEntity {
 
+    @TableId(type = IdType.AUTO)
     private Long id;
 
+    @TableField(value = "username")
     private String username;
 
+    @TableField(exist = false)
     private String password;
 
 }

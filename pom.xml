@@ -39,6 +39,8 @@
         <jwt-jjwt-api.version>0.11.2</jwt-jjwt-api.version>
         <jwt-jjwt-impl.version>0.11.2</jwt-jjwt-impl.version>
         <jwt-jjwt-jackson.version>0.11.2</jwt-jjwt-jackson.version>
+        <mybatis-plus.version>3.5.5</mybatis-plus.version>
+        <mysql.version>5.1.49</mysql.version>
     </properties>
 
     <dependencies>
@@ -72,6 +74,13 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-bom</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson2.version}</version>
@@ -99,6 +108,12 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${jwt-jjwt-jackson.version}</version>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
                 <scope>import</scope>
             </dependency>
         </dependencies>
