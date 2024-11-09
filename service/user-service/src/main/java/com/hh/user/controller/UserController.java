@@ -2,6 +2,7 @@ package com.hh.user.controller;
 
 import com.hh.common.response.Result;
 import com.hh.user.entity.User;
+import com.hh.user.info.UserInfo;
 import com.hh.user.mapper.UserMapper;
 import com.hh.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,8 +31,8 @@ public class UserController {
 
     @GetMapping("/getUserById/{id}")
     @Operation(summary = "根据ID获取用户")
-    public Result<User> getUserById(@PathVariable("id") Long id) {
-        User user = userService.getById(id);
+    public Result<UserInfo> getUserById(@PathVariable("id") Long id) {
+        UserInfo user = userService.getUserById(id);
         return Result.success(user);
     }
 
