@@ -2,6 +2,7 @@ package com.hh.mybatis;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.hh.mybatis.eneity.BaseEntity;
 
 /**
  * @author huihui
@@ -32,6 +33,7 @@ public class CodeGenerator {
                             ) // 设置需要生成的表名
                             .entityBuilder()
                             .enableLombok() // 启用 Lombok
+                            .superClass(BaseEntity.class)
                             .enableTableFieldAnnotation() // 启用字段注解
                             .controllerBuilder()
                             .enableRestStyle(); // 启用 REST 风格
