@@ -3,6 +3,7 @@ package com.hh.user.controller;
 import com.hh.common.response.Result;
 import com.hh.user.entity.User;
 import com.hh.user.mapper.UserMapper;
+import com.hh.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -25,12 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserService userService;
 
     @GetMapping("/getUserById/{id}")
     @Operation(summary = "根据ID获取用户")
     public Result<User> getUserById(@PathVariable("id") Long id) {
-        User user = userMapper.selectById(id);
+        User user = userService.getById(id);
         return Result.success(user);
     }
 

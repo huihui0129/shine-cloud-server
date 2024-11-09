@@ -39,6 +39,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>log-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>
