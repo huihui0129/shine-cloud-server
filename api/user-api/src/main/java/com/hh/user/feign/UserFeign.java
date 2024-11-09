@@ -19,4 +19,7 @@ public interface UserFeign {
     @GetMapping("/getException")
     Result<String> getException();
 
+    @GetMapping("/testConnTime")
+    Result<String> getConnTime();
+
 }

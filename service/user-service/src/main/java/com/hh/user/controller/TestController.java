@@ -4,8 +4,10 @@ import com.hh.common.exception.BaseException;
 import com.hh.common.status.ResponseStatus;
 import com.hh.user.model.TestModel;
 import com.hh.common.response.Result;
+import com.hh.user.properties.UserProperties;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @Tag(name = "测试集成Swagger3", description = "测试用例")
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/test")
+public class TestController {
+
+    @Resource
+    private UserProperties userProperties;
 
     @Operation(summary = "测试获取一个虚假的Model")
     @GetMapping("/getTestModel")
@@ -35,6 +40,12 @@ public class UserController {
     @GetMapping("/testException")
     public Result<?> testException() {
         throw new BaseException(ResponseStatus.ERROR, "我是一个超级牛逼的错误");
+    }
+
+    @Operation(summary = "测试配置获取")
+    @GetMapping("/getConfig")
+    public Result<String> getConfig() {
+        return Result.success(userProperties.getTest());
     }
 
 }

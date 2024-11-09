@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@RequestMapping("/article")
-public class ArticleController {
+@RequestMapping("/test")
+public class TestController {
 
     @Autowired
     private UserFeign userFeign;
@@ -36,6 +36,11 @@ public class ArticleController {
     @GetMapping("/getArticle")
     public Result<String> getArticle() {
         return Result.success("牛逼");
+    }
+
+    @GetMapping("/testConn")
+    public Result<String> getConn() {
+        return Result.success(userFeign.getConnTime().getData());
     }
 
 }

@@ -29,4 +29,14 @@ public class UserFeignImpl implements UserFeign {
         log.info("搞个异常");
         throw new BaseException(ResponseStatus.UNAUTHORIZED);
     }
+
+    @Override
+    public Result<String> getConnTime() {
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return Result.success("算你厉害");
+    }
 }
