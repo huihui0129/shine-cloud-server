@@ -3,7 +3,7 @@ package com.hh.user.controller.impl;
 import com.hh.common.response.Result;
 import com.hh.user.controller.TestApiController;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 /**
  * @author huihui
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @description TestApiControllerImpl
  */
 @Slf4j
-@RestController
+@Controller
 public class TestApiControllerImpl implements TestApiController {
 
     @Override

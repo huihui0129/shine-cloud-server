@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author huihui
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Tag(name = "测试API Controller", description = "测试API Controller")
 @RequestMapping("/testApi")
+@RestController
 public interface TestApiController {
 
     @Operation(summary = "测试将Controller放在API模块下的访问情况")
