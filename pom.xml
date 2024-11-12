@@ -42,6 +42,7 @@
         <mybatis-plus.version>3.5.5</mybatis-plus.version>
         <mysql.version>5.1.49</mysql.version>
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
+        <jbcrypt.version>0.4</jbcrypt.version>
     </properties>
 
     <dependencies>
@@ -121,6 +122,12 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>dynamic-datasource-spring-boot3-starter</artifactId>
                 <version>${dynamic-datasource.version}</version>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mindrot</groupId>
+                <artifactId>jbcrypt</artifactId>
+                <version>${jbcrypt.version}</version>
                 <scope>import</scope>
             </dependency>
         </dependencies>
