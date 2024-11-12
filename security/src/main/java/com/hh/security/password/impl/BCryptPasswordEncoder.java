@@ -15,7 +15,7 @@ public class BCryptPasswordEncoder implements PasswordEncoder {
     /**
      * 加密密码
      *
-     * @param password
+     * @param password 密码
      * @return
      */
     @Override
@@ -26,8 +26,8 @@ public class BCryptPasswordEncoder implements PasswordEncoder {
     /**
      * 验证密码
      *
-     * @param plainPassword
-     * @param hashedPassword
+     * @param plainPassword 密码
+     * @param hashedPassword 加密的密码
      * @return
      */
     @Override
