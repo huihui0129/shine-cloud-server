@@ -25,6 +25,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     public Result<?> runtimeExceptionHandler(RuntimeException e) {
         log.error("运行异常：{}", e.getMessage());
+        e.printStackTrace();
         return Result.error(ResponseStatus.ERROR, e.getMessage());
     }
 
@@ -37,6 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BaseException.class)
     public Result<?> baseExceptionHandler(BaseException e) {
         log.error("业务处理异常：[{}]|[{}]|[{}]", e.getEnum().getCode(), e.getEnum().getName(), e.getMessage());
+        e.printStackTrace();
         return Result.error(e.getEnum().getCode(), e.getMessage());
     }
 

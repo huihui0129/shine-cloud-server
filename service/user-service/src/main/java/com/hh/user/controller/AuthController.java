@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author huihui
@@ -30,6 +33,9 @@ public class AuthController {
 
     @Resource
     private DefaultKaptcha defaultKaptcha;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Operation(summary = "获取验证码图片")
     @GetMapping("/getCaptcha")
@@ -49,6 +55,7 @@ public class AuthController {
             // 返回 base64 编码的图片字符串，格式为 "data:image/jpeg;base64,BASE64_STRING"
             CaptchaResponse response = new CaptchaResponse();
             response.setImageBase64("data:image/jpeg;base64," + base64Image);
+            redisTemplate.opsForValue().setIfAbsent("captch", captchaText, 100, TimeUnit.SECONDS);
             return Result.success(response);
         } catch (IOException e) {
             log.error("生成图片验证码失败", e);

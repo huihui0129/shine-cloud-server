@@ -23,4 +23,13 @@ spring:
         group: ${nacos.group}
         prefix: ${spring.application.name}
         file-extension: yml
+        shared-configs[0]:
+          data-id: redis.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[1]:
+          data-id: cos.yml
+          group: DEFAULT_GROUP
+          refresh: true
+
 
