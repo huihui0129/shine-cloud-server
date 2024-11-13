@@ -43,6 +43,7 @@
         <mysql.version>5.1.49</mysql.version>
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <jbcrypt.version>0.4</jbcrypt.version>
+        <kaptcha.version>2.3.2</kaptcha.version>
     </properties>
 
     <dependencies>
@@ -128,6 +129,12 @@
                 <groupId>org.mindrot</groupId>
                 <artifactId>jbcrypt</artifactId>
                 <version>${jbcrypt.version}</version>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
                 <scope>import</scope>
             </dependency>
         </dependencies>
