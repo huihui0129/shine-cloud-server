@@ -3,6 +3,10 @@ package com.hh.user.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.hh.user.entity.User;
 import com.hh.user.info.UserInfo;
+import com.hh.user.request.CaptchaVerifyRequest;
+import com.hh.user.request.LoginRequest;
+import com.hh.user.response.CaptchaResponse;
+import com.hh.user.response.UserLoginResponse;
 
 /**
  * @author huihui
@@ -12,5 +16,11 @@ import com.hh.user.info.UserInfo;
 public interface UserService extends IService<User> {
 
     UserInfo getUserById(Long id);
+
+    CaptchaResponse getCaptcha();
+
+    void verifyCaptcha(CaptchaVerifyRequest request);
+
+    UserLoginResponse login(LoginRequest request);
 
 }

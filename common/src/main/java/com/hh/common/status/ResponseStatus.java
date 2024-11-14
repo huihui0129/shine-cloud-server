@@ -13,9 +13,11 @@ public enum ResponseStatus implements IEnum {
 
     SUCCESS("000000", "成功"),
 
-    ERROR("999999", "服务器出错啦，请稍后重试~"),
+    PARAMS_ERROR("100000", "你的参数不对哦~"),
 
     UNAUTHORIZED("200000", "你没有权限访问哦~"),
+
+    ERROR("900000", "服务器出错啦，请稍后重试~"),
 
     ;
 

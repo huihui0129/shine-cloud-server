@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 public class CaptchaResponse {
 
+    private String uuid;
+
     private String imageBase64;
 
 }

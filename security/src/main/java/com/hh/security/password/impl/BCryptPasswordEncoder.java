@@ -30,7 +30,11 @@ public class BCryptPasswordEncoder implements PasswordEncoder {
      */
     @Override
     public boolean matches(String plainPassword, String hashedPassword) {
-        return BCrypt.checkpw(plainPassword, hashedPassword);
+        try {
+            return BCrypt.checkpw(plainPassword, hashedPassword);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }

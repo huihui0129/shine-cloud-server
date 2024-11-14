@@ -28,7 +28,10 @@ public class User extends BaseEntity implements Serializable {
     @TableField(value = "password")
     private String password;
 
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
+    /**
+     * 头像
+     */
+    @TableField(value = "head_image")
+    private String headImage;
 
 }

@@ -53,6 +53,23 @@ public class TokenManager {
     }
 
     /**
+     * 生成token
+     * @param principal
+     * @return
+     */
+    public static String generate(AuthorityPrincipal principal) {
+        try {
+            ClassPathResource classPathResource = new ClassPathResource("private_key.pem");
+            InputStream is = classPathResource.getInputStream();
+            byte[] bytes = is.readAllBytes();
+            PrivateKey privateKey = RsaUtils.getPrivateKey(bytes);
+            return TokenManager.generate(principal, TOKEN_EXPIRE_MINUTES, privateKey);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * 通过公钥解析token
      *
      * @param token     需要解析的数据
@@ -68,6 +85,18 @@ public class TokenManager {
         principal.setId(id);
         principal.setUsername(username);
         return principal;
+    }
+
+    public static AuthorityPrincipal parse(String token) {
+        try {
+            ClassPathResource classPathResource = new ClassPathResource("public_key.pem");
+            InputStream is = classPathResource.getInputStream();
+            byte[] bytes = is.readAllBytes();
+            PublicKey publicKey = RsaUtils.getPublicKey(bytes);
+            return TokenManager.parse(token, publicKey);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) throws Exception {

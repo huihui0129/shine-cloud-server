@@ -1,24 +1,22 @@
 package com.hh.user.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import com.hh.common.exception.BaseException;
 import com.hh.common.response.Result;
+import com.hh.common.status.ResponseStatus;
+import com.hh.user.constant.UserConstant;
+import com.hh.user.entity.User;
+import com.hh.user.request.CaptchaVerifyRequest;
+import com.hh.user.request.LoginRequest;
 import com.hh.user.response.CaptchaResponse;
+import com.hh.user.response.UserLoginResponse;
+import com.hh.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.util.Base64Utils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author huihui
@@ -32,35 +30,27 @@ import java.util.concurrent.TimeUnit;
 public class AuthController {
 
     @Resource
-    private DefaultKaptcha defaultKaptcha;
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
+    private UserService userService;
 
     @Operation(summary = "获取验证码图片")
-    @GetMapping("/getCaptcha")
+    @GetMapping("/captcha/getCaptcha")
     public Result<CaptchaResponse> getCaptcha() {
-        try {
-            // 生成验证码文本
-            String captchaText = defaultKaptcha.createText();
-            // 生成验证码图片
-            BufferedImage captchaImage = defaultKaptcha.createImage(captchaText);
-            // 将图片写入 ByteArrayOutputStream
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            ImageIO.write(captchaImage, "jpeg", outputStream);
-            byte[] imageBytes = outputStream.toByteArray();
-            // 将图片字节数组编码为 base64 字符串
-            String base64Image = Base64Utils.encodeToString(imageBytes);
-            // 可将 captchaText 保存到 session 或 Redis 中以供验证
-            // 返回 base64 编码的图片字符串，格式为 "data:image/jpeg;base64,BASE64_STRING"
-            CaptchaResponse response = new CaptchaResponse();
-            response.setImageBase64("data:image/jpeg;base64," + base64Image);
-            redisTemplate.opsForValue().setIfAbsent("captch", captchaText, 100, TimeUnit.SECONDS);
-            return Result.success(response);
-        } catch (IOException e) {
-            log.error("生成图片验证码失败", e);
-            throw new RuntimeException(e);
-        }
+        CaptchaResponse response = userService.getCaptcha();
+        return Result.success(response);
+    }
+
+    @Operation(summary = "验证验证码")
+    @PostMapping("/captcha/verify")
+    public Result<?> verifyCaptcha(@RequestBody CaptchaVerifyRequest request) {
+        userService.verifyCaptcha(request);
+        return Result.success();
+    }
+
+    @Operation(summary = "登录")
+    @PostMapping("/user/login")
+    public Result<UserLoginResponse> login(@RequestBody LoginRequest request) {
+        UserLoginResponse response = userService.login(request);
+        return Result.success(response);
     }
 
 }
