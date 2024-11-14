@@ -6,6 +6,7 @@ import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.hh.common.exception.BaseException;
 import com.hh.common.status.ResponseStatus;
 import com.hh.security.authorization.AuthorityPrincipal;
+import com.hh.security.constant.SecurityConstant;
 import com.hh.security.password.PasswordEncoder;
 import com.hh.security.token.TokenManager;
 import com.hh.user.constant.UserConstant;
@@ -144,6 +145,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         response.setUsername(user.getUsername());
         response.setToken(token);
         response.setUrl(user.getHeadImage());
+        // 存入redis
+        redisTemplate.opsForValue().set(SecurityConstant.TOKEN_REDIS_PREFIX + user.getId(), token, SecurityConstant.AUTH_EXPIRE_TIME_SECONDS, TimeUnit.SECONDS);
+        // TODO 后面可能存入用户信息
         return response;
     }
 }

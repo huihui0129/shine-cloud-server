@@ -7,6 +7,8 @@ package com.hh.common.constant;
  */
 public interface BaseConstant {
 
+    String SECURITY_SERVICE = "security:";
+
     String USER_SERVICE = "user:";
 
     String ARTICLE_SERVICE = "article:";

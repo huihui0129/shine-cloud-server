@@ -13,4 +13,10 @@ public interface SecurityConstant extends BaseConstant {
 
     String HEADER_TOKEN_PREFIX = "Bearer ";
 
+    String TOKEN_REDIS_PREFIX = SECURITY_SERVICE + "auth:token:";
+
+    String USER_REDIS_PREFIX = SECURITY_SERVICE + "auth:user:";
+
+    long AUTH_EXPIRE_TIME_SECONDS = 1440L;
+
 }

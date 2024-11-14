@@ -15,6 +15,8 @@ public enum AuthorityStatus implements IEnum {
 
     ENC_DATA_NULL("200003", "加密数据不能为空"),
 
+    OFFLINE("200004", "你被人踢下线啦！快改密码！！！"),
+
     ;
 
     private final String code;

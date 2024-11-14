@@ -1,5 +1,6 @@
 package com.hh.common.response;
 
+import com.hh.common.enums.IEnum;
 import com.hh.common.status.ResponseStatus;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,7 +34,7 @@ public class Result<T> {
         return exec(code, message, null);
     }
 
-    public static <T> Result<T> exec(ResponseStatus status, T data) {
+    public static <T> Result<T> exec(IEnum status, T data) {
         return exec(status.getCode(), status.getName(), data);
     }
 
@@ -49,11 +50,11 @@ public class Result<T> {
         return exec(status, data);
     }
 
-    public static <T> Result<T> error(T data) {
-        return exec(ResponseStatus.ERROR, data);
+    public static <T> Result<T> error() {
+        return exec(ResponseStatus.ERROR, null);
     }
 
-    public static <T> Result<T> error(ResponseStatus status) {
+    public static <T> Result<T> error(IEnum status) {
         return exec(status, null);
     }
 
