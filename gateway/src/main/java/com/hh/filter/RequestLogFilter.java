@@ -1,6 +1,6 @@
 package com.hh.filter;
 
-import com.hh.common.constant.AuthorizationConstant;
+import com.hh.constant.GatewayConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -21,7 +21,7 @@ public class RequestLogFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return AuthorizationConstant.FILTER_ORDER_REQUEST_LOG;
+        return GatewayConstant.FILTER_ORDER_REQUEST_LOG;
     }
 
     @Override

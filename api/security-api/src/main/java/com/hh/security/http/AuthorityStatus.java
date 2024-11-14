@@ -9,7 +9,11 @@ import com.hh.common.enums.IEnum;
  */
 public enum AuthorityStatus implements IEnum {
 
-    ENC_DATA_NULL("200001", "加密数据不能为空"),
+    EXPIRED_TOKEN("200001", "身份认证过期了呢，重新登录一下吧"),
+
+    NO_TOKEN("200002", "我不知道你是谁哦"),
+
+    ENC_DATA_NULL("200003", "加密数据不能为空"),
 
     ;
 

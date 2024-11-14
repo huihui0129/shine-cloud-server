@@ -35,7 +35,7 @@
         </dependency>
         <dependency>
             <groupId>com.hh</groupId>
-            <artifactId>security</artifactId>
+            <artifactId>security-api</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

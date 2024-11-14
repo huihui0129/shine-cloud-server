@@ -99,32 +99,4 @@ public class TokenManager {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        String token = test01();
-        test02(token);
-    }
-
-    private static String test01() throws Exception {
-        ClassPathResource classPathResource = new ClassPathResource("private_key.pem");
-        InputStream is = classPathResource.getInputStream();
-        byte[] bytes = is.readAllBytes();
-        PrivateKey privateKey = RsaUtils.getPrivateKey(bytes);
-        AuthorityPrincipal authorityPrincipal = new AuthorityPrincipal();
-        authorityPrincipal.setId(101L);
-        authorityPrincipal.setUsername("张三");
-        String token = TokenManager.generate(authorityPrincipal, 100, privateKey);
-        System.out.println(token);
-        return token;
-    }
-
-    private static void test02(String token) throws Exception {
-        ClassPathResource classPathResource = new ClassPathResource("public_key.pem");
-        InputStream is = classPathResource.getInputStream();
-        byte[] bytes = is.readAllBytes();
-        PublicKey publicKey = RsaUtils.getPublicKey(bytes);
-        AuthorityPrincipal principal = TokenManager.parse(token, publicKey);
-        System.out.println(principal.getId());
-        System.out.println(principal.getUsername());
-    }
-
 }
