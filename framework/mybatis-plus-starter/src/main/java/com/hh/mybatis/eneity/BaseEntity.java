@@ -29,10 +29,22 @@ public class BaseEntity {
     private LocalDateTime createTime;
 
     /**
+     * 创建人
+     */
+    @TableField(value = "create_user")
+    private Long createUser;
+
+    /**
      * 修改时间
      */
-    @TableField(value = "upate_time")
-    private LocalDateTime upateTime;
+    @TableField(value = "update_time")
+    private LocalDateTime updateTime;
+
+    /**
+     * 修改人
+     */
+    @TableField(value = "update_user")
+    private Long updateUser;
 
     /**
      * 逻辑删除

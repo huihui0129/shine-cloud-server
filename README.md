@@ -62,3 +62,17 @@ swagger:
 docker exec -it 容器id /bin/bash
 rabbitmq-plugins enable rabbitmq_management  
 ```
+
+## MySql
+
+```sql
+create table `table_name` (
+    id bigint auto_increment primary key comment 'id',
+    create_time datetime default current_timestamp not null comment '创建时间',
+    create_user bigint default null comment '创建人',
+    update_time datetime default current_timestamp not null on update current_timestamp comment '修改时间',
+    update_user bigint default null comment '修改人',
+    deleted bit default b'0' not null comment '逻辑删除',
+    remark varchar(256) null comment '备注'
+) comment '表注释';
+```

@@ -32,7 +32,11 @@ public class CodeGenerator {
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(
-                                "user"
+                                "user",
+                                "menu",
+                                "role",
+                                "role_menu",
+                                "user_role"
                             ) // 设置需要生成的表名
                             .entityBuilder()
                             .enableLombok() // 启用 Lombok
