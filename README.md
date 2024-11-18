@@ -54,3 +54,11 @@ swagger:
   documentation-description: 用户服务Swagger接口文档
   url: /
 ```
+
+## RabbitMq
+
+启动web服务
+```text
+docker exec -it 容器id /bin/bash
+rabbitmq-plugins enable rabbitmq_management  
+```
