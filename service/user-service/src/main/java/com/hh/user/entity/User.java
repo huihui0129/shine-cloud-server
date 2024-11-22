@@ -3,6 +3,7 @@ package com.hh.user.entity;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.hh.mybatis.eneity.BaseEntity;
+import com.hh.security.authorization.Principal;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 @TableName(value = "user")
 @Data
-public class User extends BaseEntity implements Serializable {
+public class User extends BaseEntity implements Principal, Serializable {
 
     /**
      * 用户名

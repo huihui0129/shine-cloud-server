@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.hh.common.exception.BaseException;
 import com.hh.common.status.ResponseStatus;
-import com.hh.security.authorization.AuthorityPrincipal;
+import com.hh.security.authorization.impl.AuthorityPrincipal;
 import com.hh.security.constant.SecurityConstant;
 import com.hh.security.password.PasswordEncoder;
 import com.hh.security.token.TokenManager;

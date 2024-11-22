@@ -1,4 +1,4 @@
-package com.hh.util;
+package com.hh.security.util;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.util.AntPathMatcher;

@@ -1,7 +1,7 @@
 package com.hh.security.token;
 
 import com.hh.common.exception.BaseException;
-import com.hh.security.authorization.AuthorityPrincipal;
+import com.hh.security.authorization.impl.AuthorityPrincipal;
 import com.hh.security.http.AuthorityStatus;
 import com.hh.common.utils.RsaUtils;
 import io.jsonwebtoken.Claims;

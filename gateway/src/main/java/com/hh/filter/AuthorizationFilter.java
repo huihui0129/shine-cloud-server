@@ -4,11 +4,11 @@ import com.alibaba.fastjson2.JSON;
 import com.hh.constant.GatewayConstant;
 import com.hh.common.enums.IEnum;
 import com.hh.properties.GatewayCustomizeProperties;
-import com.hh.security.authorization.AuthorityPrincipal;
+import com.hh.security.authorization.impl.AuthorityPrincipal;
 import com.hh.security.constant.SecurityConstant;
 import com.hh.security.http.AuthorityStatus;
 import com.hh.security.token.TokenManager;
-import com.hh.util.PathMatchUtil;
+import com.hh.security.util.PathMatchUtil;
 import com.hh.common.response.Result;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -54,10 +54,10 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
         String path = request.getPath().value();
+        String token = request.getHeaders().getFirst(SecurityConstant.HEADER_TOKEN_KEY);
         // 不需要认证的路径
         if (PathMatchUtil.notMatch(gatewayCustomizeProperties.getAuthorizationExcludePath(), path)) {
             log.info("请求地址：{}，需要验证Token", path);
-            String token = request.getHeaders().getFirst(SecurityConstant.HEADER_TOKEN_KEY);
             if (StringUtils.isBlank(token)) {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
                 return getVoidMono(response, AuthorityStatus.NO_TOKEN);
@@ -83,7 +83,24 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                 }
             }
         } else {
+            // 不需要验证的路径尝试解析内容，如果解析异常，那么就删除这个头就行
             log.info("请求地址：{}，不需要验证Token", path);
+            if (StringUtils.isNotBlank(token)) {
+                token = token.replace("Bearer ", "");
+                if (StringUtils.isNotBlank(token)) {
+                    // 尝试解析
+                    try {
+                        // 可以解析到就没事了，继续往下走
+                        TokenManager.parse(token);
+                    } catch (Exception e) {
+                        log.error("解析Token异常，但是这个路径是免登的");
+                        // 删除这个头以免下游服务误解
+                        request.mutate()
+                                .headers(headers -> headers.remove(SecurityConstant.HEADER_TOKEN_KEY))
+                                .build();
+                    }
+                }
+            }
         }
         return chain.filter(exchange);
     }
