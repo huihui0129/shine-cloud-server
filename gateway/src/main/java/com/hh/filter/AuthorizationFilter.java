@@ -77,14 +77,6 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                         response.setStatusCode(HttpStatus.UNAUTHORIZED);
                         return getVoidMono(response, AuthorityStatus.OFFLINE);
                     }
-                    // TODO 这块逻辑现在还不需要
-                    // 获取用户信息
-//                    String userStr = redisTemplate.opsForValue().get(SecurityConstant.USER_REDIS_PREFIX + principal.getId());
-                    // 没有就是过期
-//                    if (StringUtils.isBlank(userStr)) {
-//                        response.setStatusCode(HttpStatus.UNAUTHORIZED);
-//                        return getVoidMono(response, AuthorityStatus.EXPIRED_TOKEN);
-//                    }
                 } catch (Exception e) {
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
                     return getVoidMono(response, AuthorityStatus.EXPIRED_TOKEN);
