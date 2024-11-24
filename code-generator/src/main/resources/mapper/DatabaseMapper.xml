@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hh.generator.mapper.DatabaseMapper">
+
+    <select id="getTableInfo" resultType="com.hh.generator.entity.Table">
+        select table_name, table_comment as comment
+        from information_schema.tables
+        where table_schema = #{databaseName}
+        and table_name = #{tableName}
+    </select>
+
+    <select id="getColumnInfo" resultType="com.hh.generator.entity.Column">
+        select column_name, data_type, column_comment as comment
+        from information_schema.columns
+        where table_schema = #{databaseName}
+        and table_name = #{tableName}
+    </select>
+
+</mapper>
