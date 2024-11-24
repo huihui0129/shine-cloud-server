@@ -93,7 +93,7 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                         // 可以解析到就没事了，继续往下走
                         TokenManager.parse(token);
                     } catch (Exception e) {
-                        log.error("解析Token异常，但是这个路径是免登的");
+                        log.error("解析Token异常，但是这个路径是可以访问的");
                         // 删除这个头以免下游服务误解
                         request.mutate()
                                 .headers(headers -> headers.remove(SecurityConstant.HEADER_TOKEN_KEY))
