@@ -6,6 +6,7 @@ import com.hh.generator.handler.AbstractGeneratorHandler;
 import com.hh.generator.handler.GeneratorHandler;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -17,12 +18,14 @@ import java.io.IOException;
  * @date 2024/11/24 15:21
  * @description EntityHandler
  */
+@Slf4j
 @Component
 public class EntityHandler extends AbstractGeneratorHandler implements GeneratorHandler {
 
     @Override
     public void handler() throws Exception {
         Table table = this.prepare();
+        log.info("开始生成实体类");
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(GeneratorApplication.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
@@ -41,7 +44,7 @@ public class EntityHandler extends AbstractGeneratorHandler implements Generator
         try (FileWriter writer = new FileWriter(output)) {
             template.process(table, writer);
         }
-        System.out.println("生成实体成功");
+        log.info("生成实体类成功");
     }
 
 }

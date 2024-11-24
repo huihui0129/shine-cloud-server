@@ -6,6 +6,7 @@ import com.hh.generator.entity.Table;
 import com.hh.generator.mapper.DatabaseMapper;
 import com.hh.generator.properties.GeneratorProperties;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * @description AGeneratorHandler
  */
 @Data
+@Slf4j
 @Component
 public abstract class AbstractGeneratorHandler implements GeneratorHandler {
 
@@ -32,6 +34,7 @@ public abstract class AbstractGeneratorHandler implements GeneratorHandler {
     private TypeConvert typeConvert;
 
     protected Table prepare() {
+        log.info("查询表对象");
         // 查询数据库
         DatabaseMapper databaseMapper = this.getDatabaseMapper();
         Table table = databaseMapper.getTableInfo("hh_user", "user");
@@ -65,6 +68,7 @@ public abstract class AbstractGeneratorHandler implements GeneratorHandler {
         this.columnNameConvert(columnList);
         this.typeConvert(columnList);
         table.setColumnList(columnList);
+        log.info("表对象封装完成");
         return table;
     }
 
