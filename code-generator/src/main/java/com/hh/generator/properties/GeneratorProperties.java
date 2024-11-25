@@ -36,7 +36,7 @@ public class GeneratorProperties {
     public static class Package {
 
         private String modalName;
-        private String basePaceage;
+        private String basePackage;
 
     }
 

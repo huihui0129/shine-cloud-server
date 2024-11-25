@@ -6,7 +6,7 @@ generator:
   # 包配置
   package-config:
     modal-name: user
-    base-paceage: com.hh
+    base-package: com.hh
   # 生成配置
   generator:
     table-name: user
