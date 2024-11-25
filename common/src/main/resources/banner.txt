@@ -1,4 +1,3 @@
-
 ${AnsiColor.MAGENTA}
 
    _____   _    _   _____   _   _   ______             _____   _         ____    _    _   _____     ${AnsiColor.BRIGHT_RED}
