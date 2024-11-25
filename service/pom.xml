@@ -6,7 +6,7 @@
 
     <parent>
         <groupId>com.hh</groupId>
-        <artifactId>hh-cloud-server</artifactId>
+        <artifactId>shine-cloud-server</artifactId>
         <version>1.0.0</version>
     </parent>
 

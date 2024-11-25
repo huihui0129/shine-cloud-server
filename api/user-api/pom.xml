@@ -16,17 +16,14 @@
         <dependency>
             <groupId>com.hh</groupId>
             <artifactId>common</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.hh</groupId>
             <artifactId>openfeign-starter</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.hh</groupId>
             <artifactId>swagger-starter</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

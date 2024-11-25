@@ -16,12 +16,10 @@
         <dependency>
             <groupId>com.hh</groupId>
             <artifactId>article-api</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.hh</groupId>
             <artifactId>user-api</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
