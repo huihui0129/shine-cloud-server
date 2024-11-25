@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>log-starter</artifactId>
+    <description>日志</description>
 
     <dependencies>
         <dependency>

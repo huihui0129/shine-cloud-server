@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>redis-starter</artifactId>
+    <description>redis</description>
 
     <dependencies>
         <dependency>

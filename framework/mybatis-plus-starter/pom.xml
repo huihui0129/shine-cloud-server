@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>mybatis-plus-starter</artifactId>
+    <description>数据库操作</description>
 
     <dependencies>
         <dependency>

@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>rabbitmq-starter</artifactId>
+    <description>消息队列</description>
 
     <dependencies>
         <dependency>
