@@ -31,6 +31,11 @@ public class InfoHandler extends AbstractGeneratorHandler implements GeneratorHa
     }
 
     @Override
+    public void handleTable(Table table) {
+        table.setClassName(table.getClassName() + "Info");
+    }
+
+    @Override
     public void handler(Table table) throws Exception {
         log.info("开始生成Info");
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);

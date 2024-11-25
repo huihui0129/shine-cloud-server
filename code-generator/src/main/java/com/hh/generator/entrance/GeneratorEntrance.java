@@ -73,6 +73,7 @@ public class GeneratorEntrance {
     public void handler() throws Exception {
         for (GeneratorHandler handler : this.handlerList) {
             for (Table table : tableList) {
+                handler.handleTable(table);
                 handler.handler(table);
             }
         }
@@ -83,8 +84,8 @@ public class GeneratorEntrance {
     }
 
     protected void tableNameConvert(Table table) {
-        String className = this.nameConvert(table.getTableName());
-        table.setClassName(className);
+        String tableName = table.getTableName();
+        table.setClassName(tableName.substring(0, 1).toUpperCase() + tableName.substring(1));
     }
 
     protected void columnNameConvert(List<Column> columnList) {

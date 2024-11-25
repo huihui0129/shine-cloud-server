@@ -3,6 +3,11 @@ package com.hh.user.info;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+<#assign hasDate = columnList?filter(item -> item.javaType?contains("LocalDateTime"))>
+<#if (hasDate?size > 0)>
+import java.time.LocalDateTime;
+</#if>
+
 @Data
 public class ${className} {
 
