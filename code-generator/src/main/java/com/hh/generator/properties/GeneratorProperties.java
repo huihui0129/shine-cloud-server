@@ -43,6 +43,7 @@ public class GeneratorProperties {
     @Data
     public static class Generator {
 
+        private String database;
         private List<String> tableName;
         private String tablePrefix;
         private List<GeneratorEnum> code;

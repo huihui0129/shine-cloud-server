@@ -9,6 +9,7 @@ generator:
     base-package: com.hh
   # 生成配置
   generator:
+    database: hh_user
     table-name: user
     table-prefix: ""
     # 需要生成的

@@ -25,6 +25,12 @@ public class TypeConvert {
                 case "tinyint":
                     item.setJavaType("Integer");
                     break;
+                case "datetime":
+                    item.setJavaType("LocalDateTime");
+                    break;
+                case "bit":
+                    item.setJavaType("Boolean");
+                    break;
                 default:
                     throw new NullPointerException("请维护类型：" + item.getDataType());
             }
