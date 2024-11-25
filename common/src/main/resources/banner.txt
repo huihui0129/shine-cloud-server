@@ -1,0 +1,14 @@
+
+${AnsiColor.MAGENTA}
+
+   _____   _    _   _____   _   _   ______             _____   _         ____    _    _   _____     ${AnsiColor.BRIGHT_RED}
+  / ____| | |  | | |_   _| | \ | | |  ____|           / ____| | |       / __ \  | |  | | |  __ \    ${AnsiColor.YELLOW}
+ | (___   | |__| |   | |   |  \| | | |__     ______  | |      | |      | |  | | | |  | | | |  | |   ${AnsiColor.BRIGHT_GREEN}
+  \___ \  |  __  |   | |   | . ` | |  __|   |______| | |      | |      | |  | | | |  | | | |  | |   ${AnsiColor.BRIGHT_CYAN}
+  ____) | | |  | |  _| |_  | |\  | | |____           | |____  | |____  | |__| | | |__| | | |__| |   ${AnsiColor.BLUE}
+ |_____/  |_|  |_| |_____| |_| \_| |______|           \_____| |______|  \____/   \____/  |_____/    ${AnsiColor.BRIGHT_MAGENTA}
+
+${application.formatted-version}
+spring-boot:${spring-boot.formatted-version}
+spring-cloud: ${spring-cloud.version}
+spring-cloud-alibaba: ${spring-cloud-alibaba.version}
