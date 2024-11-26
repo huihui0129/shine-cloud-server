@@ -21,4 +21,8 @@ public interface TestApiController {
     @GetMapping("/testGet")
     Result<String> getApiTest();
 
+    @Operation(summary = "测试异步线程池是否可用")
+    @GetMapping("/testAsyncTask")
+    Result<?> testAsyncTask();
+
 }

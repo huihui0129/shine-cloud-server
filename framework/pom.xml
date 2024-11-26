@@ -20,6 +20,7 @@
         <module>log-starter</module>
         <module>redis-starter</module>
         <module>rabbitmq-starter</module>
+        <module>async-starter</module>
     </modules>
 
 </project>

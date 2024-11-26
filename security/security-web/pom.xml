@@ -5,22 +5,27 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hh</groupId>
-        <artifactId>shine-cloud-server</artifactId>
+        <artifactId>security</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>common</artifactId>
-    <description>公共依赖模块</description>
+    <artifactId>security-web</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.hh</groupId>
+            <artifactId>security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.alibaba.fastjson2</groupId>
-            <artifactId>fastjson2</artifactId>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <optional>true</optional>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

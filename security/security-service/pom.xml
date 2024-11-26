@@ -5,17 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.hh</groupId>
-        <artifactId>shine-cloud-server</artifactId>
+        <artifactId>security</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>security</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>security-service</artifactId>
 
-    <modules>
-        <module>security-core</module>
-        <module>security-web</module>
-        <module>security-service</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>security-api</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

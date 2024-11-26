@@ -16,11 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.hh</groupId>
-            <artifactId>common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.hh</groupId>
-            <artifactId>security-api</artifactId>
+            <artifactId>security-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.hh</groupId>

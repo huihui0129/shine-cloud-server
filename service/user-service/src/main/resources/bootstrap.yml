@@ -31,5 +31,8 @@ spring:
           data-id: cos.yml
           group: DEFAULT_GROUP
           refresh: true
-
-
+async:
+  thread:
+    core-pool-size: 3
+    max-pool-size: 5
+    queue-capacity: 8

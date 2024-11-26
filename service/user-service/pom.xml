@@ -53,6 +53,10 @@
             <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>async-starter</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
