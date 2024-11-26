@@ -1,4 +1,4 @@
-package com.hh.common.utils;
+package com.hh.security.utils;
 
 import java.io.File;
 import java.io.IOException;

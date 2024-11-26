@@ -8,7 +8,7 @@ import com.hh.security.authorization.impl.AuthorityPrincipal;
 import com.hh.security.constant.SecurityConstant;
 import com.hh.security.http.AuthorityStatus;
 import com.hh.security.token.TokenManager;
-import com.hh.security.util.PathMatchUtil;
+import com.hh.security.utils.PathMatchUtil;
 import com.hh.common.response.Result;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

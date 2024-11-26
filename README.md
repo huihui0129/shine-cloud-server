@@ -1,5 +1,7 @@
 # hh-cloud-service
 
+
+
 ## 依赖版本
 
 > jdk：17
@@ -8,7 +10,66 @@
 > spring-boot：3.0.0
 
 
+
+## 模块依赖
+
+> 为了防止我自己忘记，所以写的
+>
+> framework工程下面全部是服务可选依赖，需要什么功能即可引入；
+>
+> components为组件，也是服务可选依赖；
+>
+> 不同与framework，components是提供基础功能的，比如文件上传、ID生成之类的
+>
+> 安全模块（Security）比较特殊，考虑到其作用较大以及网关是基于webflux实现的，故将安全模块拆分为core和web，前者提供基础功能，例如Token生成和解析，后者进行web相关的配置，比如拦截器
+>
+> 注：各个service服务之间不可相互依赖，也决不可依赖另一个service，如需访问，请依赖对方的api模块，使用远程调用访问
+
+
+
+模块说明：
+
+shine-cloud-server：父工程，进行依赖管理
+
+api：对外暴露接口
+
+service：对内实现逻辑
+
+gateway：网关
+
+common：公共依赖
+
+security：安全模块，提供oauth认证
+
+async-start：异步模块，提供基本的线程池配置，可依赖后自行配置
+
+log-starter：配置了日志打印格式
+
+mybatis-plus-starter：模块如其名，无需多言（操作数据库的）
+
+openfeign-starter：远程调用的
+
+rabbitmq-starter：消息中间件，RabbitMq
+
+redis-starter：redis的基础配置
+
+swagger-starter：spring-doc的基础配置，可以在引用模块后自行配置
+
+security：安全聚合模块，详情请看模块依赖说明，有详细解释
+
+...大概就这么多吧。
+
+
+
+## 公共模块说明
+
+common：顾名思义，公共依赖模块，里面提供了常量基础、枚举接口、通用异常接口以及对应的实现，全局异常处理，以及通用响应、响应码
+
+
+
 ## 服务Nacos配置
+
+
 
 ### 用户服务
 
@@ -55,6 +116,8 @@ swagger:
   url: /
 ```
 
+
+
 ## RabbitMq
 
 启动web服务
@@ -62,6 +125,8 @@ swagger:
 docker exec -it 容器id /bin/bash
 rabbitmq-plugins enable rabbitmq_management  
 ```
+
+
 
 ## MySql
 
@@ -76,3 +141,4 @@ create table `table_name` (
     remark varchar(256) null comment '备注'
 ) comment '表注释';
 ```
+
