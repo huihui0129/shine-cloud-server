@@ -1,4 +1,4 @@
-# hh-cloud-service
+# shine-cloud-server
 
 
 
