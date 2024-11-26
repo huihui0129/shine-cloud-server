@@ -52,6 +52,14 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -191,6 +199,21 @@
             <dependency>
                 <groupId>com.hh</groupId>
                 <artifactId>security-api</artifactId>
+                <version>${shine-clooud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hh</groupId>
+                <artifactId>async-starter</artifactId>
+                <version>${shine-clooud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hh</groupId>
+                <artifactId>security-core</artifactId>
+                <version>${shine-clooud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.hh</groupId>
+                <artifactId>security-web</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
         </dependencies>
