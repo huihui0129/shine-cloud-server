@@ -1,5 +1,6 @@
 package com.hh.security.strategy;
 
+import com.hh.security.response.AuthorizeCodeResponse;
 import com.hh.security.response.AuthorizeResponse;
 
 /**
@@ -11,7 +12,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
 
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
-        return null;
+        return new AuthorizeCodeResponse();
     }
 
 }
