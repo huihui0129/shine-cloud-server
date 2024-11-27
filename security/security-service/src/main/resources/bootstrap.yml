@@ -6,7 +6,7 @@ nacos:
   group: DEFAULT_GROUP
 spring:
   application:
-    name: gateway
+    name: security-service
   cloud:
     nacos:
       discovery:
@@ -23,27 +23,11 @@ spring:
         group: ${nacos.group}
         prefix: ${spring.application.name}
         file-extension: yml
-    gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-      routes:
-        - id: auth
-          uri: lb://auth-service
-          predicates:
-            - Path=/auth/**
-          filters:
-            - StripPrefix=1
-        - id: user
-          uri: lb://user-service
-          predicates:
-            - Path=/user/**
-          filters:
-            - StripPrefix=1
-        - id: article
-          uri: lb://article-service
-          predicates:
-            - Path=/article/**
-          filters:
-            - StripPrefix=1
-
+        shared-configs[0]:
+          data-id: redis.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[1]:
+          data-id: cos.yml
+          group: DEFAULT_GROUP
+          refresh: true

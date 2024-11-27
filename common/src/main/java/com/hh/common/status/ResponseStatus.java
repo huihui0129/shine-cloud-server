@@ -9,7 +9,7 @@ import lombok.Getter;
  * @description HttpStatus
  */
 @Getter
-public enum ResponseStatus implements IEnum {
+public enum ResponseStatus implements IEnum<String> {
 
     SUCCESS("000000", "成功"),
 

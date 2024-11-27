@@ -9,14 +9,14 @@ import com.hh.common.enums.IEnum;
  */
 public class BaseException extends RuntimeException implements IException {
 
-    private final IEnum iEnum;
+    private final IEnum<String> iEnum;
 
-    public BaseException(IEnum iEnum) {
+    public BaseException(IEnum<String> iEnum) {
         super(iEnum.getName());
         this.iEnum = iEnum;
     }
 
-    public BaseException(IEnum iEnum, String message) {
+    public BaseException(IEnum<String> iEnum, String message) {
         super(message);
         this.iEnum = iEnum;
     }
@@ -27,7 +27,7 @@ public class BaseException extends RuntimeException implements IException {
      * @return 通用异常枚举
      */
     @Override
-    public IEnum getEnum() {
+    public IEnum<String> getEnum() {
         return iEnum;
     }
 

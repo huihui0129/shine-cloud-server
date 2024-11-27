@@ -5,9 +5,9 @@ package com.hh.common.enums;
  * @date 2024/11/7 11:33
  * @description IEnum
  */
-public interface IEnum {
+public interface IEnum<T> {
 
-    String getCode();
+    T getCode();
 
     String getName();
 

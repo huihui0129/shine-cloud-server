@@ -24,6 +24,10 @@
             <groupId>com.hh</groupId>
             <artifactId>security-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>swagger-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

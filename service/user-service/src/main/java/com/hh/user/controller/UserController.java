@@ -1,13 +1,10 @@
 package com.hh.user.controller;
 
 import com.hh.common.response.Result;
-import com.hh.user.entity.User;
 import com.hh.user.info.UserInfo;
-import com.hh.user.mapper.UserMapper;
 import com.hh.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

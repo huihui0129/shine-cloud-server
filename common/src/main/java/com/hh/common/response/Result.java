@@ -34,7 +34,7 @@ public class Result<T> {
         return exec(code, message, null);
     }
 
-    public static <T> Result<T> exec(IEnum status, T data) {
+    public static <T> Result<T> exec(IEnum<String> status, T data) {
         return exec(status.getCode(), status.getName(), data);
     }
 
@@ -54,7 +54,7 @@ public class Result<T> {
         return exec(ResponseStatus.ERROR, null);
     }
 
-    public static <T> Result<T> error(IEnum status) {
+    public static <T> Result<T> error(IEnum<String> status) {
         return exec(status, null);
     }
 

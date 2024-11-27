@@ -7,15 +7,17 @@ import com.hh.common.enums.IEnum;
  * @date 2024/11/7 11:38
  * @description AuthorityStatus 200000 开头
  */
-public enum AuthorityStatus implements IEnum {
+public enum AuthorityStatus implements IEnum<String> {
 
-    EXPIRED_TOKEN("200001", "身份认证过期了呢，重新登录一下吧"),
+    AUTH_MODE_ERROR("200001", "我不知道这个授权模式是什么呢"),
 
-    NO_TOKEN("200002", "我不知道你是谁哦"),
+    EXPIRED_TOKEN("210001", "身份认证过期了呢，重新登录一下吧"),
 
-    ENC_DATA_NULL("200003", "加密数据不能为空"),
+    NO_TOKEN("210002", "我不知道你是谁哦"),
 
-    OFFLINE("200004", "你被人踢下线啦！快改密码！！！"),
+    ENC_DATA_NULL("210003", "加密数据不能为空"),
+
+    OFFLINE("210004", "你被人踢下线啦！快改密码！！！"),
 
     ;
 
