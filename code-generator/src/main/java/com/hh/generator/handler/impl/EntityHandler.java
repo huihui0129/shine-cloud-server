@@ -66,14 +66,14 @@ public class EntityHandler extends AbstractGeneratorHandler implements Generator
 
     @Override
     public void handler(Table table) throws Exception {
-        log.info("开始生成实体类");
+        log.info("开始生成{}实体类", table.getEntityName());
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(GeneratorApplication.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
         // 2. 加载模板
         Template template = cfg.getTemplate("entity.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/User.java");
+        File output = new File("code-generator/target/generator/package/entity/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {
@@ -85,7 +85,7 @@ public class EntityHandler extends AbstractGeneratorHandler implements Generator
         try (FileWriter writer = new FileWriter(output)) {
             template.process(table, writer);
         }
-        log.info("生成实体类成功");
+        log.info("生成{}实体类成功", table.getEntityName());
     }
 
 }

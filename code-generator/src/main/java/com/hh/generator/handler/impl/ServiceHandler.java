@@ -16,35 +16,35 @@ import java.io.IOException;
 
 /**
  * @author huihui
- * @date 2024/11/25 16:32
- * @description InfoHandler
+ * @date 2024/12/1 13:44
+ * @description MapperHandler
  */
 @Slf4j
 @Component
-public class InfoHandler extends AbstractGeneratorHandler implements GeneratorHandler {
+public class ServiceHandler extends AbstractGeneratorHandler implements GeneratorHandler {
 
-    private final GeneratorEnum generatorEnum = GeneratorEnum.INFO;
+    private final GeneratorEnum generatorEnum = GeneratorEnum.SERVICE;
 
     @Override
     public GeneratorEnum getEnum() {
-        return this.generatorEnum;
+        return generatorEnum;
     }
 
     @Override
     public void handleTable(Table table) {
-        table.setClassName(table.getClassName() + "Info");
+        table.setClassName(table.getClassName() + "Service");
     }
 
     @Override
     public void handler(Table table) throws Exception {
-        log.info("开始生成{}Info", table.getEntityName());
+        log.info("开始生成{}Service", table.getEntityName());
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(GeneratorApplication.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
         // 2. 加载模板
-        Template template = cfg.getTemplate("info.ftl");
+        Template template = cfg.getTemplate("service.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/info/" + table.getClassName() + ".java");
+        File output = new File("code-generator/target/generator/package/service/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {
@@ -56,7 +56,7 @@ public class InfoHandler extends AbstractGeneratorHandler implements GeneratorHa
         try (FileWriter writer = new FileWriter(output)) {
             template.process(table, writer);
         }
-        log.info("生成{}Info成功", table.getEntityName());
+        log.info("生成{}Service成功", table.getEntityName());
     }
 
 }

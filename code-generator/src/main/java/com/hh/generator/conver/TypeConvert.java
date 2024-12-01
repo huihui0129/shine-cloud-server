@@ -30,6 +30,8 @@ public class TypeConvert {
                     break;
                 case "bit":
                     item.setJavaType("Boolean");
+                case "int":
+                    item.setJavaType("Integer");
                     break;
                 default:
                     throw new NullPointerException("请维护类型：" + item.getDataType());

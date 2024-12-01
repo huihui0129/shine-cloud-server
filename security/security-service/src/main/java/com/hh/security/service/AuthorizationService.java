@@ -1,5 +1,7 @@
 package com.hh.security.service;
 
+import com.hh.security.request.AuthorizationTokenRequest;
+import com.hh.security.response.AccessTokenResponse;
 import com.hh.security.response.AuthorizeResponse;
 
 /**
@@ -20,5 +22,13 @@ public interface AuthorizationService {
      * @return
      */
     AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state);
+
+    /**
+     * 获取访问令牌
+     *
+     * @param request
+     * @return
+     */
+    AccessTokenResponse token(AuthorizationTokenRequest request);
 
 }

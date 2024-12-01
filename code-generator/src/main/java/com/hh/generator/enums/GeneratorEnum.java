@@ -9,5 +9,10 @@ public enum GeneratorEnum {
 
     ENTITY,
     INFO,
+    MAPPER,
+    MAPPER_XML,
+    SERVICE,
+    SERVICE_IMPL,
+    CONTROLLER,
 
 }

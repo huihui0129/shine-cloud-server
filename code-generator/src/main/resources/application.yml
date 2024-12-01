@@ -1,21 +1,28 @@
 generator:
   datasource:
-    url: jdbc:mysql://localhost:3306/hh_user?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true
+    url: jdbc:mysql://localhost:3306/hh_auth?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true
     username: root
     password: 123456
   # 包配置
   package-config:
-    modal-name: user
+    modal-name: auth
     base-package: com.hh
   # 生成配置
   generator:
-    database: hh_user
-    table-name: user
-    table-prefix: ""
+    database: hh_auth
+    table-name:
+      - oauth_client
+      - oauth_client_grant_type
+      - oauth_client_redirect_uri
+      - oauth_client_scope
+    table-prefix: oauth_
     # 需要生成的
     code:
       - entity
       - info
+      - mapper
+      - service
+      - service_impl
 
 
 

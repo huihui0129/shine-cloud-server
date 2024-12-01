@@ -16,8 +16,20 @@ public class Table {
 
     private String className;
 
+    private String lowercaseClassName;
+
+    private String entityName;
+
     private String comment;
 
     private List<Column> columnList;
+
+    private String generatorDate;
+
+    private String author = "huihui";
+
+    private String packagePath;
+
+    private String moduleName;
 
 }

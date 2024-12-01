@@ -1,16 +1,15 @@
 package com.hh.security.controller;
 
 import com.hh.common.response.Result;
+import com.hh.security.request.AuthorizationTokenRequest;
+import com.hh.security.response.AccessTokenResponse;
 import com.hh.security.response.AuthorizeResponse;
 import com.hh.security.service.AuthorizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author huihui
@@ -36,6 +35,12 @@ public class AuthorizationController {
             @RequestParam(value = "state", required = false) String state
     ) {
         return Result.success(authorizationService.authorize(responseType, clientId, redirectUri, scope, state));
+    }
+
+    @Operation(summary = "获取访问令牌")
+    @PostMapping("/token")
+    public Result<AccessTokenResponse> token(@RequestBody AuthorizationTokenRequest request) {
+        return Result.success(authorizationService.token(request));
     }
 
 }

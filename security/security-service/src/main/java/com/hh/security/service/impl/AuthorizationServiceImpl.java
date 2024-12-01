@@ -3,6 +3,8 @@ package com.hh.security.service.impl;
 import com.hh.common.exception.BaseException;
 import com.hh.security.enums.AuthorizationResponseTypeEnum;
 import com.hh.security.http.AuthorityStatus;
+import com.hh.security.request.AuthorizationTokenRequest;
+import com.hh.security.response.AccessTokenResponse;
 import com.hh.security.response.AuthorizeCodeResponse;
 import com.hh.security.response.AuthorizeResponse;
 import com.hh.security.service.AuthorizationService;
@@ -44,4 +46,24 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         return context.authorize(responseType, clientId, redirectUri, scope, state);
     }
 
+    /**
+     * 获取访问令牌
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public AccessTokenResponse token(AuthorizationTokenRequest request) {
+        // TODO 需要存入表然后查询授权类型
+        AuthorizationResponseTypeEnum typeEnum = AuthorizationResponseTypeEnum.findByCode();
+        AuthorizationContext context;
+        switch (typeEnum) {
+            case CODE: // 授权码模式
+                context = new AuthorizationContext(new AuthorizationCodeStrategy());
+                break;
+            default:
+                throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
+        }
+        return context.authorize(responseType, clientId, redirectUri, scope, state);
+    }
 }
