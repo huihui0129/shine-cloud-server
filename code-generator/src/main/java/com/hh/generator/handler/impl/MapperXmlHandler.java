@@ -42,7 +42,7 @@ public class MapperXmlHandler extends AbstractGeneratorHandler implements Genera
         cfg.setClassForTemplateLoading(GeneratorApplication.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
         // 2. 加载模板
-        Template template = cfg.getTemplate("mapper.ftl");
+        Template template = cfg.getTemplate("mapperXml.ftl");
         // 4. 生成文件
         File output = new File("code-generator/target/generator/package/mapperXml/" + table.getClassName() + ".xml");
         File parentDir = output.getParentFile();

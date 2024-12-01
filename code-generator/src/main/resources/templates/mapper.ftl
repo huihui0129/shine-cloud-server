@@ -1,7 +1,7 @@
-package ${packagePath}.${moduleName}.info;
+package ${packagePath}.${moduleName}.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.hh.user.entity.${entityName};
+import ${packagePath}.${moduleName}.mapper.${entityName};
 
 /**
 * @author ${author}

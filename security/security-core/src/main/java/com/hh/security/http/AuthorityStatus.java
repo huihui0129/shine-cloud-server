@@ -19,6 +19,8 @@ public enum AuthorityStatus implements IEnum<String> {
 
     OFFLINE("210004", "你被人踢下线啦！快改密码！！！"),
 
+    NOT_EXISTS_CLIENT("210005", "没有找到这个客户端呢，请先联系管理员注册客户端吧"),
+
     ;
 
     private final String code;

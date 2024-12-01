@@ -5,16 +5,17 @@ generator:
     password: 123456
   # 包配置
   package-config:
-    modal-name: auth
+    modal-name: security
     base-package: com.hh
   # 生成配置
   generator:
     database: hh_auth
     table-name:
-      - oauth_client
-      - oauth_client_grant_type
-      - oauth_client_redirect_uri
-      - oauth_client_scope
+      - oauth_authorization_code
+#      - oauth_client
+#      - oauth_client_grant_type
+#      - oauth_client_redirect_uri
+#      - oauth_client_scope
     table-prefix: oauth_
     # 需要生成的
     code:

@@ -11,6 +11,9 @@ import lombok.Data;
 @Data
 public class AuthorizationTokenRequest {
 
+    @Schema(description = "授权码")
+    private String code;
+
     @Schema(description = "授权类型")
     private String grantType;
 

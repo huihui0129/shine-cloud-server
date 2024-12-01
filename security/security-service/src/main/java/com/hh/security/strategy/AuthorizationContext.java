@@ -1,5 +1,6 @@
 package com.hh.security.strategy;
 
+import com.hh.security.response.AccessTokenResponse;
 import com.hh.security.response.AuthorizeResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,10 @@ public class AuthorizationContext {
 
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
         return authorizationStrategy.authorize(responseType, clientId, redirectUri, scope, state);
+    }
+
+    public AccessTokenResponse token(String clientId, String clientSecret, String grantType, String code, String refreshToken) {
+        return authorizationStrategy.token(clientId, clientSecret, grantType, code, refreshToken);
     }
 
 }

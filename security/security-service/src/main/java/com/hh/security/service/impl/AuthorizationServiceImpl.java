@@ -5,11 +5,11 @@ import com.hh.security.enums.AuthorizationResponseTypeEnum;
 import com.hh.security.http.AuthorityStatus;
 import com.hh.security.request.AuthorizationTokenRequest;
 import com.hh.security.response.AccessTokenResponse;
-import com.hh.security.response.AuthorizeCodeResponse;
 import com.hh.security.response.AuthorizeResponse;
 import com.hh.security.service.AuthorizationService;
 import com.hh.security.strategy.AuthorizationCodeStrategy;
 import com.hh.security.strategy.AuthorizationContext;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class AuthorizationServiceImpl implements AuthorizationService {
+
+    @Resource
+    private AuthorizationCodeStrategy authorizationCodeStrategy;
 
     /**
      * 获取授权码
@@ -38,7 +41,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         AuthorizationContext context;
         switch (typeEnum) {
             case CODE: // 授权码模式
-                context = new AuthorizationContext(new AuthorizationCodeStrategy());
+                context = new AuthorizationContext(authorizationCodeStrategy);
                 break;
             default:
                 throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
@@ -55,15 +58,15 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public AccessTokenResponse token(AuthorizationTokenRequest request) {
         // TODO 需要存入表然后查询授权类型
-        AuthorizationResponseTypeEnum typeEnum = AuthorizationResponseTypeEnum.findByCode();
+        AuthorizationResponseTypeEnum typeEnum = AuthorizationResponseTypeEnum.findByCode(request.getGrantType());
         AuthorizationContext context;
         switch (typeEnum) {
             case CODE: // 授权码模式
-                context = new AuthorizationContext(new AuthorizationCodeStrategy());
+                context = new AuthorizationContext(authorizationCodeStrategy);
                 break;
             default:
                 throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
         }
-        return context.authorize(responseType, clientId, redirectUri, scope, state);
+        return context.token(request.getClientId(), request.getClientSecret(), request.getGrantType(), request.getCode(), request.getRefreshToken());
     }
 }
