@@ -50,6 +50,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 log.error("授权码已被删除：{}", id);
             } else if (AuthorizationCodeStatusEnum.S2.getCode().equals(authorizationCode.getStatus())) {
                 log.info("授权码已被使用：{}", id);
+            } else if (AuthorizationCodeStatusEnum.S3.getCode().equals(authorizationCode.getStatus())) {
+                log.error("重复消费消息？：{}", id);
             } else {
                 // 修改为已过期
                 int count = authorizationCodeMapper.update(

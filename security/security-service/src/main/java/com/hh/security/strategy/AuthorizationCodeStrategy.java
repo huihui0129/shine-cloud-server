@@ -65,10 +65,10 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         authorizationCode.setExpireAt(expireTime);
         authorizationCode.setStatus(AuthorizationCodeStatusEnum.S1.getCode());
         authorizationCodeMapper.insert(authorizationCode);
-        // 发送一条消息给rabitmq
+        // 发送一条消息给rabbitmq
         rabbitTemplate.setConfirmCallback((data, ack, cause) -> {
             if (ack) {
-                log.info("消息发送成功！数据：{}", cause);
+                log.info("消息发送成功！数据：{}", data);
             } else {
                 log.error("消息发送失败！数据：{}", cause);
             }
