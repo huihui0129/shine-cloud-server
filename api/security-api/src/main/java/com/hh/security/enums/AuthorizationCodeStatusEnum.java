@@ -27,11 +27,11 @@ public enum AuthorizationCodeStatusEnum implements IEnum<Integer> {
 
     @Override
     public Integer getCode() {
-        return 0;
+        return this.code;
     }
 
     @Override
     public String getName() {
-        return "";
+        return this.name;
     }
 }

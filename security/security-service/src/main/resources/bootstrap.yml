@@ -31,3 +31,7 @@ spring:
           data-id: cos.yml
           group: DEFAULT_GROUP
           refresh: true
+        shared-configs[2]:
+          data-id: rabbit.yml
+          group: DEFAULT_GROUP
+          refresh: true

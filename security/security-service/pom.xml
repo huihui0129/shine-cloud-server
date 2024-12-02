@@ -41,6 +41,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>rabbitmq-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
