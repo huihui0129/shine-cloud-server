@@ -130,6 +130,10 @@ rabbitmq-plugins enable rabbitmq_management
 ```
 
 
+Nacos后台运行指令
+
+> Start-Process -WindowStyle hidden -FilePath "J:\cloud-components\nacos-2.2.1\bin\startup.cmd"
+
 
 ## MySql
 

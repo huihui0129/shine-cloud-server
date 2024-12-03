@@ -1,20 +1,24 @@
 package com.hh.security.token;
 
 import com.hh.common.exception.BaseException;
+import com.hh.security.authorization.Principal;
 import com.hh.security.authorization.impl.AuthorityPrincipal;
+import com.hh.security.authorization.impl.ClientAuthorityPrincipal;
 import com.hh.security.http.AuthorityStatus;
 import com.hh.security.utils.RsaUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @author huihui
@@ -28,6 +32,18 @@ public class TokenManager {
      */
     private static final Integer TOKEN_EXPIRE_MINUTES = 1440;
 
+    private static final Map<Class<? extends Principal>, List<Field>> fieldCache = new HashMap<>();
+
+    static {
+        cachePrincipal(AuthorityPrincipal.class);
+        cachePrincipal(ClientAuthorityPrincipal.class);
+    }
+
+    private static void cachePrincipal(Class<? extends Principal> principalClass) {
+        List<Field> fields = Arrays.asList(principalClass.getDeclaredFields());
+        fieldCache.put(principalClass, fields);
+    }
+
     /**
      * 根据私钥生成token
      *
@@ -36,16 +52,27 @@ public class TokenManager {
      * @param privateKey
      * @return
      */
-    public static String generate(AuthorityPrincipal principal, Integer expireMinutes, PrivateKey privateKey) {
+    public static String generate(Principal principal, Integer expireMinutes, PrivateKey privateKey) {
         if (principal == null) {
             throw new BaseException(AuthorityStatus.ENC_DATA_NULL);
         }
         if (expireMinutes == null) {
             expireMinutes = TOKEN_EXPIRE_MINUTES;
         }
+        // 使用预先缓存的字段信息
+        List<Field> fieldList = fieldCache.get(principal.getClass());
+        if (CollectionUtils.isEmpty(fieldList)) {
+            throw new BaseException(AuthorityStatus.NO_CACHE_PRINCIPAL);
+        }
         JwtBuilder jwtBuilder = Jwts.builder();
-        jwtBuilder.claim("id", principal.getId());
-        jwtBuilder.claim("username", principal.getUsername());
+        for (Field field : fieldList) {
+            field.setAccessible(true);
+            try {
+                jwtBuilder.claim(field.getName(), field.get(principal));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         LocalDateTime expire = LocalDateTime.now().plusMinutes(expireMinutes);
         jwtBuilder.setExpiration(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()));
         jwtBuilder.signWith(privateKey);
@@ -57,7 +84,7 @@ public class TokenManager {
      * @param principal
      * @return
      */
-    public static String generate(AuthorityPrincipal principal) {
+    public static String generate(Principal principal) {
         try {
             ClassPathResource classPathResource = new ClassPathResource("private_key.pem");
             InputStream is = classPathResource.getInputStream();

@@ -6,7 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 /**
  * @author huihui
  * @date 2024/11/12 14:41
- * @description BCryptPasswordEncoder
+ * @description BCryptPasswordEncoder 超级牛逼的密码加密器
  */
 public class BCryptPasswordEncoder implements PasswordEncoder {
 

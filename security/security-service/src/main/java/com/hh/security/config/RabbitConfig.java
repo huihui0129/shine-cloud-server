@@ -23,7 +23,7 @@ public class RabbitConfig {
         return QueueBuilder.durable(RabbitConstant.Security.AUTHORIZATION_CODE_QUEUE)
                 .withArgument("x-dead-letter-exchange", RabbitConstant.Security.AUTHORIZATION_CODE_DIE_EXCHANGE)
                 .withArgument("x-dead-letter-routing-key", RabbitConstant.Security.AUTHORIZATION_CODE_DIE_KEY)
-                .withArgument("x-message-ttl", 10000)
+                .withArgument("x-message-ttl", 60000) // 过期时间一分钟
                 .build();
     }
 
