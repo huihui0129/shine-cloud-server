@@ -1,87 +1,61 @@
-# shine-cloud-server
+# Shine Cloud Server
 
-
+Shine Cloud Server 是基于 Spring Cloud 微服务架构的项目，提供一系列模块化、可扩展的功能，支持灵活的依赖选择。
 
 ## 依赖版本
 
-> jdk：17
-> 
-> spring-cloud：2022.0.3
-> 
-> spring-cloud-alibaba：2022.0.0.0
-> 
-> spring-boot：3.0.0
+- **JDK**: 17
+- **Spring Cloud**: 2022.0.3
+- **Spring Cloud Alibaba**: 2022.0.0.0
+- **Spring Boot**: 3.0.0
 
+## 模块结构
 
+### 父工程
 
-## 模块依赖
+- **shine-cloud-server**: 统一依赖管理和版本控制。
 
-> 为了防止我自己忘记，所以写的
->
-> framework工程下面全部是服务可选依赖，需要什么功能即可引入；
->
-> components为组件，也是服务可选依赖；
->
-> 不同与framework，components是提供基础功能的，比如文件上传、ID生成之类的
->
-> 安全模块（Security）比较特殊，考虑到其作用较大以及网关是基于webflux实现的，故将安全模块拆分为core和web，前者提供基础功能，例如Token生成和解析，后者进行web相关的配置，比如拦截器
->
-> 注：各个service服务之间不可相互依赖，也决不可依赖另一个service，如需访问，请依赖对方的api模块，使用远程调用访问
+### 核心模块
 
+- **api**: 定义对外暴露的接口。
+- **service**: 具体业务逻辑的实现。
+- **gateway**: 网关服务。
+- **common**: 公共依赖模块，提供通用工具、常量、异常处理等。
 
+### 可选依赖模块
 
-模块说明：
+- **framework**: 服务可选依赖模块，按需引入所需功能。
+- **components**: 基础功能模块，如文件上传、ID生成等。
+- **security**:
+    - **core**: 提供基础安全功能（如 Token 生成与解析）。
+    - **web**: 针对 WebFlux 的安全配置（如拦截器）。
 
-shine-cloud-server：父工程，进行依赖管理
+> **注意**: 各服务模块之间不得直接依赖，需通过 API 模块使用远程调用实现服务间通信。
 
-api：对外暴露接口
+### 扩展功能模块
 
-service：对内实现逻辑
-
-gateway：网关
-
-common：公共依赖
-
-security：安全模块，提供oauth认证
-
-async-start：异步模块，提供基本的线程池配置，可依赖后自行配置
-
-log-starter：配置了日志打印格式
-
-mybatis-plus-starter：模块如其名，无需多言（操作数据库的）
-
-openfeign-starter：远程调用的
-
-rabbitmq-starter：消息中间件，RabbitMq
-
-redis-starter：redis的基础配置
-
-swagger-starter：spring-doc的基础配置，可以在引用模块后自行配置
-
-security：安全聚合模块，详情请看模块依赖说明，有详细解释
-
-...大概就这么多吧。
-
-
+- **async-starter**: 提供线程池配置，支持异步处理。
+- **log-starter**: 定义统一的日志打印格式。
+- **mybatis-plus-starter**: 集成 MyBatis-Plus。
+- **openfeign-starter**: 支持远程调用。
+- **rabbitmq-starter**: RabbitMQ 消息队列配置。
+- **redis-starter**: Redis 的基础配置。
+- **swagger-starter**: 基于 Spring Doc 的 Swagger 配置。
 
 ## 公共模块说明
 
-common：顾名思义，公共依赖模块，里面提供了常量基础、枚举接口、通用异常接口以及对应的实现，全局异常处理，以及通用响应、响应码
+- **common**: 提供以下功能：
+    - 通用常量与枚举接口
+    - 全局异常处理
+    - 通用响应与响应码
 
+## 示例配置
 
+### 用户服务（Nacos 配置）
 
-## 服务Nacos配置
-
-
-
-### 用户服务
-
-```yml
+```yaml
 server:
   port: 9001
-
-user:
-  test: 123465
 
 spring:
   mvc:
@@ -96,14 +70,14 @@ spring:
 mybatis-plus:
   global-config:
     db-config:
-      logic-delete-field: deleted # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
-      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
-      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.hh.user.entity
   configuration:
-    map-underscore-to-camel-case: true # 开启驼峰命名：默认开启，【二选一】
-    cache-enabled: true # 开启二级缓存，默认开启
+    map-underscore-to-camel-case: true
+    cache-enabled: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 springdoc:
@@ -113,39 +87,39 @@ springdoc:
 swagger:
   enable: true
   title: 用户服务
-  description: 用户服务Swagger接口文档
+  description: 用户服务 Swagger 接口文档
   version: 1.0.0
-  documentation-description: 用户服务Swagger接口文档
-  url: /
 ```
 
+## RabbitMQ
 
+启动Web管理页面：
 
-## RabbitMq
-
-启动web服务
-```text
+```bash
 docker exec -it 容器id /bin/bash
 rabbitmq-plugins enable rabbitmq_management  
 ```
 
+## Nacos
 
-Nacos后台运行指令
+后台运行命令：
 
-> Start-Process -WindowStyle hidden -FilePath "J:\cloud-components\nacos-2.2.1\bin\startup.cmd"
-
+```bash
+Start-Process -WindowStyle hidden -FilePath "J:\cloud-components\nacos-2.2.1\bin\startup.cmd"
+```
 
 ## MySql
 
-```sql
-create table `table_name` (
-    id bigint auto_increment primary key comment 'id',
-    create_time datetime default current_timestamp not null comment '创建时间',
-    create_user bigint default null comment '创建人',
-    update_time datetime default current_timestamp not null on update current_timestamp comment '修改时间',
-    update_user bigint default null comment '修改人',
-    deleted bit default b'0' not null comment '逻辑删除',
-    remark varchar(256) null comment '备注'
-) comment '表注释';
-```
+数据表示例
 
+```sql
+CREATE TABLE `table_name` (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    create_user BIGINT DEFAULT NULL COMMENT '创建人',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    update_user BIGINT DEFAULT NULL COMMENT '修改人',
+    deleted BIT DEFAULT b'0' NOT NULL COMMENT '逻辑删除',
+    remark VARCHAR(256) NULL COMMENT '备注'
+) COMMENT '表注释';
+```
