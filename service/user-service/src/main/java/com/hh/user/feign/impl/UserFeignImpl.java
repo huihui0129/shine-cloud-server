@@ -1,9 +1,14 @@
 package com.hh.user.feign.impl;
 
-import com.hh.common.exception.BaseException;
-import com.hh.common.status.ResponseStatus;
-import com.hh.user.feign.UserFeign;
+import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.hh.common.response.Result;
+import com.hh.user.entity.User;
+import com.hh.user.feign.UserFeign;
+import com.hh.user.info.UserInfo;
+import com.hh.user.request.UserRequest;
+import com.hh.user.service.UserService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,25 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserFeignImpl implements UserFeign {
 
-    @Override
-    public Result<String> getUser() {
-        log.info("远程调用我了");
-        return Result.success("成功获取用户ID：666");
-    }
+    @Resource
+    private UserService userService;
 
     @Override
-    public Result<String> getException() {
-        log.info("搞个异常");
-        throw new BaseException(ResponseStatus.UNAUTHORIZED);
-    }
-
-    @Override
-    public Result<String> getConnTime() {
-        try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    public Result<UserInfo> getUser(UserRequest request) {
+        User user = userService.getOne(
+                Wrappers.<User>lambdaQuery()
+                        .eq(User::getUsername, request.getUsername())
+        );
+        if (user == null) {
+            return Result.error();
         }
-        return Result.success("算你厉害");
+        UserInfo userInfo = new UserInfo();
+        BeanUtil.copyProperties(user, userInfo, true);
+        return Result.success(userInfo);
     }
 }

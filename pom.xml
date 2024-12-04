@@ -45,6 +45,7 @@
         <dynamic-datasource.version>4.3.0</dynamic-datasource.version>
         <jbcrypt.version>0.4</jbcrypt.version>
         <kaptcha.version>2.3.2</kaptcha.version>
+        <hutool.version>5.8.4</hutool.version>
     </properties>
 
     <dependencies>
@@ -108,19 +109,16 @@
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-api</artifactId>
                 <version>${jwt-jjwt-api.version}</version>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-impl</artifactId>
                 <version>${jwt-jjwt-impl.version}</version>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt-jackson</artifactId>
                 <version>${jwt-jjwt-jackson.version}</version>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
@@ -138,7 +136,6 @@
                 <groupId>org.mindrot</groupId>
                 <artifactId>jbcrypt</artifactId>
                 <version>${jbcrypt.version}</version>
-                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.penggle</groupId>
@@ -215,6 +212,11 @@
                 <groupId>com.hh</groupId>
                 <artifactId>security-web</artifactId>
                 <version>${shine-clooud.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

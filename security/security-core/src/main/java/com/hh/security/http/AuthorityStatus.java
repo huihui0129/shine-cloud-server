@@ -25,6 +25,8 @@ public enum AuthorityStatus implements IEnum<String> {
 
     CLIENT_ID_MISMATCH("210006", "客户端Secret错误了呢，检查下吧"),
 
+    INCORRECT_AUTHORIZATION_CODE("210007", "授权码错误了哦，检查下吧"),
+
     ;
 
     private final String code;

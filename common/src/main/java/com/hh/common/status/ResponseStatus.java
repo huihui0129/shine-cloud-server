@@ -17,6 +17,8 @@ public enum ResponseStatus implements IEnum<String> {
 
     UNAUTHORIZED("200000", "你没有权限访问哦~"),
 
+    FEIGN_ERROR("300000", "远程调用失败~"),
+
     ERROR("900000", "服务器出错啦，请稍后重试~"),
 
     ;

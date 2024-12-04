@@ -5,6 +5,7 @@ import com.hh.common.context.ShineRequestContext;
 import com.hh.common.exception.BaseException;
 import com.hh.common.status.ResponseStatus;
 import com.hh.rabbitmq.constant.RabbitConstant;
+import com.hh.security.authorization.impl.AuthorityPrincipal;
 import com.hh.security.authorization.impl.ClientAuthorityPrincipal;
 import com.hh.security.entity.AuthorizationCode;
 import com.hh.security.entity.Client;
@@ -13,6 +14,7 @@ import com.hh.security.http.AuthorityStatus;
 import com.hh.security.mapper.AuthorizationCodeMapper;
 import com.hh.security.mapper.ClientMapper;
 import com.hh.security.password.PasswordEncoder;
+import com.hh.security.properties.SecurityProperties;
 import com.hh.security.response.AccessTokenResponse;
 import com.hh.security.response.AuthorizeCodeResponse;
 import com.hh.security.response.AuthorizeResponse;
@@ -22,6 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -49,6 +52,9 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
 
     @Resource(name = "secretEncoder")
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private SecurityProperties properties;
 
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
@@ -100,11 +106,33 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         if (passwordEncoder.matches(clientSecret, client.getClientSecret())) {
             throw new BaseException(AuthorityStatus.CLIENT_ID_MISMATCH);
         }
+        // 验证授权码
+        AuthorizationCode authorizationCode = authorizationCodeMapper.selectOne(
+                Wrappers.<AuthorizationCode>lambdaQuery()
+                        .eq(AuthorizationCode::getAuthorizationCode, code)
+                        .eq(AuthorizationCode::getClientId, client.getClientId())
+        );
+        // 错误的授权码
+        if (StringUtils.equals(authorizationCode.getAuthorizationCode(), code)) {
+            throw new BaseException(AuthorityStatus.INCORRECT_AUTHORIZATION_CODE);
+        }
         // 生成token
-        // TODO 待完善
         String token = ShineRequestContext.getToken();
+        AuthorityPrincipal user = TokenManager.parse(token, AuthorityPrincipal.class);
         ClientAuthorityPrincipal principal = new ClientAuthorityPrincipal();
-        TokenManager.generate(principal);
-        return null;
+        principal.setClientId(client.getClientId());
+        principal.setId(user.getId());
+        principal.setUsername(user.getUsername());
+        principal.setPassword(user.getPassword());
+        Integer expireIn = properties.getClientAccessTokenExpireSeconds();
+        String accessToken = TokenManager.generate(principal, expireIn);
+        AccessTokenResponse response = new AccessTokenResponse();
+        response.setAccessToken(accessToken);
+        response.setTokenType("Bearer");
+        response.setExpiresIn(expireIn);
+        response.setRefreshToken("???");
+        response.setScope(authorizationCode.getScope());
+        return response;
     }
+
 }

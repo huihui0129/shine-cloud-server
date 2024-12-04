@@ -1,4 +1,4 @@
-package com.hh.user.request;
+package com.hh.security.request;
 
 import lombok.Data;
 

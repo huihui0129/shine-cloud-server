@@ -2,6 +2,7 @@ package com.hh.feign.config;
 
 import feign.Feign;
 import feign.Request;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  * @description OpenfeignConfig
  */
 @Configuration
+@EnableFeignClients(basePackages = "com.hh.*.*")
 public class OpenfeignConfig {
 
     @Bean

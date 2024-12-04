@@ -45,6 +45,18 @@
             <groupId>com.hh</groupId>
             <artifactId>rabbitmq-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>redis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>user-api</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

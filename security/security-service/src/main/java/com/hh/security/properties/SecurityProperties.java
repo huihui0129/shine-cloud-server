@@ -14,4 +14,14 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "security")
 public class SecurityProperties {
 
+    /**
+     * 客户端AccessToken有效期
+     */
+    private Integer clientAccessTokenExpireSeconds = 3600;
+
+    /**
+     * 客户端刷新令牌有效期
+     */
+    private Integer clientRefreshTokenExpireSeconds = 7200;
+
 }

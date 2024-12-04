@@ -1,5 +1,6 @@
 package com.hh.security.token;
 
+import com.alibaba.fastjson2.JSON;
 import com.hh.common.exception.BaseException;
 import com.hh.security.authorization.Principal;
 import com.hh.security.authorization.impl.AuthorityPrincipal;
@@ -30,7 +31,7 @@ public class TokenManager {
     /**
      * token默认过期时间 分钟
      */
-    private static final Integer TOKEN_EXPIRE_MINUTES = 1440;
+    private static final Integer TOKEN_EXPIRE_SECONDS = 1440;
 
     private static final Map<Class<? extends Principal>, List<Field>> fieldCache = new HashMap<>();
 
@@ -48,16 +49,16 @@ public class TokenManager {
      * 根据私钥生成token
      *
      * @param principal
-     * @param expireMinutes
+     * @param expireSeconds
      * @param privateKey
      * @return
      */
-    public static String generate(Principal principal, Integer expireMinutes, PrivateKey privateKey) {
+    public static String generate(Principal principal, Integer expireSeconds, PrivateKey privateKey) {
         if (principal == null) {
             throw new BaseException(AuthorityStatus.ENC_DATA_NULL);
         }
-        if (expireMinutes == null) {
-            expireMinutes = TOKEN_EXPIRE_MINUTES;
+        if (expireSeconds == null) {
+            expireSeconds = TOKEN_EXPIRE_SECONDS;
         }
         // 使用预先缓存的字段信息
         List<Field> fieldList = fieldCache.get(principal.getClass());
@@ -65,15 +66,16 @@ public class TokenManager {
             throw new BaseException(AuthorityStatus.NO_CACHE_PRINCIPAL);
         }
         JwtBuilder jwtBuilder = Jwts.builder();
-        for (Field field : fieldList) {
-            field.setAccessible(true);
-            try {
-                jwtBuilder.claim(field.getName(), field.get(principal));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        LocalDateTime expire = LocalDateTime.now().plusMinutes(expireMinutes);
+//        for (Field field : fieldList) {
+//            field.setAccessible(true);
+//            try {
+//                jwtBuilder.claim(field.getName(), field.get(principal));
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        jwtBuilder.claim("user", JSON.toJSONString(principal));
+        LocalDateTime expire = LocalDateTime.now().plusSeconds(expireSeconds);
         jwtBuilder.setExpiration(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()));
         jwtBuilder.signWith(privateKey);
         return jwtBuilder.compact();
@@ -81,19 +83,29 @@ public class TokenManager {
 
     /**
      * 生成token
+     *
+     * @param principal
+     * @return
+     */
+    public static String generate(Principal principal, Integer expireSeconds) {
+        ClassPathResource classPathResource = new ClassPathResource("private_key.pem");
+        try (InputStream is = classPathResource.getInputStream()) {
+            byte[] bytes = is.readAllBytes();
+            PrivateKey privateKey = RsaUtils.getPrivateKey(bytes);
+            return TokenManager.generate(principal, expireSeconds, privateKey);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 生成token
+     *
      * @param principal
      * @return
      */
     public static String generate(Principal principal) {
-        try {
-            ClassPathResource classPathResource = new ClassPathResource("private_key.pem");
-            InputStream is = classPathResource.getInputStream();
-            byte[] bytes = is.readAllBytes();
-            PrivateKey privateKey = RsaUtils.getPrivateKey(bytes);
-            return TokenManager.generate(principal, TOKEN_EXPIRE_MINUTES, privateKey);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return generate(principal, TOKEN_EXPIRE_SECONDS);
     }
 
     /**
@@ -104,23 +116,26 @@ public class TokenManager {
      * @return
      * @throws Exception
      */
-    public static AuthorityPrincipal parse(String token, PublicKey publicKey) throws Exception {
+    public static <T extends Principal> T parse(PublicKey publicKey, String token, Class<T> principalClass) throws Exception {
         Claims body = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token).getBody();
-        Long id = body.get("id", Long.class);
-        String username = body.get("username", String.class);
-        AuthorityPrincipal principal = new AuthorityPrincipal();
-        principal.setId(id);
-        principal.setUsername(username);
+        T principal = principalClass.getDeclaredConstructor().newInstance();
+        // 从缓存中获取字段并赋值
+        for (Field field : fieldCache.get(principalClass)) {
+            field.setAccessible(true);
+            Object value = body.get(field.getName());
+            if (value != null) {
+                field.set(principal, value);
+            }
+        }
         return principal;
     }
 
-    public static AuthorityPrincipal parse(String token) {
-        try {
-            ClassPathResource classPathResource = new ClassPathResource("public_key.pem");
-            InputStream is = classPathResource.getInputStream();
+    public static <T extends Principal> T parse(String token, Class<T> principalClass) {
+        ClassPathResource classPathResource = new ClassPathResource("public_key.pem");
+        try (InputStream is = classPathResource.getInputStream()) {
             byte[] bytes = is.readAllBytes();
             PublicKey publicKey = RsaUtils.getPublicKey(bytes);
-            return TokenManager.parse(token, publicKey);
+            return TokenManager.parse(publicKey, token, principalClass);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

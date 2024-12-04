@@ -15,7 +15,6 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @RefreshScope
-@EnableFeignClients
 @ComponentScan(basePackages = { "com.hh" })
 public class UserApplication {
 

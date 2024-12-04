@@ -1,4 +1,4 @@
-package com.hh.user.response;
+package com.hh.security.response;
 
 import lombok.Data;
 

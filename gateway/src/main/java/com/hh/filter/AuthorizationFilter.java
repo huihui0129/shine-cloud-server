@@ -64,7 +64,7 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
             } else {
                 token = token.replace(SecurityConstant.HEADER_TOKEN_PREFIX, "");
                 try {
-                    AuthorityPrincipal principal = TokenManager.parse(token);
+                    AuthorityPrincipal principal = TokenManager.parse(token, AuthorityPrincipal.class);
                     // 查询redis是否有key
                     String redisToken = redisTemplate.opsForValue().get(SecurityConstant.TOKEN_REDIS_PREFIX + principal.getId());
                     // 没有就是过期
@@ -78,6 +78,7 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                         return getVoidMono(response, AuthorityStatus.OFFLINE);
                     }
                 } catch (Exception e) {
+                    log.error("解析Token异常：", e);
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
                     return getVoidMono(response, AuthorityStatus.EXPIRED_TOKEN);
                 }
@@ -91,7 +92,7 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                     // 尝试解析
                     try {
                         // 可以解析到就没事了，继续往下走
-                        TokenManager.parse(token);
+                        TokenManager.parse(token, AuthorityPrincipal.class);
                     } catch (Exception e) {
                         log.error("解析Token异常，但是这个路径是可以访问的");
                         // 删除这个头以免下游服务误解

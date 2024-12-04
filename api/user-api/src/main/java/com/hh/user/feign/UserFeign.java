@@ -1,9 +1,12 @@
 package com.hh.user.feign;
 
-import com.hh.feign.constant.FeignClientConstant;
 import com.hh.common.response.Result;
+import com.hh.feign.constant.FeignClientConstant;
+import com.hh.user.info.UserInfo;
+import com.hh.user.request.UserRequest;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * @author huihui
@@ -13,13 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(name = FeignClientConstant.USER_NAME, contextId = FeignClientConstant.USER_CONTENT_ID, path = "/user")
 public interface UserFeign {
 
-    @GetMapping("/getUser")
-    Result<String> getUser();
-
-    @GetMapping("/getException")
-    Result<String> getException();
-
-    @GetMapping("/testConnTime")
-    Result<String> getConnTime();
+    @PostMapping("/getUser")
+    Result<UserInfo> getUser(@RequestBody UserRequest request);
 
 }

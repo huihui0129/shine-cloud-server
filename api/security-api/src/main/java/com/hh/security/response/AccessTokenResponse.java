@@ -18,7 +18,7 @@ public class AccessTokenResponse {
     private String tokenType;
 
     @Schema(description = "过期时间")
-    private Long expiresIn;
+    private Integer expiresIn;
 
     @Schema(description = "刷新令牌")
     private String refreshToken;

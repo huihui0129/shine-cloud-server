@@ -27,7 +27,7 @@ public class SecurityContextInterceptor implements HandlerInterceptor {
             token = token.replace("Bearer ", "");
             if (StringUtils.isNotBlank(token)) {
                 try {
-                    AuthorityPrincipal principal = TokenManager.parse(token);
+                    AuthorityPrincipal principal = TokenManager.parse(token, AuthorityPrincipal.class);
                     SecurityContext context = new SecurityContext();
                     context.setPrincipal(principal);
                     SecurityContextHolder.setContext(context);
