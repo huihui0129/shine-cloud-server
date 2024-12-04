@@ -66,15 +66,14 @@ public class TokenManager {
             throw new BaseException(AuthorityStatus.NO_CACHE_PRINCIPAL);
         }
         JwtBuilder jwtBuilder = Jwts.builder();
-//        for (Field field : fieldList) {
-//            field.setAccessible(true);
-//            try {
-//                jwtBuilder.claim(field.getName(), field.get(principal));
-//            } catch (IllegalAccessException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        jwtBuilder.claim("user", JSON.toJSONString(principal));
+        for (Field field : fieldList) {
+            field.setAccessible(true);
+            try {
+                jwtBuilder.claim(field.getName(), field.get(principal));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         LocalDateTime expire = LocalDateTime.now().plusSeconds(expireSeconds);
         jwtBuilder.setExpiration(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()));
         jwtBuilder.signWith(privateKey);
@@ -122,7 +121,7 @@ public class TokenManager {
         // 从缓存中获取字段并赋值
         for (Field field : fieldCache.get(principalClass)) {
             field.setAccessible(true);
-            Object value = body.get(field.getName());
+            Object value = body.get(field.getName(), field.getType());
             if (value != null) {
                 field.set(principal, value);
             }
