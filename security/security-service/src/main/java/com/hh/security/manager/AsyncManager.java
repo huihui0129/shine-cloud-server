@@ -1,4 +1,4 @@
-package com.hh.user.manager;
+package com.hh.security.manager;
 
 import com.hh.async.contsant.AsyncConstant;
 import lombok.extern.slf4j.Slf4j;

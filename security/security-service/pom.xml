@@ -57,6 +57,10 @@
             <groupId>com.hh</groupId>
             <artifactId>user-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.hh</groupId>
+            <artifactId>async-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

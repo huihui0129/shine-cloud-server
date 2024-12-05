@@ -1,5 +1,6 @@
 package com.hh.async.config;
 
+import com.hh.async.contsant.AsyncConstant;
 import com.hh.async.properties.ThreadPoolProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +27,7 @@ public class AsyncAutoConfiguration {
         this.properties = properties;
     }
 
-    @Bean
+    @Bean(AsyncConstant.DEFAULT_ASYNC_EXECUTOR)
     public Executor asyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(properties.getCorePoolSize());

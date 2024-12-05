@@ -58,6 +58,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
 
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
+        log.info("获取授权码：{}", clientId);
         if (StringUtils.isBlank(clientId)) {
             throw new BaseException(ResponseStatus.PARAMS_ERROR, "是哪一个客户端呢？");
         }
@@ -93,11 +94,13 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
             }
         });
         rabbitTemplate.convertAndSend(RabbitConstant.Security.AUTHORIZATION_CODE_EXCHANGE, RabbitConstant.Security.AUTHORIZATION_CODE_KEY, authorizationCode.getId());
+        // 存储Token信息
         return response;
     }
 
     @Override
     public AccessTokenResponse token(String clientId, String clientSecret, String grantType, String code, String refreshToken) {
+        log.info("使用授权码获取令牌：{}", clientId);
         Client client = clientMapper.selectOne(Wrappers.<Client>lambdaQuery().eq(Client::getClientId, clientId));
         // 验证客户端
         if (!StringUtils.equals(clientId, client.getClientId())) {
