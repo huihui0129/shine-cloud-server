@@ -2,7 +2,7 @@ package com.hh.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.hh.mybatis.eneity.BaseEntity;
+import eneity.com.shine.mybatis.BaseEntity;
 import lombok.Data;
 
 @Data
