@@ -33,6 +33,8 @@ public enum AuthorityStatus implements IEnum<String> {
 
     AUTHORIZATION_CODE_EXPIRE("210010", "授权码过期了呢，快重新搞一个"),
 
+    AUTHORIZATION_DEFAULT_ACT("210011", "此grantType无需当前操作"),
+
     ;
 
     private final String code;

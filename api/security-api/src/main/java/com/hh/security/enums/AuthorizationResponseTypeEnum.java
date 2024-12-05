@@ -16,6 +16,8 @@ public enum AuthorizationResponseTypeEnum implements IEnum<String> {
 
     CODE("code", "授权码模式"),
 
+    REFRESH_TOKEN("refresh_token", "刷新令牌模式"),
+
     ;
 
     private String code;

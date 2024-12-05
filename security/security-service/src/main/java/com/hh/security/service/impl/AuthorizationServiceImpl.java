@@ -14,6 +14,7 @@ import com.hh.security.response.AuthorizeResponse;
 import com.hh.security.service.AuthorizationService;
 import com.hh.security.strategy.AuthorizationCodeStrategy;
 import com.hh.security.strategy.AuthorizationContext;
+import com.hh.security.strategy.RefreshTokenStrategy;
 import com.rabbitmq.client.Channel;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Resource
     private AuthorizationCodeStrategy authorizationCodeStrategy;
+
+    @Resource
+    private RefreshTokenStrategy refreshTokenStrategy;
 
     @Resource
     private AuthorizationCodeMapper authorizationCodeMapper;
@@ -91,14 +95,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
         AuthorizationResponseTypeEnum typeEnum = AuthorizationResponseTypeEnum.findByCode(responseType);
-        AuthorizationContext context;
-        switch (typeEnum) {
-            case CODE: // 授权码模式
-                context = new AuthorizationContext(authorizationCodeStrategy);
-                break;
-            default:
-                throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
-        }
+        AuthorizationContext context = this.findAuthorizationContext(typeEnum);
         return context.authorize(responseType, clientId, redirectUri, scope, state);
     }
 
@@ -110,16 +107,25 @@ public class AuthorizationServiceImpl implements AuthorizationService {
      */
     @Override
     public AccessTokenResponse token(AuthorizationTokenRequest request) {
-        // TODO 需要存入表然后查询授权类型
         AuthorizationResponseTypeEnum typeEnum = AuthorizationResponseTypeEnum.findByCode(request.getGrantType());
-        AuthorizationContext context;
+        AuthorizationContext context = this.findAuthorizationContext(typeEnum);
+        return context.token(request.getClientId(), request.getClientSecret(), request.getGrantType(), request.getCode(), request.getRefreshToken());
+    }
+
+    /**
+     * 获取对应的策略
+     *
+     * @param typeEnum
+     * @return
+     */
+    private AuthorizationContext findAuthorizationContext(AuthorizationResponseTypeEnum typeEnum) {
         switch (typeEnum) {
             case CODE: // 授权码模式
-                context = new AuthorizationContext(authorizationCodeStrategy);
-                break;
+                return new AuthorizationContext(authorizationCodeStrategy);
+            case REFRESH_TOKEN: // 刷新令牌模式
+                return new AuthorizationContext(refreshTokenStrategy);
             default:
                 throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
         }
-        return context.token(request.getClientId(), request.getClientSecret(), request.getGrantType(), request.getCode(), request.getRefreshToken());
     }
 }

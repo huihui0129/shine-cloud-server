@@ -1,5 +1,7 @@
 package com.hh.security.strategy;
 
+import com.hh.common.exception.BaseException;
+import com.hh.security.http.AuthorityStatus;
 import com.hh.security.response.AccessTokenResponse;
 import com.hh.security.response.AuthorizeResponse;
 
@@ -10,7 +12,9 @@ import com.hh.security.response.AuthorizeResponse;
  */
 public interface AuthorizationStrategy {
 
-    AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state);
+    default AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
+        throw new BaseException(AuthorityStatus.AUTHORIZATION_DEFAULT_ACT);
+    }
 
     AccessTokenResponse token(String clientId, String clientSecret, String grantType, String code, String refreshToken);
 

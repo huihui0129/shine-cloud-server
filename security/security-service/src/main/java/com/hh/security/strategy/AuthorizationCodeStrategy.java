@@ -144,7 +144,6 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         response.setExpiresIn(expireIn);
         response.setRefreshToken("???");
         response.setScope(authorizationCode.getScope());
-        ClientAuthorityPrincipal parse = TokenManager.parse(accessToken, ClientAuthorityPrincipal.class);
         // 授权码标记为已使用
         authorizationCodeMapper.update(
                 Wrappers.<AuthorizationCode>lambdaUpdate()
