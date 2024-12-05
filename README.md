@@ -74,7 +74,7 @@ mybatis-plus:
       logic-delete-value: 1
       logic-not-delete-value: 0
   mapper-locations: classpath:/mapper/*.xml
-  type-aliases-package: com.hh.user.entity
+  type-aliases-package: com.shine.user.entity
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: true

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.hh</groupId>
+    <groupId>com.shine</groupId>
     <artifactId>shine-cloud-server</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
@@ -144,72 +144,72 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>common</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>swagger-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>openfeign-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>mybatis-plus-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>redis-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>rabbitmq-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>log-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>file-component</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>user-api</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>article-api</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>security-api</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>async-starter</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>security-core</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.hh</groupId>
+                <groupId>com.shine</groupId>
                 <artifactId>security-web</artifactId>
                 <version>${shine-clooud.version}</version>
             </dependency>

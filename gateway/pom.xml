@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.hh</groupId>
+        <groupId>com.shine</groupId>
         <artifactId>shine-cloud-server</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -15,15 +15,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>security-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>log-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>redis-starter</artifactId>
         </dependency>
         <dependency>

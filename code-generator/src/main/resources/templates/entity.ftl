@@ -1,4 +1,4 @@
-package com.hh.user.entity;
+package com.shine.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;

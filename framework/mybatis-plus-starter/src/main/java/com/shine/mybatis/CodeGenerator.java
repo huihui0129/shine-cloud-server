@@ -21,7 +21,7 @@ public class CodeGenerator {
                             .outputDir("src/main/java"); // 输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.hh.user") // 设置父包名
+                    builder.parent("com.shine.user") // 设置父包名
                             .entity("entity") // 设置实体类包名
                             .mapper("mapper") // 设置 Mapper 接口包名
                             .service("service") // 设置 Service 接口包名

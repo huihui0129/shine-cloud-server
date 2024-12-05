@@ -26,7 +26,7 @@ public class CustomizeGenerator {
         Template template = cfg.getTemplate("entityInfo.java.ftl");
 
         // 生成代码
-        generateCode(template, "User", "com.hh.user.dto.info");
+        generateCode(template, "User", "com.shine.user.dto.info");
     }
 
     private static void generateCode(Template template, String entityName, String packageName) throws Exception {

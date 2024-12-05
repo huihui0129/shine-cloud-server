@@ -6,7 +6,7 @@ generator:
   # 包配置
   package-config:
     modal-name: security
-    base-package: com.hh
+    base-package: com.shine
   # 生成配置
   generator:
     database: hh_auth

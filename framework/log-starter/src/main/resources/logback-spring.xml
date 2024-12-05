@@ -53,7 +53,7 @@
         <appender-ref ref="StdoutAppender"/>
         <appender-ref ref="FileAppender"/>
     </root>
-    <logger name="com.hh" level="debug">
+    <logger name="com.shine" level="debug">
     </logger>
     <logger name="org.springframework.cloud.openfeign" level="debug">
     </logger>

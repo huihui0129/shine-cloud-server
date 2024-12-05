@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.hh</groupId>
+        <groupId>com.shine</groupId>
         <artifactId>api</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -13,19 +13,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>security-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>security-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hh</groupId>
+            <groupId>com.shine</groupId>
             <artifactId>swagger-starter</artifactId>
         </dependency>
     </dependencies>
