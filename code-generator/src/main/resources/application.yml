@@ -11,7 +11,7 @@ generator:
   generator:
     database: hh_auth
     table-name:
-      - oauth_authorization_code
+      - oauth_access_token
 #      - oauth_client
 #      - oauth_client_grant_type
 #      - oauth_client_redirect_uri
@@ -22,8 +22,10 @@ generator:
       - entity
       - info
       - mapper
+      - mapper_xml
       - service
       - service_impl
+      - controller
 
 
 

@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "${comment} Controller", description = "${comment} Controller")
 @RestController
 @RequestMapping("/${lowercaseClassName}")
-public interface ${className} {
+public class ${className} {
 
 }
