@@ -9,7 +9,7 @@ import lombok.Data;
  * @description AuthorityPrincipal
  */
 @Data
-public class AuthorityPrincipal implements Principal {
+public final class AuthorityPrincipal implements Principal {
 
     private Long id;
 

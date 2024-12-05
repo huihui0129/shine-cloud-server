@@ -27,6 +27,12 @@ public enum AuthorityStatus implements IEnum<String> {
 
     INCORRECT_AUTHORIZATION_CODE("210007", "授权码错误了哦，检查下吧"),
 
+    NO_AUTHORIZATION_CODE("210008", "请先获取授权码哦"),
+
+    AUTHORIZATION_CODE_USED("210009", "授权码被用了耶，重试一下吧"),
+
+    AUTHORIZATION_CODE_EXPIRE("210010", "授权码过期了呢，快重新搞一个"),
+
     ;
 
     private final String code;

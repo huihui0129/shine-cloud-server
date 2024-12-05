@@ -103,7 +103,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         if (!StringUtils.equals(clientId, client.getClientId())) {
             throw new BaseException(AuthorityStatus.NOT_EXISTS_CLIENT);
         }
-        if (passwordEncoder.matches(clientSecret, client.getClientSecret())) {
+        if (!passwordEncoder.matches(clientSecret, client.getClientSecret())) {
             throw new BaseException(AuthorityStatus.CLIENT_ID_MISMATCH);
         }
         // 验证授权码
@@ -112,8 +112,20 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
                         .eq(AuthorizationCode::getAuthorizationCode, code)
                         .eq(AuthorizationCode::getClientId, client.getClientId())
         );
+        // 不存在
+        if (authorizationCode == null) {
+            throw new BaseException(AuthorityStatus.NO_AUTHORIZATION_CODE);
+        }
+        // 已使用
+        if (AuthorizationCodeStatusEnum.S2.getCode().equals(authorizationCode.getStatus())) {
+            throw new BaseException(AuthorityStatus.AUTHORIZATION_CODE_USED);
+        }
+        // 已过期
+        if (AuthorizationCodeStatusEnum.S3.getCode().equals(authorizationCode.getStatus())) {
+            throw new BaseException(AuthorityStatus.AUTHORIZATION_CODE_EXPIRE);
+        }
         // 错误的授权码
-        if (StringUtils.equals(authorizationCode.getAuthorizationCode(), code)) {
+        if (!StringUtils.equals(authorizationCode.getAuthorizationCode(), code)) {
             throw new BaseException(AuthorityStatus.INCORRECT_AUTHORIZATION_CODE);
         }
         // 生成token
@@ -132,6 +144,13 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         response.setExpiresIn(expireIn);
         response.setRefreshToken("???");
         response.setScope(authorizationCode.getScope());
+        ClientAuthorityPrincipal parse = TokenManager.parse(accessToken, ClientAuthorityPrincipal.class);
+        // 授权码标记为已使用
+        authorizationCodeMapper.update(
+                Wrappers.<AuthorizationCode>lambdaUpdate()
+                        .eq(AuthorizationCode::getId, authorizationCode.getId())
+                        .set(AuthorizationCode::getStatus, AuthorizationCodeStatusEnum.S2.getCode())
+        );
         return response;
     }
 

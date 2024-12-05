@@ -73,7 +73,8 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                         return getVoidMono(response, AuthorityStatus.EXPIRED_TOKEN);
                     }
                     // 有不匹配就是下线
-                    if (StringUtils.equals(redisToken, token)) {
+                    if (!StringUtils.equals(redisToken, token)) {
+                        log.error("不匹配RedisToken，下线");
                         response.setStatusCode(HttpStatus.UNAUTHORIZED);
                         return getVoidMono(response, AuthorityStatus.OFFLINE);
                     }

@@ -9,8 +9,14 @@ import lombok.Data;
  * @description ClientAuthorityPrincipal
  */
 @Data
-public class ClientAuthorityPrincipal extends AuthorityPrincipal implements Principal {
+public final class ClientAuthorityPrincipal implements Principal {
 
     private String clientId;
+
+    private Long id;
+
+    private String username;
+
+    private String password;
 
 }
