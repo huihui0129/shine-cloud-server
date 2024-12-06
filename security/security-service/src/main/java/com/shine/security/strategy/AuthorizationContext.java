@@ -1,5 +1,6 @@
 package com.shine.security.strategy;
 
+import com.shine.security.request.AccessTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeResponse;
 import lombok.AllArgsConstructor;
@@ -14,14 +15,14 @@ import lombok.Data;
 @AllArgsConstructor
 public class AuthorizationContext {
 
-    private AuthorizationStrategy authorizationStrategy;
+    private AuthorizationStrategy<AccessTokenRequest> authorizationStrategy;
 
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
         return authorizationStrategy.authorize(responseType, clientId, redirectUri, scope, state);
     }
 
-    public AccessTokenResponse token(String clientId, String clientSecret, String grantType, String code, String refreshToken) {
-        return authorizationStrategy.token(clientId, clientSecret, grantType, code, refreshToken);
+    public AccessTokenResponse token(AccessTokenRequest request) {
+        return authorizationStrategy.token(request);
     }
 
 }

@@ -1,15 +1,12 @@
 package com.shine.security.strategy;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.shine.async.contsant.AsyncConstant;
 import com.shine.common.context.ShineRequestContext;
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.rabbitmq.constant.RabbitConstant;
-import com.shine.security.authorization.Principal;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.authorization.impl.ClientAuthorityPrincipal;
-import com.shine.security.context.SecurityContext;
 import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.entity.AccessToken;
 import com.shine.security.entity.AuthorizationCode;
@@ -21,6 +18,7 @@ import com.shine.security.mapper.AuthorizationCodeMapper;
 import com.shine.security.mapper.ClientMapper;
 import com.shine.security.password.PasswordEncoder;
 import com.shine.security.properties.SecurityProperties;
+import com.shine.security.request.AuthorizationCodeRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeCodeResponse;
 import com.shine.security.response.AuthorizeResponse;
@@ -42,7 +40,7 @@ import java.util.UUID;
  */
 @Slf4j
 @Component
-public class AuthorizationCodeStrategy implements AuthorizationStrategy {
+public class AuthorizationCodeStrategy implements AuthorizationStrategy<AuthorizationCodeRequest> {
 
     @Resource
     private ClientMapper clientMapper;
@@ -108,7 +106,11 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
     }
 
     @Override
-    public AccessTokenResponse token(String clientId, String clientSecret, String grantType, String code, String refreshToken) {
+    public AccessTokenResponse token(AuthorizationCodeRequest request) {
+        String clientId = request.getClientId();
+        String clientSecret = request.getClientSecret();
+        String code = request.getCode();
+        String grantType = request.getGrantType();
         log.info("使用授权码获取令牌：{}", clientId);
         Client client = clientMapper.selectOne(Wrappers.<Client>lambdaQuery().eq(Client::getClientId, clientId));
         // 验证客户端
@@ -158,7 +160,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         // 客户端刷新令牌过期时间
         Integer refreshExpireIn = properties.getClientRefreshTokenExpireSeconds();
         String accessToken = TokenManager.generate(principal, expireIn);
-        refreshToken = TokenManager.generate(principal, refreshExpireIn);
+        String refreshToken = TokenManager.generate(principal, refreshExpireIn);
         AccessTokenResponse response = new AccessTokenResponse();
         response.setAccessToken(accessToken);
         response.setTokenType("Bearer");

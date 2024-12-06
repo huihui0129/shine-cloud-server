@@ -1,6 +1,7 @@
 package com.shine.security.controller;
 
 import com.shine.common.response.Result;
+import com.shine.security.request.AuthorizationCodeRequest;
 import com.shine.security.request.AuthorizationTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeResponse;
@@ -39,7 +40,7 @@ public class AuthorizationController {
 
     @Operation(summary = "获取访问令牌")
     @PostMapping("/token")
-    public Result<AccessTokenResponse> token(@RequestBody AuthorizationTokenRequest request) {
+    public Result<AccessTokenResponse> token(@RequestBody AuthorizationCodeRequest request) {
         return Result.success(authorizationService.token(request));
     }
 

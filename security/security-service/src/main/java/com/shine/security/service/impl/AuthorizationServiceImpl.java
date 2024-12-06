@@ -8,6 +8,7 @@ import com.shine.security.enums.AuthorizationCodeStatusEnum;
 import com.shine.security.enums.AuthorizationResponseTypeEnum;
 import com.shine.security.http.AuthorityStatus;
 import com.shine.security.mapper.AuthorizationCodeMapper;
+import com.shine.security.request.AccessTokenRequest;
 import com.shine.security.request.AuthorizationTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeResponse;
@@ -106,10 +107,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
      * @return
      */
     @Override
-    public AccessTokenResponse token(AuthorizationTokenRequest request) {
+    public AccessTokenResponse token(AccessTokenRequest request) {
         AuthorizationResponseTypeEnum typeEnum = AuthorizationResponseTypeEnum.findByCode(request.getGrantType());
         AuthorizationContext context = this.findAuthorizationContext(typeEnum);
-        return context.token(request.getClientId(), request.getClientSecret(), request.getGrantType(), request.getCode(), request.getRefreshToken());
+        return context.token(request);
     }
 
     /**

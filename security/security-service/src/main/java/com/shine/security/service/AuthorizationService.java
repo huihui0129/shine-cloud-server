@@ -1,6 +1,6 @@
 package com.shine.security.service;
 
-import com.shine.security.request.AuthorizationTokenRequest;
+import com.shine.security.request.AccessTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeResponse;
 
@@ -29,6 +29,6 @@ public interface AuthorizationService {
      * @param request
      * @return
      */
-    AccessTokenResponse token(AuthorizationTokenRequest request);
+    AccessTokenResponse token(AccessTokenRequest request);
 
 }

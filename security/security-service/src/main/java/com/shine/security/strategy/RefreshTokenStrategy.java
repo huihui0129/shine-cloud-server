@@ -1,5 +1,6 @@
 package com.shine.security.strategy;
 
+import com.shine.security.request.RefreshTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class RefreshTokenStrategy implements AuthorizationStrategy {
+public class RefreshTokenStrategy implements AuthorizationStrategy<RefreshTokenRequest> {
 
     @Override
-    public AccessTokenResponse token(String clientId, String clientSecret, String grantType, String code, String refreshToken) {
+    public AccessTokenResponse token(RefreshTokenRequest request) {
         return null;
     }
 
