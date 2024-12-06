@@ -35,6 +35,8 @@ public enum AuthorityStatus implements IEnum<String> {
 
     AUTHORIZATION_DEFAULT_ACT("210011", "此grantType无需当前操作"),
 
+    CREATE_USER_MISMATCH("210012", "不是你获取的用什么用"),
+
     ;
 
     private final String code;

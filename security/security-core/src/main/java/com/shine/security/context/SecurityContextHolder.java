@@ -9,7 +9,7 @@ public class SecurityContextHolder {
 
     private static final ThreadLocal<SecurityContext> contextHolder = new ThreadLocal<>();
 
-    private static SecurityContext getContext() {
+    public static SecurityContext getContext() {
         return contextHolder.get();
     }
 

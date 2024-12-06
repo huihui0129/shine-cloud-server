@@ -1,16 +1,22 @@
 package com.shine.security.strategy;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.shine.async.contsant.AsyncConstant;
 import com.shine.common.context.ShineRequestContext;
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.rabbitmq.constant.RabbitConstant;
+import com.shine.security.authorization.Principal;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.authorization.impl.ClientAuthorityPrincipal;
+import com.shine.security.context.SecurityContext;
+import com.shine.security.context.SecurityContextHolder;
+import com.shine.security.entity.AccessToken;
 import com.shine.security.entity.AuthorizationCode;
 import com.shine.security.entity.Client;
 import com.shine.security.enums.AuthorizationCodeStatusEnum;
 import com.shine.security.http.AuthorityStatus;
+import com.shine.security.manager.AsyncManager;
 import com.shine.security.mapper.AuthorizationCodeMapper;
 import com.shine.security.mapper.ClientMapper;
 import com.shine.security.password.PasswordEncoder;
@@ -53,6 +59,9 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
     @Autowired
     private SecurityProperties properties;
 
+    @Resource
+    private AsyncManager asyncManager;
+
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
         log.info("获取授权码：{}", clientId);
@@ -73,6 +82,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         response.setScope(scope);
         response.setState(state);
         // 保存授权码到服务器
+        Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
         AuthorizationCode authorizationCode = new AuthorizationCode();
         authorizationCode.setClientId(clientId);
         authorizationCode.setAuthorizationCode(code);
@@ -81,6 +91,8 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         LocalDateTime expireTime = LocalDateTime.now().plusSeconds(client.getAccessTokenLefetime());
         authorizationCode.setExpireAt(expireTime);
         authorizationCode.setStatus(AuthorizationCodeStatusEnum.S1.getCode());
+        authorizationCode.setCreateUser(userId);
+        authorizationCode.setUpdateUser(userId);
         authorizationCodeMapper.insert(authorizationCode);
         // 发送一条消息给rabbitmq
         rabbitTemplate.setConfirmCallback((data, ack, cause) -> {
@@ -128,6 +140,11 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         if (!StringUtils.equals(authorizationCode.getAuthorizationCode(), code)) {
             throw new BaseException(AuthorityStatus.INCORRECT_AUTHORIZATION_CODE);
         }
+        // 非本人获取
+        Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
+        if (authorizationCode.getCreateUser().equals(userId)) {
+            throw new BaseException(AuthorityStatus.CREATE_USER_MISMATCH);
+        }
         // 生成token
         String token = ShineRequestContext.getToken();
         AuthorityPrincipal user = TokenManager.parse(token, AuthorityPrincipal.class);
@@ -136,13 +153,17 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
         principal.setId(user.getId());
         principal.setUsername(user.getUsername());
         principal.setPassword(user.getPassword());
+        // 客户端访问令牌过期时间
         Integer expireIn = properties.getClientAccessTokenExpireSeconds();
+        // 客户端刷新令牌过期时间
+        Integer refreshExpireIn = properties.getClientRefreshTokenExpireSeconds();
         String accessToken = TokenManager.generate(principal, expireIn);
+        refreshToken = TokenManager.generate(principal, refreshExpireIn);
         AccessTokenResponse response = new AccessTokenResponse();
         response.setAccessToken(accessToken);
         response.setTokenType("Bearer");
         response.setExpiresIn(expireIn);
-        response.setRefreshToken("???");
+        response.setRefreshToken(refreshToken);
         response.setScope(authorizationCode.getScope());
         // 授权码标记为已使用
         authorizationCodeMapper.update(
@@ -150,6 +171,22 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy {
                         .eq(AuthorizationCode::getId, authorizationCode.getId())
                         .set(AuthorizationCode::getStatus, AuthorizationCodeStatusEnum.S2.getCode())
         );
+        // 记录token
+        AccessToken saveToken = new AccessToken();
+        saveToken.setClientId(clientId);
+        saveToken.setAccessToken(accessToken);
+        saveToken.setRefreshToken(refreshToken);
+        saveToken.setUserId(userId);
+        saveToken.setGrantType(grantType);
+        saveToken.setScope(authorizationCode.getScope());
+        saveToken.setTokenType("Bearer");
+        saveToken.setRedirectUri(authorizationCode.getRedirectUri());
+        saveToken.setAccessTokenExpireTime(LocalDateTime.now().plusSeconds(expireIn));
+        saveToken.setRefreshTokenExpireTime(LocalDateTime.now().plusSeconds(refreshExpireIn));
+        saveToken.setCreateUser(userId);
+        saveToken.setUpdateUser(userId);
+        saveToken.setRemark("使用授权码生成的令牌");
+        asyncManager.saveToken(saveToken);
         return response;
     }
 

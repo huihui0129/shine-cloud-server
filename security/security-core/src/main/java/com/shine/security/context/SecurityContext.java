@@ -9,8 +9,8 @@ import lombok.Data;
  * @description SecurityContext
  */
 @Data
-public class SecurityContext {
+public class SecurityContext<T extends Principal> {
 
-    private Principal principal;
+    private T principal;
 
 }

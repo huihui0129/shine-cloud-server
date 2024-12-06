@@ -1,6 +1,9 @@
 package com.shine.security.manager;
 
 import com.shine.async.contsant.AsyncConstant;
+import com.shine.security.entity.AccessToken;
+import com.shine.security.service.AccessTokenService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -14,15 +17,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class AsyncManager {
 
+    @Resource
+    private AccessTokenService accessTokenService;
+
     @Async(AsyncConstant.DEFAULT_ASYNC_EXECUTOR)
-    public void asyncTask() {
-        log.info("执行异步任务");
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        log.info("异步任务执行成功");
+    public void saveToken(AccessToken token) {
+        log.info("异步保存授权码");
+        accessTokenService.save(token);
+        log.info("保存成功");
     }
 
 }
