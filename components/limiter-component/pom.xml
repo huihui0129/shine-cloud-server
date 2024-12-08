@@ -5,26 +5,24 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.shine</groupId>
-        <artifactId>framework</artifactId>
+        <artifactId>components</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>redis-starter</artifactId>
-    <description>redis</description>
+    <artifactId>limiter-component</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <optional>true</optional>
+            <artifactId>spring-aop</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
+            <groupId>com.shine</groupId>
+            <artifactId>redis-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
         </dependency>
     </dependencies>
 

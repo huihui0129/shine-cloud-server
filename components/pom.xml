@@ -16,6 +16,7 @@
     <modules>
         <module>file-component</module>
         <module>lock-component</module>
+        <module>limiter-component</module>
     </modules>
 
 </project>
