@@ -15,6 +15,7 @@
 
     <modules>
         <module>file-component</module>
+        <module>lock-component</module>
     </modules>
 
 </project>
