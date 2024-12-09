@@ -1,6 +1,8 @@
 package com.shine.security.token;
 
+import com.shine.common.exception.AuthException;
 import com.shine.common.exception.BaseException;
+import com.shine.common.status.ResponseStatus;
 import com.shine.security.authorization.Principal;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.authorization.impl.ClientAuthorityPrincipal;
@@ -30,7 +32,7 @@ public class TokenManager {
     /**
      * token默认过期时间 分钟
      */
-    private static final Integer TOKEN_EXPIRE_SECONDS = 1440;
+    private static final Integer TOKEN_EXPIRE_SECONDS = 60;
 
     private static final Map<Class<? extends Principal>, List<Field>> fieldCache = new HashMap<>();
 
@@ -135,7 +137,7 @@ public class TokenManager {
             PublicKey publicKey = RsaUtils.getPublicKey(bytes);
             return TokenManager.parse(publicKey, token, principalClass);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new AuthException(ResponseStatus.UNAUTHORIZED);
         }
     }
 

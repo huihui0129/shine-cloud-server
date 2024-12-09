@@ -4,6 +4,7 @@ import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
 import com.shine.security.response.CaptchaResponse;
 import com.shine.security.response.UserLoginResponse;
+import com.shine.user.info.UserInfo;
 
 /**
  * @author huihui
@@ -33,5 +34,12 @@ public interface LoginService {
      * @return
      */
     UserLoginResponse login(LoginRequest request);
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    UserInfo getUserInfo();
 
 }

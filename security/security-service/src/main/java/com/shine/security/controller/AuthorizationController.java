@@ -2,7 +2,6 @@ package com.shine.security.controller;
 
 import com.shine.common.response.Result;
 import com.shine.security.request.AuthorizationCodeRequest;
-import com.shine.security.request.AuthorizationTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeResponse;
 import com.shine.security.service.AuthorizationService;

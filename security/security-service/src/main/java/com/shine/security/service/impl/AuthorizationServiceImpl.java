@@ -9,7 +9,6 @@ import com.shine.security.enums.AuthorizationResponseTypeEnum;
 import com.shine.security.http.AuthorityStatus;
 import com.shine.security.mapper.AuthorizationCodeMapper;
 import com.shine.security.request.AccessTokenRequest;
-import com.shine.security.request.AuthorizationTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeResponse;
 import com.shine.security.service.AuthorizationService;

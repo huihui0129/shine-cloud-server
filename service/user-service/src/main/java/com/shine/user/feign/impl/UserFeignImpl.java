@@ -10,6 +10,7 @@ import com.shine.user.request.UserRequest;
 import com.shine.user.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,8 @@ public class UserFeignImpl implements UserFeign {
     public Result<UserInfo> getUser(UserRequest request) {
         User user = userService.getOne(
                 Wrappers.<User>lambdaQuery()
-                        .eq(User::getUsername, request.getUsername())
+                        .eq(request.getUserId() != null, User::getId, request.getUserId())
+                        .eq(StringUtils.isNotBlank(request.getUsername()), User::getUsername, request.getUsername())
         );
         if (user == null) {
             return Result.error();

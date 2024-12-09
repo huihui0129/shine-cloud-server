@@ -1,9 +1,11 @@
 package com.shine.common.handler;
 
+import com.shine.common.exception.AuthException;
 import com.shine.common.exception.BaseException;
 import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,6 +17,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    @ExceptionHandler(value = AuthException.class)
+    @org.springframework.web.bind.annotation.ResponseStatus(code = HttpStatus.UNAUTHORIZED, value = HttpStatus.UNAUTHORIZED)
+    public Result<?> authExceptionHandler(AuthException e) {
+        log.error("权限处理异常：[{}]|[{}]|[{}]", e.getEnum().getCode(), e.getEnum().getName(), e.getMessage());
+        e.printStackTrace();
+        return Result.error(e.getEnum().getCode(), e.getMessage());
+    }
 
     /**
      * 统一处理未知错误

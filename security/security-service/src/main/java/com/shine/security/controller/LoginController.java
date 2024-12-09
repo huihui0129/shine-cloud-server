@@ -6,6 +6,7 @@ import com.shine.security.request.LoginRequest;
 import com.shine.security.response.CaptchaResponse;
 import com.shine.security.response.UserLoginResponse;
 import com.shine.security.service.LoginService;
+import com.shine.user.info.UserInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -45,6 +46,14 @@ public class LoginController {
     public Result<UserLoginResponse> login(@RequestBody LoginRequest request) {
         UserLoginResponse response = loginService.login(request);
         return Result.success(response);
+    }
+
+    @Operation(summary = "获取用户信息")
+    @GetMapping("/user/getUserInfo")
+    public Result<UserInfo> getUserInfo() {
+        UserInfo userInfo = loginService.getUserInfo();
+        userInfo.setPassword("你想知道个屁");
+        return Result.success(userInfo);
     }
 
 }

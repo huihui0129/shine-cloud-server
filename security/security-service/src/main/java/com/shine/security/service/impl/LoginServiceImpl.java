@@ -6,6 +6,7 @@ import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.constant.SecurityConstant;
+import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.password.PasswordEncoder;
 import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
@@ -124,16 +125,35 @@ public class LoginServiceImpl implements LoginService {
         AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setId(user.getId());
         principal.setUsername(user.getUsername());
-        String token = TokenManager.generate(principal);
+        // 一天过期
+        int expire = 86400;
+        String token = TokenManager.generate(principal, expire);
         UserLoginResponse response = new UserLoginResponse();
         response.setId(user.getId());
         response.setUsername(user.getUsername());
         response.setToken(token);
         response.setUrl(user.getHeadImage());
         // 存入redis
-        redisTemplate.opsForValue().set(SecurityConstant.TOKEN_REDIS_PREFIX + user.getId(), token, SecurityConstant.AUTH_EXPIRE_TIME_SECONDS, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(SecurityConstant.TOKEN_REDIS_PREFIX + user.getId(), token, expire, TimeUnit.SECONDS);
         // TODO 后面可能存入用户信息
         return response;
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return
+     */
+    @Override
+    public UserInfo getUserInfo() {
+        Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
+        UserRequest userRequest = new UserRequest();
+        userRequest.setUserId(userId);
+        Result<UserInfo> user = userFeign.getUser(userRequest);
+        if (!user.getSuccess()) {
+            throw new BaseException(ResponseStatus.FEIGN_ERROR, "获取用户信息失败哦");
+        }
+        return user.getData();
     }
 
 }

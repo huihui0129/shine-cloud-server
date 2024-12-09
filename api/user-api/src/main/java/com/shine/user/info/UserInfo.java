@@ -17,6 +17,9 @@ public class UserInfo {
     @Schema(description = "密码")
     private String password;
 
+    @Schema(description = "昵称")
+    private String nickName;
+
     @Schema(description = "头像")
     private String headImage;
 

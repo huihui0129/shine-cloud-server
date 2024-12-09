@@ -30,6 +30,12 @@ public class User extends BaseEntity implements Principal, Serializable {
     private String password;
 
     /**
+     * 昵称
+     */
+    @TableField(value = "nick_name")
+    private String nickName;
+
+    /**
      * 头像
      */
     @TableField(value = "head_image")
