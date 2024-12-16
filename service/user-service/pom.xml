@@ -19,10 +19,6 @@
         </dependency>
         <dependency>
             <groupId>com.shine</groupId>
-            <artifactId>mybatis-plus-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.shine</groupId>
             <artifactId>log-starter</artifactId>
         </dependency>
         <dependency>

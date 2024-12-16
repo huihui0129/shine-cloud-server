@@ -5,6 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import eneity.com.shine.mybatis.BaseEntity;
 import lombok.Data;
 
+<#assign hasDate = columnList?filter(item -> item.javaType?contains("LocalDateTime"))>
+<#if (hasDate?size > 0)>
+    import java.time.LocalDateTime;
+</#if>
+
 @Data
 @TableName(value = "${tableName}")
 public class ${className} extends BaseEntity {

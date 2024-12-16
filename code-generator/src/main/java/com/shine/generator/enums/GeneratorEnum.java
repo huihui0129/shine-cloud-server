@@ -9,6 +9,7 @@ public enum GeneratorEnum {
 
     ENTITY,
     INFO,
+    PAGE_REQUEST,
     MAPPER,
     MAPPER_XML,
     SERVICE,

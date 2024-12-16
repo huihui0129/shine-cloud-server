@@ -1,10 +1,12 @@
 package com.shine.user.service.impl;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.shine.mybatis.utils.PageUtil;
 import com.shine.user.entity.User;
 import com.shine.user.info.UserInfo;
 import com.shine.user.mapper.UserMapper;
+import com.shine.user.request.UserPageRequest;
 import com.shine.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,19 +21,18 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Override
+    public IPage<UserInfo> pageUser(UserPageRequest request) {
+        return this.baseMapper.pageUser(PageUtil.buildPage(request), request);
+    }
+
+    @Override
     public UserInfo getUserById(Long id) {
-        if (id == null) {
-            return null;
-        }
-        User user = this.getOne(
-                Wrappers.<User>lambdaQuery()
-                        .eq(User::getId, id)
-        );
-        UserInfo userInfo = new UserInfo();
-        userInfo.setId(user.getId());
-        userInfo.setUsername(user.getUsername());
-        userInfo.setDeleted(user.getDeleted());
-        return userInfo;
+        return this.baseMapper.getById(id);
+    }
+
+    @Override
+    public Boolean deleteById(Long id) {
+        return this.removeById(id);
     }
 
 }

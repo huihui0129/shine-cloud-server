@@ -1,6 +1,7 @@
 package com.shine.generator.properties;
 
 import com.shine.generator.enums.GeneratorEnum;
+import com.shine.generator.enums.MethodEnum;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -47,6 +48,7 @@ public class GeneratorProperties {
         private List<String> tableName;
         private String tablePrefix;
         private List<GeneratorEnum> code;
+        private List<MethodEnum> methods;
 
     }
 

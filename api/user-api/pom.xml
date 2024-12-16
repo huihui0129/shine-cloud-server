@@ -25,6 +25,10 @@
             <groupId>com.shine</groupId>
             <artifactId>swagger-starter</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.shine</groupId>
+            <artifactId>mybatis-plus-starter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

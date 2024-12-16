@@ -1,7 +1,10 @@
 package com.shine.user.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shine.common.response.Result;
+import com.shine.user.entity.User;
 import com.shine.user.info.UserInfo;
+import com.shine.user.request.UserPageRequest;
 import com.shine.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,11 +29,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getUserById/{id}")
-    @Operation(summary = "根据ID获取用户")
-    public Result<UserInfo> getUserById(@PathVariable("id") Long id) {
+    @GetMapping("/page")
+    @Operation(summary = "用户分页查询")
+    private Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
+        IPage<UserInfo> userPage = userService.pageUser(request);
+        return Result.success(userPage);
+    }
+
+    @GetMapping("/get/{id}")
+    @Operation(summary = "用户详情查询")
+    private Result<UserInfo> getUserById(@PathVariable("id") Long id) {
         UserInfo user = userService.getUserById(id);
         return Result.success(user);
+    }
+
+    @GetMapping("/delete/{id}")
+    @Operation(summary = "根据ID删除用户")
+    private Result<Boolean> deleteUserById(@PathVariable("id") Long id) {
+        Boolean flag = userService.deleteById(id);
+        return Result.success(flag);
     }
 
 }

@@ -1,18 +1,24 @@
 package com.shine.generator.handler.impl;
 
 import com.shine.generator.GeneratorApplication;
+import com.shine.generator.entity.Column;
 import com.shine.generator.entity.Table;
 import com.shine.generator.enums.GeneratorEnum;
 import com.shine.generator.handler.AbstractGeneratorHandler;
 import com.shine.generator.handler.GeneratorHandler;
+import com.shine.generator.model.MethodModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author huihui
@@ -33,6 +39,29 @@ public class MapperXmlHandler extends AbstractGeneratorHandler implements Genera
     @Override
     public void handleTable(Table table) {
         table.setClassName(table.getClassName() + "Mapper");
+        List<Column> columnList = table.getColumnList();
+        columnList = columnList.stream().filter(item -> {
+            if (StringUtils.equals(item.getColumnName(), "id")) {
+                return false;
+            }
+            if (StringUtils.equals(item.getColumnName(), "create_time")) {
+                return false;
+            }
+            if (StringUtils.equals(item.getColumnName(), "update_time")) {
+                return false;
+            }
+            if (StringUtils.equals(item.getColumnName(), "create_user")) {
+                return false;
+            }
+            if (StringUtils.equals(item.getColumnName(), "update_user")) {
+                return false;
+            }
+            if (StringUtils.equals(item.getColumnName(), "deleted")) {
+                return false;
+            }
+            return true;
+        }).collect(Collectors.toList());
+        table.setColumnList(columnList);
     }
 
     @Override
@@ -54,7 +83,13 @@ public class MapperXmlHandler extends AbstractGeneratorHandler implements Genera
             }
         }
         try (FileWriter writer = new FileWriter(output)) {
-            template.process(table, writer);
+            // 方法
+            MethodModel model = new MethodModel();
+            BeanUtils.copyProperties(table, model);
+            model.setInfoName(table.getEntityName() + "Info");
+            model.setMethodList(getProperties().getGenerator().getMethods());
+            model.setDatasourceName(getProperties().getGenerator().getDatabase());
+            template.process(model, writer);
         }
         log.info("生成{}MapperXml成功", table.getEntityName());
     }
