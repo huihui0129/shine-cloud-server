@@ -1,0 +1,30 @@
+spring:
+  data:
+    redis:
+      # Redis 客户端，默认为 Lettuce，可选值：lettuce 或 jedis
+      client-type: lettuce
+      # Redis 服务器地址
+      host: 127.0.0.1
+      # Redis 端口
+      port: 6379
+      # Redis 用户名（如果需要）
+      #      username: root
+      # Redis 密码
+      #      password:
+      # Redis 数据库索引
+      database: 0
+      # 连接超时时间
+      timeout: 60000ms
+      # 连接超时时间
+      connect-timeout: 10000ms
+      lettuce:
+        pool:
+          enabled: true
+          # 最大连接数
+          max-active: 10
+          # 最大空闲连接数
+          max-idle: 5
+          # 最小空闲连接数
+          min-idle: 1
+          # 最大等待时间
+          max-wait: 10000ms

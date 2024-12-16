@@ -1,0 +1,64 @@
+server:
+  port: 9000
+hh:
+  gateway:
+    authorizationExcludePath:
+      - /auth/user/login
+      - /auth/captcha/getCaptcha
+      - /testApi/testAsyncTask
+      - /oauth/authorize
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+nacos:
+  server-addr: 127.0.0.1:8848
+  username: nacos
+  password: nacos
+  namespace: 7a315776-c8ed-4a70-be9c-2d60debde2e8
+  group: DEFAULT_GROUP
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos.server-addr}
+        username: ${nacos.username}
+        password: ${nacos.password}
+        namespace: ${nacos.namespace}
+        group: ${nacos.group}
+      config:
+        server-addr: ${nacos.server-addr}
+        username: ${nacos.username}
+        password: ${nacos.password}
+        namespace: ${nacos.namespace}
+        group: ${nacos.group}
+        prefix: ${spring.application.name}
+        file-extension: yml
+    gateway:
+#      discovery:
+#        locator:
+#          enabled: true
+      routes:
+        - id: security
+          uri: lb://security-service
+          predicates:
+            - Path=/security/**
+          filters:
+            - StripPrefix=1
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+          filters:
+            - StripPrefix=1
+        - id: article
+          uri: lb://article-service
+          predicates:
+            - Path=/article/**
+          filters:
+            - StripPrefix=1
+
