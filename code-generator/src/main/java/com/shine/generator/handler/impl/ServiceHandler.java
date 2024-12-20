@@ -50,7 +50,7 @@ public class ServiceHandler extends AbstractGeneratorHandler implements Generato
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {
-                System.out.println("成功创建目录：" + parentDir.getAbsolutePath());
+                log.info("成功创建目录：{}", parentDir.getAbsolutePath());
             } else {
                 throw new IOException("无法创建目录：" + parentDir.getAbsolutePath());
             }

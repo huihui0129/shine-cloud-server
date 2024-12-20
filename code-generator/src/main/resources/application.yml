@@ -12,8 +12,8 @@ generator:
     database: hh_user
     table-name:
       - menu
-#      - oauth_client
-#      - oauth_client_grant_type
+      - user
+      - role
 #      - oauth_client_redirect_uri
 #      - oauth_client_scope
 #    table-prefix: oauth_
