@@ -5,9 +5,11 @@ import com.shine.generator.entity.Table;
 import com.shine.generator.enums.GeneratorEnum;
 import com.shine.generator.handler.AbstractGeneratorHandler;
 import com.shine.generator.handler.GeneratorHandler;
+import com.shine.generator.model.MethodModel;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -54,7 +56,12 @@ public class ServiceHandler extends AbstractGeneratorHandler implements Generato
             }
         }
         try (FileWriter writer = new FileWriter(output)) {
-            template.process(table, writer);
+            // 方法
+            MethodModel model = new MethodModel();
+            BeanUtils.copyProperties(table, model);
+            model.setInfoName(table.getEntityName() + "Info");
+            model.setMethodList(getProperties().getGenerator().getMethods());
+            template.process(model, writer);
         }
         log.info("生成{}Service成功", table.getEntityName());
     }

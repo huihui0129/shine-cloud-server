@@ -29,7 +29,7 @@ public interface ${className} extends BaseMapper<${entityName}> {
      * @param request
      * @return
      */
-    IPage<${infoName}> pageUser(Page<${entityName}> iPage, @Param("request") ${entityName}PageRequest request);
+    IPage<${infoName}> page${entityName}(Page<${entityName}> iPage, @Param("request") ${entityName}PageRequest request);
 </#if>
 
 <#assign hasGet = methodList?filter(item -> item?string == "GET")>
