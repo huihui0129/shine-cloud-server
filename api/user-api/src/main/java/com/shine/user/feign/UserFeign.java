@@ -19,4 +19,7 @@ public interface UserFeign {
     @PostMapping("/getUser")
     Result<UserInfo> getUser(@RequestBody UserRequest request);
 
+    @PostMapping("/save")
+    Result<Boolean> saveUser(UserInfo userInfo);
+
 }

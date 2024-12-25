@@ -6,14 +6,17 @@ import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.constant.SecurityConstant;
+import com.shine.security.context.SecurityContext;
 import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.password.PasswordEncoder;
 import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
+import com.shine.security.request.UserRegisterRequest;
 import com.shine.security.response.CaptchaResponse;
 import com.shine.security.response.UserLoginResponse;
 import com.shine.security.service.LoginService;
 import com.shine.security.token.TokenManager;
+import com.shine.user.enums.UserStatusEnum;
 import com.shine.user.feign.UserFeign;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserRequest;
@@ -156,4 +159,26 @@ public class LoginServiceImpl implements LoginService {
         return user.getData();
     }
 
+    /**
+     * 用户注册
+     *
+     * @param request
+     * @return
+     */
+    @Override
+    public Boolean register(UserRegisterRequest request) {
+        Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
+        log.info("用户注册：{}", userId);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(request.getUsername());
+        userInfo.setPassword(passwordEncoder.encode(request.getPassword()));
+        userInfo.setNickName(request.getNickName());
+        userInfo.setHeadImage(request.getHeadImage());
+        userInfo.setStatus(UserStatusEnum.S1.getCode());
+        userInfo.setCreateUser(userId);
+        userInfo.setUpdateUser(userId);
+        userInfo.setRemark(request.getRemark());
+        Result<Boolean> result = userFeign.saveUser(userInfo);
+        return result.getData();
+    }
 }

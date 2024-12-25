@@ -1,6 +1,7 @@
 package com.shine.user.feign.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.shine.common.response.Result;
 import com.shine.user.entity.User;
@@ -40,6 +41,15 @@ public class UserFeignImpl implements UserFeign {
         UserInfo userInfo = new UserInfo();
         BeanUtil.copyProperties(user, userInfo, true);
         return Result.success(userInfo);
+    }
+
+    @Override
+    public Result<Boolean> saveUser(UserInfo userInfo) {
+        log.info("用户新增：{}", JSON.toJSONString(userInfo));
+        User user = new User();
+        BeanUtil.copyProperties(userInfo, user, true);
+        boolean flag = userService.save(user);
+        return Result.success(flag);
     }
 
 }

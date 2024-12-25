@@ -68,7 +68,7 @@ public class RedisLimitAspect {
         List<String> keys = new ArrayList<>();
         keys.add(redisKey);
         Long currentNum = stringRedisTemplate.execute(redisScript, keys, String.valueOf(frequency), String.valueOf(millisecondsOfConvert));
-        if (currentNum.equals(0L)) {
+        if (currentNum != null && currentNum == 0) {
             log.warn("当前访问次数已达上限：{}，被限流", frequency);
             throw new RuntimeException(message);
         }

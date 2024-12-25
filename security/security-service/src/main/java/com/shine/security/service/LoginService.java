@@ -2,6 +2,7 @@ package com.shine.security.service;
 
 import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
+import com.shine.security.request.UserRegisterRequest;
 import com.shine.security.response.CaptchaResponse;
 import com.shine.security.response.UserLoginResponse;
 import com.shine.user.info.UserInfo;
@@ -41,5 +42,13 @@ public interface LoginService {
      * @return
      */
     UserInfo getUserInfo();
+
+    /**
+     * 用户注册
+     *
+     * @param request
+     * @return
+     */
+    Boolean register(UserRegisterRequest request);
 
 }

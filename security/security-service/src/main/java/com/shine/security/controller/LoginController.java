@@ -3,6 +3,7 @@ package com.shine.security.controller;
 import com.shine.common.response.Result;
 import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
+import com.shine.security.request.UserRegisterRequest;
 import com.shine.security.response.CaptchaResponse;
 import com.shine.security.response.UserLoginResponse;
 import com.shine.security.service.LoginService;
@@ -54,6 +55,12 @@ public class LoginController {
         UserInfo userInfo = loginService.getUserInfo();
         userInfo.setPassword("你想知道个屁");
         return Result.success(userInfo);
+    }
+
+    @Operation(summary = "用户注册")
+    @PostMapping("/user/register")
+    public Result<Boolean> registerUser(@RequestBody UserRegisterRequest request) {
+        return Result.success(loginService.register(request));
     }
 
 }
