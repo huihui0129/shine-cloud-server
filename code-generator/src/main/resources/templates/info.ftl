@@ -1,4 +1,4 @@
-package com.shine.user.info;
+package ${packagePath}.${moduleName}.info;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

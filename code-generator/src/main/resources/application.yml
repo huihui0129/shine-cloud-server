@@ -9,17 +9,18 @@ generator:
     base-package: com.shine
   # 生成配置
   generator:
-    database: hh_user
+    database: hh_auth
     table-name:
-      - menu
-      - user
-      - role
-#      - oauth_client_redirect_uri
+#      - menu
+#      - user
+#      - role
+      - oauth_authorization_code
 #      - oauth_client_scope
-#    table-prefix: oauth_
+    table-prefix: oauth_
     # 需要生成的
     code:
       - entity
+      - enum
       - info
       - page_request
       - mapper

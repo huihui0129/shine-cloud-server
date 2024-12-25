@@ -8,6 +8,7 @@ package com.shine.generator.enums;
 public enum GeneratorEnum {
 
     ENTITY,
+    ENUM,
     INFO,
     PAGE_REQUEST,
     MAPPER,

@@ -1,4 +1,4 @@
-package com.shine.user.entity;
+package ${packagePath}.${moduleName}.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 <#assign hasDate = columnList?filter(item -> item.javaType?contains("LocalDateTime"))>
 <#if (hasDate?size > 0)>
-    import java.time.LocalDateTime;
+import java.time.LocalDateTime;
 </#if>
 
 @Data

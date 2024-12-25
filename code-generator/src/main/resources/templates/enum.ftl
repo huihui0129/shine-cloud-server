@@ -1,29 +1,21 @@
-package com.shine.security.enums;
+package ${packagePath}.${moduleName}.enums;
 
 import com.shine.common.enums.IEnum;
 
 /**
- * @author huihui
- * @date 2024/12/25 15:32
- * @description AuthorizationCodeStatusEnum
+ * @author ${author}
+ * @date ${generatorDate}
+ * @description ${className}
  */
 public enum AuthorizationCodeStatusEnum implements IEnum<Integer> {
 
+    <#list contentList as content>
     /**
-     * 未使用
+     * ${content.comment}
      */
-    S1(1, "未使用"),
+    ${content.value}(${content.code}, "${content.name}"),
 
-    /**
-     * 已使用
-     */
-    S2(2, "已使用"),
-
-    /**
-     * 已过期
-     */
-    S3(3, "已过期"),
-
+    </#list>
     ;
 
     private Integer code;
