@@ -87,7 +87,7 @@ public class EnumHandler extends AbstractGeneratorHandler implements GeneratorHa
                         String enumComment = item.getComment();
                         String[] split = enumComment.split("：");
                         String enumStr = split[1];
-                        String[] enums = enumStr.split(" \\| ");
+                        String[] enums = enumStr.split("\\|");
                         List<EnumModel.Item> itemList = new ArrayList<>(enums.length);
                         for (String anEnum : enums) {
                             EnumModel.Item single = new EnumModel.Item();

@@ -2,6 +2,7 @@ package com.shine.security.authorization.impl;
 
 import com.shine.security.authorization.Principal;
 import lombok.Data;
+import lombok.Setter;
 
 /**
  * @author huihui
@@ -10,6 +11,8 @@ import lombok.Data;
  */
 @Data
 public final class AuthorityPrincipal implements Principal {
+
+    private String clientId;
 
     private Long id;
 

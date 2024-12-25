@@ -9,6 +9,8 @@ package com.shine.security.authorization;
  */
 public interface Principal {
 
+    String getClientId();
+
     Long getId();
 
     String getUsername();

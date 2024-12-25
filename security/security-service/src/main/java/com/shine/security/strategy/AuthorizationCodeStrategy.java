@@ -6,7 +6,6 @@ import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.rabbitmq.constant.RabbitConstant;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
-import com.shine.security.authorization.impl.ClientAuthorityPrincipal;
 import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.entity.AccessToken;
 import com.shine.security.entity.AuthorizationCode;
@@ -150,7 +149,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         // 生成token
         String token = ShineRequestContext.getToken();
         AuthorityPrincipal user = TokenManager.parse(token, AuthorityPrincipal.class);
-        ClientAuthorityPrincipal principal = new ClientAuthorityPrincipal();
+        AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setClientId(client.getClientId());
         principal.setId(user.getId());
         principal.setUsername(user.getUsername());

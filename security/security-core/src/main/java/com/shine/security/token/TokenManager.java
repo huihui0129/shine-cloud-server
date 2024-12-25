@@ -5,7 +5,6 @@ import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.authorization.Principal;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
-import com.shine.security.authorization.impl.ClientAuthorityPrincipal;
 import com.shine.security.http.AuthorityStatus;
 import com.shine.security.utils.RsaUtils;
 import io.jsonwebtoken.Claims;
@@ -38,7 +37,6 @@ public class TokenManager {
 
     static {
         cachePrincipal(AuthorityPrincipal.class);
-        cachePrincipal(ClientAuthorityPrincipal.class);
     }
 
     private static void cachePrincipal(Class<? extends Principal> principalClass) {

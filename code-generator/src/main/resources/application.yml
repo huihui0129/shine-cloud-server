@@ -9,14 +9,14 @@ generator:
     base-package: com.shine
   # 生成配置
   generator:
-    database: hh_auth
+    database: hh_user
     table-name:
-#      - menu
+      - menu
 #      - user
 #      - role
-      - oauth_authorization_code
+#      - oauth_authorization_code
 #      - oauth_client_scope
-    table-prefix: oauth_
+#    table-prefix: oauth_
     # 需要生成的
     code:
       - entity

@@ -7,7 +7,7 @@ import com.shine.common.enums.IEnum;
  * @date ${generatorDate}
  * @description ${className}
  */
-public enum AuthorizationCodeStatusEnum implements IEnum<Integer> {
+public enum ${className} implements IEnum<Integer> {
 
     <#list contentList as content>
     /**
@@ -22,7 +22,7 @@ public enum AuthorizationCodeStatusEnum implements IEnum<Integer> {
 
     private String name;
 
-    AuthorizationCodeStatusEnum(Integer code, String name) {
+    ${className}(Integer code, String name) {
         this.code = code;
         this.name = name;
     }

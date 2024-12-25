@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shine.common.response.Result;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserPageRequest;
+import com.shine.user.response.UserPermissionResponse;
 import com.shine.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -47,6 +48,12 @@ public class UserController {
     private Result<Boolean> deleteUserById(@PathVariable("id") Long id) {
         Boolean flag = userService.deleteById(id);
         return Result.success(flag);
+    }
+
+    @GetMapping("/get/perm/{id}")
+    @Operation(summary = "查询用户以及权限详细信息")
+    private Result<UserPermissionResponse> getUserPermById(@PathVariable("id") Long id) {
+        return Result.success(userService.getPerm(id));
     }
 
 }

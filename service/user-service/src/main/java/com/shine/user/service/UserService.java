@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.shine.user.entity.User;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserPageRequest;
+import com.shine.user.response.UserPermissionResponse;
 
 /**
  * @author huihui
@@ -36,5 +37,7 @@ public interface UserService extends IService<User> {
      * @return
      */
     Boolean deleteById(Long id);
+
+    UserPermissionResponse getPerm(Long id);
 
 }
