@@ -41,4 +41,5 @@ public class UserFeignImpl implements UserFeign {
         BeanUtil.copyProperties(user, userInfo, true);
         return Result.success(userInfo);
     }
+
 }
