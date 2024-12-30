@@ -2,9 +2,13 @@ package com.shine.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shine.user.entity.Menu;
+import com.shine.user.info.MenuInfo;
 import com.shine.user.mapper.MenuMapper;
 import com.shine.user.service.MenuService;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +20,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
+
+    @Override
+    public List<MenuInfo> getByUserId(Long appId, Long id) {
+        if (id == null) {
+            log.error("获取用户菜单用户ID为空");
+            return Collections.emptyList();
+        }
+        if (appId == null) {
+            appId = 1L;
+        }
+        return this.baseMapper.selectByUserId(appId, id);
+    }
 
 }

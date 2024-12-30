@@ -50,10 +50,10 @@ public class UserController {
         return Result.success(flag);
     }
 
-    @GetMapping("/get/perm/{id}")
+    @GetMapping("/get/perm/{appId}/{id}")
     @Operation(summary = "查询用户以及权限详细信息")
-    private Result<UserPermissionResponse> getUserPermById(@PathVariable("id") Long id) {
-        return Result.success(userService.getPerm(id));
+    private Result<UserPermissionResponse> getUserPermById(@PathVariable("appId") Long appId, @PathVariable("id") Long id) {
+        return Result.success(userService.getPerm(appId, id));
     }
 
 }

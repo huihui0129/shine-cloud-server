@@ -2,6 +2,9 @@ package com.shine.user.service;
 
 import com.shine.user.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.shine.user.info.MenuInfo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,14 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2024-11-18
  */
 public interface MenuService extends IService<Menu> {
+
+    /**
+     * 获取用户所有菜单权限
+     *
+     * @param appId
+     * @param id
+     * @return
+     */
+    List<MenuInfo> getByUserId(Long appId, Long id);
 
 }
