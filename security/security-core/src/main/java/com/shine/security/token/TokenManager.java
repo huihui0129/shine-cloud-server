@@ -10,16 +10,15 @@ import com.shine.security.utils.RsaUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author huihui
@@ -32,17 +31,6 @@ public class TokenManager {
      * token默认过期时间 分钟
      */
     private static final Integer TOKEN_EXPIRE_SECONDS = 60;
-
-    private static final Map<Class<? extends Principal>, List<Field>> fieldCache = new HashMap<>();
-
-    static {
-        cachePrincipal(AuthorityPrincipal.class);
-    }
-
-    private static void cachePrincipal(Class<? extends Principal> principalClass) {
-        List<Field> fields = Arrays.asList(principalClass.getDeclaredFields());
-        fieldCache.put(principalClass, fields);
-    }
 
     /**
      * 根据私钥生成token
@@ -60,19 +48,12 @@ public class TokenManager {
             expireSeconds = TOKEN_EXPIRE_SECONDS;
         }
         // 使用预先缓存的字段信息
-        List<Field> fieldList = fieldCache.get(principal.getClass());
-        if (CollectionUtils.isEmpty(fieldList)) {
-            throw new BaseException(AuthorityStatus.NO_CACHE_PRINCIPAL);
-        }
         JwtBuilder jwtBuilder = Jwts.builder();
-        for (Field field : fieldList) {
-            field.setAccessible(true);
-            try {
-                jwtBuilder.claim(field.getName(), field.get(principal));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
+        jwtBuilder.claim(Principal.CLIENT_ID_KEY, principal.getClientId());
+        jwtBuilder.claim(Principal.USER_ID_KEY, principal.getId());
+        jwtBuilder.claim(Principal.USERNAME_KEY, principal.getUsername());
+        jwtBuilder.claim(Principal.ROLE_KEY, principal.getRoleList());
+        jwtBuilder.claim(Principal.PERMISSION_KEY, principal.getPermissionList());
         LocalDateTime expire = LocalDateTime.now().plusSeconds(expireSeconds);
         jwtBuilder.setExpiration(Date.from(expire.atZone(ZoneId.systemDefault()).toInstant()));
         jwtBuilder.signWith(privateKey);
@@ -114,26 +95,29 @@ public class TokenManager {
      * @return
      * @throws Exception
      */
-    public static <T extends Principal> T parse(PublicKey publicKey, String token, Class<T> principalClass) throws Exception {
+    public static AuthorityPrincipal parse(PublicKey publicKey, String token) throws Exception {
         Claims body = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token).getBody();
-        T principal = principalClass.getDeclaredConstructor().newInstance();
-        // 从缓存中获取字段并赋值
-        for (Field field : fieldCache.get(principalClass)) {
-            field.setAccessible(true);
-            Object value = body.get(field.getName(), field.getType());
-            if (value != null) {
-                field.set(principal, value);
-            }
-        }
+        String clientId = body.get(Principal.CLIENT_ID_KEY, String.class);
+        Long userId = body.get(Principal.USER_ID_KEY, Long.class);
+        String username = body.get(Principal.USERNAME_KEY, String.class);
+        List role = body.get(Principal.ROLE_KEY, List.class);
+        List permission = body.get(Principal.PERMISSION_KEY, List.class);
+        AuthorityPrincipal principal = new AuthorityPrincipal();
+        principal.setClientId(clientId);
+        principal.setId(userId);
+        principal.setUsername(username);
+        principal.setPassword("你不想知道");
+        principal.setRoleList(role);
+        principal.setPermissionList(permission);
         return principal;
     }
 
-    public static <T extends Principal> T parse(String token, Class<T> principalClass) {
+    public static AuthorityPrincipal parse(String token) {
         ClassPathResource classPathResource = new ClassPathResource("public_key.pem");
         try (InputStream is = classPathResource.getInputStream()) {
             byte[] bytes = is.readAllBytes();
             PublicKey publicKey = RsaUtils.getPublicKey(bytes);
-            return TokenManager.parse(publicKey, token, principalClass);
+            return TokenManager.parse(publicKey, token);
         } catch (Exception e) {
             throw new AuthException(ResponseStatus.UNAUTHORIZED);
         }

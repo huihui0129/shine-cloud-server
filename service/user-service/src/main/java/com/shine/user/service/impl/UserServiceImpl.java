@@ -52,16 +52,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserPermissionResponse getPerm(Long appId, Long id) {
-        UserInfo user = this.getUserById(id);
+    public UserPermissionResponse getPerm(Long appId, Long userId) {
+        UserInfo user = this.getUserById(userId);
         if (user == null) {
             throw new BaseException(ResponseStatus.PARAMS_ERROR, "用户不存在");
         }
         UserPermissionResponse response = new UserPermissionResponse();
         BeanUtil.copyProperties(user, response, true);
-        List<MenuInfo> menuInfoList = menuService.getByUserId(appId, id);
+        List<MenuInfo> menuInfoList = menuService.getByUserId(appId, userId);
         if (CollectionUtils.isEmpty(menuInfoList)) {
-            log.error("用户：{}，没有权限", id);
+            log.error("用户：{}，没有权限", userId);
             return response;
         }
         Map<Integer, List<MenuInfo>> typeMap = menuInfoList.stream().collect(Collectors.groupingBy(MenuInfo::getType));

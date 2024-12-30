@@ -9,6 +9,12 @@ package com.shine.security.authorization;
  */
 public interface Principal {
 
+    String CLIENT_ID_KEY = "clientId";
+    String USER_ID_KEY = "userId";
+    String USERNAME_KEY = "username";
+    String ROLE_KEY = "role";
+    String PERMISSION_KEY = "permission";
+
     String getClientId();
 
     Long getId();
@@ -16,5 +22,9 @@ public interface Principal {
     String getUsername();
 
     String getPassword();
+
+    String getRoleList();
+
+    String getPermissionList();
 
 }

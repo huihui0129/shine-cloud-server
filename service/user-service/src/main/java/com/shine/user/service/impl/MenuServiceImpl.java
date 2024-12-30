@@ -22,15 +22,12 @@ import java.util.List;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Override
-    public List<MenuInfo> getByUserId(Long appId, Long id) {
-        if (id == null) {
+    public List<MenuInfo> getByUserId(Long appId, Long userId) {
+        if (userId == null) {
             log.error("获取用户菜单用户ID为空");
             return Collections.emptyList();
         }
-        if (appId == null) {
-            appId = 1L;
-        }
-        return this.baseMapper.selectByUserId(appId, id);
+        return this.baseMapper.selectByUserId(appId, userId);
     }
 
 }

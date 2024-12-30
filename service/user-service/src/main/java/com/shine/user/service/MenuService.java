@@ -20,9 +20,9 @@ public interface MenuService extends IService<Menu> {
      * 获取用户所有菜单权限
      *
      * @param appId
-     * @param id
+     * @param userId
      * @return
      */
-    List<MenuInfo> getByUserId(Long appId, Long id);
+    List<MenuInfo> getByUserId(Long appId, Long userId);
 
 }

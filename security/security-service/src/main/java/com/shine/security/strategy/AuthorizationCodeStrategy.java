@@ -148,7 +148,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         }
         // 生成token
         String token = ShineRequestContext.getToken();
-        AuthorityPrincipal user = TokenManager.parse(token, AuthorityPrincipal.class);
+        AuthorityPrincipal user = TokenManager.parse(token);
         AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setClientId(client.getClientId());
         principal.setId(user.getId());
