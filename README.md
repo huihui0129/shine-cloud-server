@@ -123,3 +123,9 @@ CREATE TABLE `table_name` (
     remark VARCHAR(256) NULL COMMENT '备注'
 ) COMMENT '表注释';
 ```
+
+枚举代码生成格式示例
+
+```text
+枚举 字段备注：1-枚举名称1|2-枚举名称2|3-枚举名称3
+```
