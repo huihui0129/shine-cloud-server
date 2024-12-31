@@ -1,6 +1,5 @@
 package com.shine.user.response;
 
-import com.shine.user.info.MenuInfo;
 import com.shine.user.info.UserInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

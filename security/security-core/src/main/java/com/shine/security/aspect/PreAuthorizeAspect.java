@@ -4,6 +4,7 @@ import com.shine.common.exception.AuthException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.annotation.PreAuthorize;
 import com.shine.security.utils.SecurityAuthentication;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
  * @date 2024/12/30 13:25
  * @description PreAuthorizeAspect
  */
+@Slf4j
 @Aspect
 @Component
 public class PreAuthorizeAspect {
@@ -36,6 +38,7 @@ public class PreAuthorizeAspect {
         // 解析并执行表达式
         boolean hasPermission = (Boolean) parser.parseExpression(expression).getValue(context);
         if (!hasPermission) {
+            log.error("无权：{}", expression);
             throw new AuthException(ResponseStatus.UNAUTHORIZED);
         }
     }
