@@ -18,6 +18,7 @@
         <module>components</module>
         <module>framework</module>
         <module>security</module>
+        <module>monitor</module>
     </modules>
 
     <properties>
@@ -47,6 +48,7 @@
         <kaptcha.version>2.3.2</kaptcha.version>
         <hutool.version>5.8.4</hutool.version>
         <redisson.version>3.20.0</redisson.version>
+        <spring-boot-admin.version>3.0.0</spring-boot-admin.version>
     </properties>
 
     <dependencies>
@@ -93,6 +95,16 @@
                 <version>${mybatis-plus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${spring-boot-admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${spring-boot-admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
