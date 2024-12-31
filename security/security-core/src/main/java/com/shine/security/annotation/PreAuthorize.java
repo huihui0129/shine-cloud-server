@@ -6,6 +6,7 @@ import java.lang.annotation.*;
  * @author huihui
  * @date 2024/12/30 13:23
  * @description PreAuthorize
+ * @see com.shine.security.utils.SecurityAuthentication
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
