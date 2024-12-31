@@ -2,6 +2,7 @@ package com.shine.user.controller;
 
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
+import com.shine.security.annotation.PreAuthorize;
 import com.shine.user.model.TestModel;
 import com.shine.common.response.Result;
 import com.shine.user.properties.UserProperties;
@@ -44,6 +45,7 @@ public class TestController {
 
     @Operation(summary = "测试配置获取")
     @GetMapping("/getConfig")
+    @PreAuthorize("hasRole('system_admin')")
     public Result<String> getConfig() {
         return Result.success(userProperties.getTest());
     }

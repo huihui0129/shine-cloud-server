@@ -4,6 +4,7 @@ import com.shine.common.response.Result;
 import com.shine.feign.constant.FeignClientConstant;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserRequest;
+import com.shine.user.response.UserPermissionResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserFeign {
 
     @PostMapping("/getUser")
-    Result<UserInfo> getUser(@RequestBody UserRequest request);
+    Result<UserPermissionResponse> getUser(@RequestBody UserRequest request);
 
     @PostMapping("/save")
     Result<Boolean> saveUser(UserInfo userInfo);

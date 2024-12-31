@@ -67,8 +67,9 @@ public class LoginController {
     @Operation(summary = "测试权限")
     @PreAuthorize("hasRole('system_admin')")
     @GetMapping("/test")
-    public Result<String> test() {
-        return Result.success("牛逼");
+    public Result<CaptchaResponse> test() {
+        CaptchaResponse captcha = loginService.getCaptcha();
+        return Result.success(captcha);
     }
 
 }

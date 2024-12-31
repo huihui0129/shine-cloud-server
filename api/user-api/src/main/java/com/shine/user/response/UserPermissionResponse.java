@@ -15,10 +15,10 @@ import java.util.List;
 @Data
 public class UserPermissionResponse extends UserInfo {
 
-    @Schema(description = "菜单集合")
-    private List<MenuInfo> menuList;
+    @Schema(description = "角色集合")
+    private List<String> roleList;
 
     @Schema(description = "按钮权限集合")
-    private List<String> buttonList;
+    private List<String> permissionList;
 
 }

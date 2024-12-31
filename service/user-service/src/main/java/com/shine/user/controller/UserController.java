@@ -9,8 +9,8 @@ import com.shine.user.response.UserPermissionResponse;
 import com.shine.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
-    @Resource
+    @Autowired
     private UserService userService;
 
     @GetMapping("/page")
     @Operation(summary = "用户分页查询")
-    @PreAuthorize("hasRole('system_admin')")
     private Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
         IPage<UserInfo> userPage = userService.pageUser(request);
         return Result.success(userPage);

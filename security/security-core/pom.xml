@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>security-core</artifactId>
+    <description>安全服务</description>
 
     <dependencies>
         <dependency>
@@ -35,12 +36,10 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
-            <optional>true</optional>
         </dependency>
     </dependencies>
 

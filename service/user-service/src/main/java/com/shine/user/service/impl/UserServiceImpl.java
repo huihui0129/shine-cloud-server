@@ -67,10 +67,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Map<Integer, List<MenuInfo>> typeMap = menuInfoList.stream().collect(Collectors.groupingBy(MenuInfo::getType));
         List<MenuInfo> menuList = typeMap.get(MenuTypeEnum.T0.getCode());
         List<MenuInfo> buttonList = typeMap.get(MenuTypeEnum.T1.getCode());
-        response.setMenuList(menuList);
-        if (CollectionUtils.isNotEmpty(buttonList)) {
-            response.setButtonList(buttonList.stream().map(MenuInfo::getPermission).collect(Collectors.toList()));
-        }
+        // TODO
+//        response.setMenuList(menuList);
+//        if (CollectionUtils.isNotEmpty(buttonList)) {
+//            response.setButtonList(buttonList.stream().map(MenuInfo::getPermission).collect(Collectors.toList()));
+//        }
         return response;
     }
 

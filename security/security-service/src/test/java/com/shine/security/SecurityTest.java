@@ -37,8 +37,8 @@ public class SecurityTest {
 
     @Test
     public void test01() {
-        Result<String> test = loginController.test();
-        System.out.println(JSON.toJSONString(test));
+//        Result<String> test = loginController.test();
+//        System.out.println(JSON.toJSONString(test));
     }
 
     public AuthorityPrincipal getCurrentPrincipal() {

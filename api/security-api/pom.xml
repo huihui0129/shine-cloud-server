@@ -18,10 +18,6 @@
         </dependency>
         <dependency>
             <groupId>com.shine</groupId>
-            <artifactId>security-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.shine</groupId>
             <artifactId>security-web</artifactId>
         </dependency>
         <dependency>

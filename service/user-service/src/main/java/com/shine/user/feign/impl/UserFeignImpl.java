@@ -8,12 +8,18 @@ import com.shine.user.entity.User;
 import com.shine.user.feign.UserFeign;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserRequest;
+import com.shine.user.response.UserPermissionResponse;
+import com.shine.user.service.MenuService;
+import com.shine.user.service.RoleService;
 import com.shine.user.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author huihui
@@ -28,8 +34,14 @@ public class UserFeignImpl implements UserFeign {
     @Resource
     private UserService userService;
 
+    @Resource
+    private RoleService roleService;
+
+    @Resource
+    private MenuService menuService;
+
     @Override
-    public Result<UserInfo> getUser(UserRequest request) {
+    public Result<UserPermissionResponse> getUser(UserRequest request) {
         User user = userService.getOne(
                 Wrappers.<User>lambdaQuery()
                         .eq(request.getUserId() != null, User::getId, request.getUserId())
@@ -38,8 +50,17 @@ public class UserFeignImpl implements UserFeign {
         if (user == null) {
             return Result.error();
         }
-        UserInfo userInfo = new UserInfo();
+        UserPermissionResponse userInfo = new UserPermissionResponse();
         BeanUtil.copyProperties(user, userInfo, true);
+        // 角色和按钮
+        List<String> roleList = new ArrayList<>();
+        roleList.add("system_user");
+        roleList.add("system_admin");
+        List<String> permissionList = new ArrayList<>();
+        permissionList.add("system:user:add");
+        permissionList.add("system:user:query");
+        userInfo.setRoleList(roleList);
+        userInfo.setPermissionList(permissionList);
         return Result.success(userInfo);
     }
 

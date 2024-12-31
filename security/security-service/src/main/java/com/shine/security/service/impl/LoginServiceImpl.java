@@ -18,8 +18,10 @@ import com.shine.security.service.LoginService;
 import com.shine.security.token.TokenManager;
 import com.shine.user.enums.UserStatusEnum;
 import com.shine.user.feign.UserFeign;
+import com.shine.user.info.MenuInfo;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserRequest;
+import com.shine.user.response.UserPermissionResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -114,11 +116,11 @@ public class LoginServiceImpl implements LoginService {
         // 验证账号密码
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername(request.getUsername());
-        Result<UserInfo> userResult = userFeign.getUser(userRequest);
+        Result<UserPermissionResponse> userResult = userFeign.getUser(userRequest);
         if (!userResult.getSuccess()) {
             throw new BaseException(ResponseStatus.FEIGN_ERROR, "用户名不存在哦，请仔细看看呢");
         }
-        UserInfo user = userResult.getData();
+        UserPermissionResponse user = userResult.getData();
         // 验证密码
         boolean matches = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!matches) {
@@ -128,6 +130,8 @@ public class LoginServiceImpl implements LoginService {
         AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setId(user.getId());
         principal.setUsername(user.getUsername());
+        principal.setRoleList(user.getRoleList());
+        principal.setPermissionList(user.getPermissionList());
         // 一天过期
         int expire = 86400;
         String token = TokenManager.generate(principal, expire);
@@ -152,7 +156,7 @@ public class LoginServiceImpl implements LoginService {
         Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
         UserRequest userRequest = new UserRequest();
         userRequest.setUserId(userId);
-        Result<UserInfo> user = userFeign.getUser(userRequest);
+        Result<UserPermissionResponse> user = userFeign.getUser(userRequest);
         if (!user.getSuccess()) {
             throw new BaseException(ResponseStatus.FEIGN_ERROR, "获取用户信息失败哦");
         }
