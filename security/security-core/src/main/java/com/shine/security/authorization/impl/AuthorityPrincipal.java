@@ -3,6 +3,8 @@ package com.shine.security.authorization.impl;
 import com.shine.security.authorization.Principal;
 import lombok.Data;
 import lombok.Setter;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -25,5 +27,14 @@ public final class AuthorityPrincipal implements Principal {
     private List<String> roleList;
 
     private List<String> permissionList;
+
+    @Override
+    public boolean hasRole(String role) {
+        List<String> roleList = getRoleList();
+        if (CollectionUtils.isEmpty(roleList) || StringUtils.isBlank(role)) {
+            return false;
+        }
+        return roleList.contains(role);
+    }
 
 }

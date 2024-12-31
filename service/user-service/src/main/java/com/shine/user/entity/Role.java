@@ -5,31 +5,27 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.shine.mybatis.eneity.BaseEntity;
 import lombok.Data;
 
-/**
- * <p>
- * 角色
- * </p>
- *
- * @author huihui
- * @since 2024-11-18
- */
+
 @Data
-@TableName("role")
+@TableName(value = "role")
 public class Role extends BaseEntity {
 
     /**
-     * 应用ID
-     */
-    @TableField("app_id")
+    * 应用ID
+    */
+    @TableField(value = "app_id")
     private Long appId;
 
     /**
-     * 角色名称
-     */
-    @TableField("role_name")
-    private String roleName;
+    * 角色编码
+    */
+    @TableField(value = "code")
+    private String code;
 
-    public static final String APP_ID = "app_id";
+    /**
+    * 角色名称
+    */
+    @TableField(value = "name")
+    private String name;
 
-    public static final String ROLE_NAME = "role_name";
 }

@@ -2,6 +2,7 @@ package com.shine.user.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shine.common.response.Result;
+import com.shine.security.annotation.PreAuthorize;
 import com.shine.user.info.UserInfo;
 import com.shine.user.request.UserPageRequest;
 import com.shine.user.response.UserPermissionResponse;
@@ -31,6 +32,7 @@ public class UserController {
 
     @GetMapping("/page")
     @Operation(summary = "用户分页查询")
+    @PreAuthorize("hasRole('system_admin')")
     private Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
         IPage<UserInfo> userPage = userService.pageUser(request);
         return Result.success(userPage);

@@ -2,7 +2,7 @@ package ${packagePath}.${moduleName}.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import eneity.com.shine.mybatis.BaseEntity;
+import com.shine.mybatis.entity.BaseEntity;
 import lombok.Data;
 
 <#assign hasDate = columnList?filter(item -> item.javaType?contains("LocalDateTime"))>

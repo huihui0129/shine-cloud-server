@@ -13,7 +13,7 @@ generator:
     table-name:
       - menu
 #      - user
-#      - role
+      - role
 #      - oauth_authorization_code
 #      - oauth_client_scope
 #    table-prefix: oauth_

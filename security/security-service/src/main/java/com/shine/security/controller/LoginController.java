@@ -1,6 +1,7 @@
 package com.shine.security.controller;
 
 import com.shine.common.response.Result;
+import com.shine.security.annotation.PreAuthorize;
 import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
 import com.shine.security.request.UserRegisterRequest;
@@ -61,6 +62,13 @@ public class LoginController {
     @PostMapping("/user/register")
     public Result<Boolean> registerUser(@RequestBody UserRegisterRequest request) {
         return Result.success(loginService.register(request));
+    }
+
+    @Operation(summary = "测试权限")
+    @PreAuthorize("hasRole('system_admin')")
+    @GetMapping("/test")
+    public Result<String> test() {
+        return Result.success("牛逼");
     }
 
 }

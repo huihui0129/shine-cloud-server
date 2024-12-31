@@ -1,5 +1,10 @@
 package com.shine.security.authorization;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
+
 /**
  * @author huihui
  * @date 2024/11/22 13:19
@@ -23,8 +28,16 @@ public interface Principal {
 
     String getPassword();
 
-    String getRoleList();
+    List<String> getRoleList();
 
-    String getPermissionList();
+    List<String> getPermissionList();
+
+    default boolean hasRole(String role) {
+        List<String> roleList = getRoleList();
+        if (CollectionUtils.isEmpty(roleList) || StringUtils.isBlank(role)) {
+            return false;
+        }
+        return roleList.contains(role);
+    }
 
 }
