@@ -11,7 +11,7 @@
  Target Server Version : 50744
  File Encoding         : 65001
 
- Date: 06/01/2025 10:52:16
+ Date: 06/01/2025 14:18:50
 */
 
 SET NAMES utf8mb4;
@@ -25,14 +25,12 @@ CREATE TABLE `oauth_access_token`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `client_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端ID',
   `access_token` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '访问令牌',
-  `refresh_token` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '刷新令牌',
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
   `grant_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '授权类型',
   `scope` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '授权范围',
   `token_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'Bearer' COMMENT 'token类型',
   `redirect_uri` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '重定向地址',
-  `access_token_expire_time` datetime NOT NULL COMMENT '访问令牌过期时间',
-  `refresh_token_expire_time` datetime NOT NULL COMMENT '刷新令牌过期时间',
+  `expire_time` datetime NOT NULL COMMENT '令牌过期时间',
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `create_user` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
   `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -42,9 +40,8 @@ CREATE TABLE `oauth_access_token`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_user_id`(`user_id`) USING BTREE,
   INDEX `idx_client_id`(`client_id`) USING BTREE,
-  INDEX `idx_access_token`(`access_token`) USING BTREE,
-  INDEX `idx_refresh_token`(`refresh_token`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 351001 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '访问令牌记录' ROW_FORMAT = Dynamic;
+  INDEX `idx_access_token`(`access_token`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '访问令牌记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for oauth_authorization_code
@@ -66,7 +63,7 @@ CREATE TABLE `oauth_authorization_code`  (
   `remark` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `client_id`(`client_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5907065 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '授权码' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '授权码' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for oauth_client
@@ -143,5 +140,25 @@ CREATE TABLE `oauth_client_scope`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `client_id`(`client_id`, `scope`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '客户端授权范围' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for oauth_refresh_token
+-- ----------------------------
+DROP TABLE IF EXISTS `oauth_refresh_token`;
+CREATE TABLE `oauth_refresh_token`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `client_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '客户端ID',
+  `refresh_token` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '访问令牌',
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `expire_time` datetime NOT NULL COMMENT '令牌过期时间',
+  `used` bit(1) NULL DEFAULT b'0' COMMENT '已使用',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `create_user` bigint(20) NULL DEFAULT NULL COMMENT '创建人',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `update_user` bigint(20) NULL DEFAULT NULL COMMENT '修改人',
+  `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '逻辑删除',
+  `remark` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '刷新令牌' ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
