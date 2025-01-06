@@ -9,6 +9,7 @@ import com.shine.security.constant.SecurityConstant;
 import com.shine.security.context.SecurityContext;
 import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.password.PasswordEncoder;
+import com.shine.security.properties.SecurityProperties;
 import com.shine.security.request.CaptchaVerifyRequest;
 import com.shine.security.request.LoginRequest;
 import com.shine.security.request.UserRegisterRequest;
@@ -57,6 +58,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private SecurityProperties properties;
 
     @Override
     public CaptchaResponse getCaptcha() {
@@ -129,6 +133,7 @@ public class LoginServiceImpl implements LoginService {
         // 生成token
         AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setId(user.getId());
+        principal.setClientId(properties.getClientId());
         principal.setUsername(user.getUsername());
         principal.setRoleList(user.getRoleList());
         principal.setPermissionList(user.getPermissionList());
@@ -142,7 +147,6 @@ public class LoginServiceImpl implements LoginService {
         response.setUrl(user.getHeadImage());
         // 存入redis
         redisTemplate.opsForValue().set(SecurityConstant.TOKEN_REDIS_PREFIX + user.getId(), token, expire, TimeUnit.SECONDS);
-        // TODO 后面可能存入用户信息
         return response;
     }
 

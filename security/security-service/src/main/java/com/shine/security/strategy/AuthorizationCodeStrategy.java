@@ -3,6 +3,7 @@ package com.shine.security.strategy;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.shine.common.context.ShineRequestContext;
 import com.shine.common.exception.BaseException;
+import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
 import com.shine.rabbitmq.constant.RabbitConstant;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
@@ -22,6 +23,9 @@ import com.shine.security.response.AccessTokenResponse;
 import com.shine.security.response.AuthorizeCodeResponse;
 import com.shine.security.response.AuthorizeResponse;
 import com.shine.security.token.TokenManager;
+import com.shine.user.feign.UserFeign;
+import com.shine.user.request.UserRequest;
+import com.shine.user.response.UserPermissionResponse;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -58,6 +62,9 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
 
     @Resource
     private AsyncManager asyncManager;
+
+    @Resource
+    private UserFeign userFeign;
 
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
@@ -143,23 +150,36 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         }
         // 非本人获取
         Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
-        if (authorizationCode.getCreateUser().equals(userId)) {
+        if (!authorizationCode.getCreateUser().equals(userId)) {
             throw new BaseException(AuthorityStatus.CREATE_USER_MISMATCH);
         }
         // 生成token
         String token = ShineRequestContext.getToken();
-        AuthorityPrincipal user = TokenManager.parse(token);
+        AuthorityPrincipal tokenUser = TokenManager.parse(token);
+        UserRequest userRequest = new UserRequest();
+        userRequest.setUsername(tokenUser.getUsername());
+        Result<UserPermissionResponse> userResult = userFeign.getUser(userRequest);
+        if (!userResult.getSuccess()) {
+            throw new BaseException(ResponseStatus.ERROR, "未获取到用户");
+        }
+        UserPermissionResponse user = userResult.getData();
         AuthorityPrincipal principal = new AuthorityPrincipal();
         principal.setClientId(client.getClientId());
         principal.setId(user.getId());
         principal.setUsername(user.getUsername());
         principal.setPassword(user.getPassword());
+        principal.setRoleList(user.getRoleList());
+        principal.setPermissionList(user.getPermissionList());
+        AuthorityPrincipal refreshTokenPrincipal = new AuthorityPrincipal();
+        refreshTokenPrincipal.setClientId(client.getClientId());
+        refreshTokenPrincipal.setId(user.getId());
+        refreshTokenPrincipal.setUsername(user.getUsername());
         // 客户端访问令牌过期时间
         Integer expireIn = properties.getClientAccessTokenExpireSeconds();
         // 客户端刷新令牌过期时间
         Integer refreshExpireIn = properties.getClientRefreshTokenExpireSeconds();
         String accessToken = TokenManager.generate(principal, expireIn);
-        String refreshToken = TokenManager.generate(principal, refreshExpireIn);
+        String refreshToken = TokenManager.generate(refreshTokenPrincipal, refreshExpireIn);
         AccessTokenResponse response = new AccessTokenResponse();
         response.setAccessToken(accessToken);
         response.setTokenType("Bearer");

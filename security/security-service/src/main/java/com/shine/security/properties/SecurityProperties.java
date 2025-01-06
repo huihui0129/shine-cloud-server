@@ -15,6 +15,11 @@ import org.springframework.stereotype.Component;
 public class SecurityProperties {
 
     /**
+     * 客户端ID
+     */
+    private String clientId = "auth";
+
+    /**
      * 客户端AccessToken有效期
      */
     private Integer clientAccessTokenExpireSeconds = 3600;
