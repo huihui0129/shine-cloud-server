@@ -23,6 +23,10 @@ spring:
         group: ${nacos.group}
         prefix: ${spring.application.name}
         file-extension: yml
+        shared-configs[0]:
+          data-id: admin.yml
+          group: DEFAULT_GROUP
+          refresh: true
     gateway:
 #      discovery:
 #        locator:
