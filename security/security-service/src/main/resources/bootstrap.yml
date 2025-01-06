@@ -24,14 +24,22 @@ spring:
         prefix: ${spring.application.name}
         file-extension: yml
         shared-configs[0]:
-          data-id: redis.yml
+          data-id: mybatis-plus.yml
           group: DEFAULT_GROUP
           refresh: true
         shared-configs[1]:
-          data-id: cos.yml
+          data-id: redis.yml
           group: DEFAULT_GROUP
           refresh: true
         shared-configs[2]:
+          data-id: cos.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[3]:
           data-id: rabbit.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[4]:
+          data-id: admin.yml
           group: DEFAULT_GROUP
           refresh: true
