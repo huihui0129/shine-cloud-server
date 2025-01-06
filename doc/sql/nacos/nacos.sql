@@ -11,7 +11,7 @@
  Target Server Version : 50744
  File Encoding         : 65001
 
- Date: 08/12/2024 14:27:22
+ Date: 06/01/2025 10:50:39
 */
 
 SET NAMES utf8mb4;
@@ -44,10 +44,6 @@ CREATE TABLE `config_info`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of config_info
--- ----------------------------
-
--- ----------------------------
 -- Table structure for config_info_aggr
 -- ----------------------------
 DROP TABLE IF EXISTS `config_info_aggr`;
@@ -63,10 +59,6 @@ CREATE TABLE `config_info_aggr`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_configinfoaggr_datagrouptenantdatum`(`data_id`, `group_id`, `tenant_id`, `datum_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '增加租户字段' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of config_info_aggr
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for config_info_beta
@@ -91,10 +83,6 @@ CREATE TABLE `config_info_beta`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_beta' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of config_info_beta
--- ----------------------------
-
--- ----------------------------
 -- Table structure for config_info_tag
 -- ----------------------------
 DROP TABLE IF EXISTS `config_info_tag`;
@@ -116,10 +104,6 @@ CREATE TABLE `config_info_tag`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_info_tag' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of config_info_tag
--- ----------------------------
-
--- ----------------------------
 -- Table structure for config_tags_relation
 -- ----------------------------
 DROP TABLE IF EXISTS `config_tags_relation`;
@@ -135,10 +119,6 @@ CREATE TABLE `config_tags_relation`  (
   UNIQUE INDEX `uk_configtagrelation_configidtag`(`id`, `tag_name`, `tag_type`) USING BTREE,
   INDEX `idx_tenant_id`(`tenant_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'config_tag_relation' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of config_tags_relation
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for group_capacity
@@ -158,10 +138,6 @@ CREATE TABLE `group_capacity`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_group_id`(`group_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '集群、各Group容量信息表' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of group_capacity
--- ----------------------------
 
 -- ----------------------------
 -- Table structure for his_config_info
@@ -189,10 +165,6 @@ CREATE TABLE `his_config_info`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '多租户改造' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of his_config_info
--- ----------------------------
-
--- ----------------------------
 -- Table structure for permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `permissions`;
@@ -204,10 +176,6 @@ CREATE TABLE `permissions`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of permissions
--- ----------------------------
-
--- ----------------------------
 -- Table structure for roles
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
@@ -216,11 +184,6 @@ CREATE TABLE `roles`  (
   `role` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   UNIQUE INDEX `idx_user_role`(`username`, `role`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of roles
--- ----------------------------
-INSERT INTO `roles` VALUES ('nacos', 'ROLE_ADMIN');
 
 -- ----------------------------
 -- Table structure for tenant_capacity
@@ -242,10 +205,6 @@ CREATE TABLE `tenant_capacity`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = '租户容量信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tenant_capacity
--- ----------------------------
-
--- ----------------------------
 -- Table structure for tenant_info
 -- ----------------------------
 DROP TABLE IF EXISTS `tenant_info`;
@@ -264,10 +223,6 @@ CREATE TABLE `tenant_info`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_bin COMMENT = 'tenant_info' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of tenant_info
--- ----------------------------
-
--- ----------------------------
 -- Table structure for users
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
@@ -277,10 +232,5 @@ CREATE TABLE `users`  (
   `enabled` tinyint(1) NOT NULL,
   PRIMARY KEY (`username`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of users
--- ----------------------------
-INSERT INTO `users` VALUES ('nacos', '$2a$10$EuWPZHzz32dJN7jexM34MOeYirDdFAZm2kuWj7VEOJhhZkDrxfvUu', 1);
 
 SET FOREIGN_KEY_CHECKS = 1;
