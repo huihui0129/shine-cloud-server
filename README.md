@@ -91,7 +91,31 @@ swagger:
   version: 1.0.0
 ```
 
+## Docker
+
+迁移数据
+```shell
+# 关闭所有发行版
+wsl --shutdown
+# 查看停止情况
+wsl --list -v
+# 备份导出目前已有的数据
+wsl --export docker-desktop-data "D:\Docker\wsl\data\docker-desktop-data.tar"
+# 删除原有数据
+wsl --unregister docker-desktop-data
+# 导入数据到新盘
+wsl --import docker-desktop-data "D:\Docker\wsl\data" "D:\Docker\wsl\data\docker-desktop-data.tar" --version 2
+# 启动Docker即可
+```
+
 ## RabbitMQ
+
+安装
+
+```shell
+docker pull rabbitmq:4.0-management
+docker run --name rabbitmq -p 15672:15672 -p 5672:5672 -d rabbitmq:4.0-management
+```
 
 启动Web管理页面：
 
@@ -109,6 +133,12 @@ Start-Process -WindowStyle hidden -FilePath "J:\cloud-components\nacos-2.2.1\bin
 ```
 
 ## MySql
+
+挂载启动
+
+```shell
+docker run --name mysql -p 3306:3306 -v G:\data\mysql\my.ini:/etc/mysql/my.cnf -v G:\data\mysql\data:/var/lib/mysql -v G:\data\mysql\logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=root --restart=always -d mysql:5.7
+```
 
 数据表示例
 
@@ -128,4 +158,10 @@ CREATE TABLE `table_name` (
 
 ```text
 枚举 字段备注：1-枚举名称1|2-枚举名称2|3-枚举名称3
+```
+
+## Redis
+
+```shell
+docker run --name redis -p 6379:6379 -v G:\data\redis\data:/data -v G:\data\redis\redis.conf:/etc/redis/redis.conf -d redis
 ```
