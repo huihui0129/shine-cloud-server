@@ -2,8 +2,7 @@ package com.shine.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.shine.mybatis.eneity.BaseEntity;
-import com.shine.security.authorization.Principal;
+import com.shine.mybatis.entity.BaseEntity;
 import lombok.Data;
 
 import java.io.Serializable;

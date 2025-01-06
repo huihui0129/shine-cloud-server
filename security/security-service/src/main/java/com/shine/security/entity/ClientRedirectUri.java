@@ -2,7 +2,7 @@ package com.shine.security.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.shine.mybatis.eneity.BaseEntity;
+import com.shine.mybatis.entity.BaseEntity;
 import lombok.Data;
 
 @Data

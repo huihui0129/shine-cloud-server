@@ -11,6 +11,7 @@ import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.entity.AccessToken;
 import com.shine.security.entity.AuthorizationCode;
 import com.shine.security.entity.Client;
+import com.shine.security.entity.RefreshToken;
 import com.shine.security.enums.AuthorizationCodeStatusEnum;
 import com.shine.security.http.AuthorityStatus;
 import com.shine.security.manager.AsyncManager;
@@ -120,7 +121,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         log.info("使用授权码获取令牌：{}", clientId);
         Client client = clientMapper.selectOne(Wrappers.<Client>lambdaQuery().eq(Client::getClientId, clientId));
         // 验证客户端
-        if (!StringUtils.equals(clientId, client.getClientId())) {
+        if (client == null) {
             throw new BaseException(AuthorityStatus.NOT_EXISTS_CLIENT);
         }
         if (!passwordEncoder.matches(clientSecret, client.getClientSecret())) {
@@ -196,18 +197,29 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         AccessToken saveToken = new AccessToken();
         saveToken.setClientId(clientId);
         saveToken.setAccessToken(accessToken);
-        saveToken.setRefreshToken(refreshToken);
         saveToken.setUserId(userId);
         saveToken.setGrantType(grantType);
         saveToken.setScope(authorizationCode.getScope());
         saveToken.setTokenType("Bearer");
         saveToken.setRedirectUri(authorizationCode.getRedirectUri());
-        saveToken.setAccessTokenExpireTime(LocalDateTime.now().plusSeconds(expireIn));
-        saveToken.setRefreshTokenExpireTime(LocalDateTime.now().plusSeconds(refreshExpireIn));
+        saveToken.setExpireTime(LocalDateTime.now().plusSeconds(expireIn));
         saveToken.setCreateUser(userId);
         saveToken.setUpdateUser(userId);
         saveToken.setRemark("使用授权码生成的令牌");
-        asyncManager.saveToken(saveToken);
+
+        RefreshToken saveRefreshToken = new RefreshToken();
+        saveRefreshToken.setClientId(clientId);
+        saveRefreshToken.setRefreshToken(refreshToken);
+        saveRefreshToken.setUserId(userId);
+        saveRefreshToken.setExpireTime(LocalDateTime.now().plusSeconds(refreshExpireIn));
+        saveRefreshToken.setUsed(false);
+        saveRefreshToken.setCreateTime(LocalDateTime.now());
+        saveRefreshToken.setCreateUser(userId);
+        saveRefreshToken.setUpdateTime(LocalDateTime.now());
+        saveRefreshToken.setUpdateUser(userId);
+
+        // 保存令牌
+        asyncManager.saveToken(saveToken, saveRefreshToken);
         return response;
     }
 

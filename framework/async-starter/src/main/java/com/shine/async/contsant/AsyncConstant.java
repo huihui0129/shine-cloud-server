@@ -7,6 +7,9 @@ package com.shine.async.contsant;
  */
 public interface AsyncConstant {
 
+    /**
+     * 默认线程池名称
+     */
     String DEFAULT_ASYNC_EXECUTOR = "asyncExecutor";
 
 }

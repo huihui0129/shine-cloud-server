@@ -117,10 +117,11 @@ public class GeneratorEntrance {
             tableName = tableName.substring(tablePrefix.length());
         }
         String className = tableName.substring(0, 1).toUpperCase() + tableName.substring(1);
-        table.setLowercaseClassName(tableName.substring(0, 1) + tableName.substring(1));
+        String entityName = this.toCamelCase(className);
+        table.setLowercaseClassName(entityName.substring(0, 1).toLowerCase() + entityName.substring(1));
 
-        table.setEntityName(this.toCamelCase(className));
-        table.setClassName(this.toCamelCase(className));
+        table.setEntityName(entityName);
+        table.setClassName(entityName);
     }
 
     /**

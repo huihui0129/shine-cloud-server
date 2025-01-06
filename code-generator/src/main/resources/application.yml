@@ -5,18 +5,18 @@ generator:
     password: 123456
   # 包配置
   package-config:
-    modal-name: user
+    modal-name: security
     base-package: com.shine
   # 生成配置
   generator:
-    database: hh_user
+    database: hh_auth
     table-name:
-      - menu
+      - oauth_refresh_token
 #      - user
-      - role
+#      - role
 #      - oauth_authorization_code
 #      - oauth_client_scope
-#    table-prefix: oauth_
+    table-prefix: oauth_
     # 需要生成的
     code:
       - entity
@@ -29,9 +29,9 @@ generator:
       - service_impl
       - controller
     methods:
-      - page
-      - get
-      - delete
+#      - page
+#      - get
+#      - delete
 
 
 

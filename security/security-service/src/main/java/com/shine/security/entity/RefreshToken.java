@@ -8,8 +8,8 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-@TableName(value = "oauth_access_token")
-public class AccessToken extends BaseEntity {
+@TableName(value = "oauth_refresh_token")
+public class RefreshToken extends BaseEntity {
 
     /**
      * 客户端ID
@@ -20,8 +20,8 @@ public class AccessToken extends BaseEntity {
     /**
      * 访问令牌
      */
-    @TableField(value = "access_token")
-    private String accessToken;
+    @TableField(value = "refresh_token")
+    private String refreshToken;
 
     /**
      * 用户ID
@@ -30,33 +30,15 @@ public class AccessToken extends BaseEntity {
     private Long userId;
 
     /**
-     * 授权类型
-     */
-    @TableField(value = "grant_type")
-    private String grantType;
-
-    /**
-     * 授权范围
-     */
-    @TableField(value = "scope")
-    private String scope;
-
-    /**
-     * token类型
-     */
-    @TableField(value = "token_type")
-    private String tokenType;
-
-    /**
-     * 重定向地址
-     */
-    @TableField(value = "redirect_uri")
-    private String redirectUri;
-
-    /**
      * 令牌过期时间
      */
     @TableField(value = "expire_time")
     private LocalDateTime expireTime;
+
+    /**
+     * 已使用
+     */
+    @TableField(value = "used")
+    private Boolean used;
 
 }

@@ -1,4 +1,4 @@
-package com.shine.mybatis.eneity;
+package com.shine.mybatis.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
