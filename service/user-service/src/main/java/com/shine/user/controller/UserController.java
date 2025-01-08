@@ -32,28 +32,28 @@ public class UserController {
 
     @GetMapping("/page")
     @Operation(summary = "用户分页查询")
-    private Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
+    public Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
         IPage<UserInfo> userPage = userService.pageUser(request);
         return Result.success(userPage);
     }
 
     @GetMapping("/get/{id}")
     @Operation(summary = "用户详情查询")
-    private Result<UserInfo> getUserById(@PathVariable("id") Long id) {
+    public Result<UserInfo> getUserById(@PathVariable("id") Long id) {
         UserInfo user = userService.getUserById(id);
         return Result.success(user);
     }
 
     @GetMapping("/delete/{id}")
     @Operation(summary = "根据ID删除用户")
-    private Result<Boolean> deleteUserById(@PathVariable("id") Long id) {
+    public Result<Boolean> deleteUserById(@PathVariable("id") Long id) {
         Boolean flag = userService.deleteById(id);
         return Result.success(flag);
     }
 
     @GetMapping("/get/perm/{appId}/{userId}")
     @Operation(summary = "查询用户以及权限详细信息")
-    private Result<UserPermissionResponse> getUserPermById(@PathVariable("appId") Long appId, @PathVariable("userId") Long userId) {
+    public Result<UserPermissionResponse> getUserPermById(@PathVariable("appId") Long appId, @PathVariable("userId") Long userId) {
         return Result.success(userService.getPerm(appId, userId));
     }
 
