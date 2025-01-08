@@ -38,7 +38,7 @@ public class ${className} {
 <#if (hasPage?size > 0)>
     @GetMapping("/page")
     @Operation(summary = "${comment}分页查询")
-    private Result<IPage<${infoName}>> page${entityName}(${entityName}PageRequest request) {
+    public Result<IPage<${infoName}>> page${entityName}(${entityName}PageRequest request) {
         IPage<${infoName}> ${lowercaseClassName}Page = ${lowercaseClassName}Service.page${entityName}(request);
         return Result.success(${lowercaseClassName}Page);
     }
@@ -48,7 +48,7 @@ public class ${className} {
 <#if (hasGet?size > 0)>
     @GetMapping("/get/{id}")
     @Operation(summary = "${comment}详情查询")
-    private Result<${infoName}> get${entityName}ById(@PathVariable("id") Long id) {
+    public Result<${infoName}> get${entityName}ById(@PathVariable("id") Long id) {
         ${entityName}Info ${lowercaseClassName} = ${lowercaseClassName}Service.getUserById(id);
         return Result.success(${lowercaseClassName});
     }
@@ -58,7 +58,7 @@ public class ${className} {
 <#if (hasDelete?size > 0)>
     @GetMapping("/delete/{id}")
     @Operation(summary = "根据ID删除${comment}")
-    private Result<Boolean> delete${entityName}ById(@PathVariable("id") Long id) {
+    public Result<Boolean> delete${entityName}ById(@PathVariable("id") Long id) {
         Boolean flag = ${lowercaseClassName}Service.deleteById(id);
         return Result.success(flag);
     }
