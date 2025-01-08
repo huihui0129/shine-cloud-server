@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class PageRequestHandler extends AbstractGeneratorHandler implements GeneratorHandler {
+public class CreateRequestHandler extends AbstractGeneratorHandler implements GeneratorHandler {
 
-    private final GeneratorEnum generatorEnum = GeneratorEnum.PAGE_REQUEST;
+    private final GeneratorEnum generatorEnum = GeneratorEnum.CREATE_REQUEST;
 
     @Override
     public GeneratorEnum getEnum() {
@@ -56,25 +56,22 @@ public class PageRequestHandler extends AbstractGeneratorHandler implements Gene
             if (StringUtils.equals(item.getColumnName(), "deleted")) {
                 return false;
             }
-            if (StringUtils.equals(item.getColumnName(), "remark")) {
-                return false;
-            }
             return true;
         }).collect(Collectors.toList());
         table.setColumnList(columnList);
-        table.setClassName(table.getClassName()+ "PageRequest");
+        table.setClassName(table.getClassName()+ "CreateRequest");
     }
 
     @Override
     public void handler(Table table) throws Exception {
-        log.info("开始生成{}PageRequest", table.getEntityName());
+        log.info("开始生成{}CreateRequest", table.getEntityName());
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(GeneratorApplication.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
         // 2. 加载模板
-        Template template = cfg.getTemplate("pageRequest.ftl");
+        Template template = cfg.getTemplate("createRequest.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/pageRequest/" + table.getClassName() + ".java");
+        File output = new File("code-generator/target/generator/package/createRequest/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {
@@ -86,7 +83,7 @@ public class PageRequestHandler extends AbstractGeneratorHandler implements Gene
         try (FileWriter writer = new FileWriter(output)) {
             template.process(table, writer);
         }
-        log.info("生成{}PageRequest成功", table.getEntityName());
+        log.info("生成{}CreateRequest成功", table.getEntityName());
     }
 
 }

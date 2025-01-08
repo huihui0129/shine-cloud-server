@@ -25,9 +25,9 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class PageRequestHandler extends AbstractGeneratorHandler implements GeneratorHandler {
+public class UpdateRequestHandler extends AbstractGeneratorHandler implements GeneratorHandler {
 
-    private final GeneratorEnum generatorEnum = GeneratorEnum.PAGE_REQUEST;
+    private final GeneratorEnum generatorEnum = GeneratorEnum.UPDATE_REQUEST;
 
     @Override
     public GeneratorEnum getEnum() {
@@ -38,9 +38,6 @@ public class PageRequestHandler extends AbstractGeneratorHandler implements Gene
     public void handleTable(Table table) {
         List<Column> columnList = table.getColumnList();
         columnList = columnList.stream().filter(item -> {
-            if (StringUtils.equals(item.getColumnName(), "id")) {
-                return false;
-            }
             if (StringUtils.equals(item.getColumnName(), "create_time")) {
                 return false;
             }
@@ -56,25 +53,22 @@ public class PageRequestHandler extends AbstractGeneratorHandler implements Gene
             if (StringUtils.equals(item.getColumnName(), "deleted")) {
                 return false;
             }
-            if (StringUtils.equals(item.getColumnName(), "remark")) {
-                return false;
-            }
             return true;
         }).collect(Collectors.toList());
         table.setColumnList(columnList);
-        table.setClassName(table.getClassName()+ "PageRequest");
+        table.setClassName(table.getClassName()+ "UpdateRequest");
     }
 
     @Override
     public void handler(Table table) throws Exception {
-        log.info("开始生成{}PageRequest", table.getEntityName());
+        log.info("开始生成{}UpdateRequest", table.getEntityName());
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_31);
         cfg.setClassForTemplateLoading(GeneratorApplication.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
         // 2. 加载模板
-        Template template = cfg.getTemplate("pageRequest.ftl");
+        Template template = cfg.getTemplate("updateRequest.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/pageRequest/" + table.getClassName() + ".java");
+        File output = new File("code-generator/target/generator/package/updateRequest/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {
@@ -86,7 +80,7 @@ public class PageRequestHandler extends AbstractGeneratorHandler implements Gene
         try (FileWriter writer = new FileWriter(output)) {
             template.process(table, writer);
         }
-        log.info("生成{}PageRequest成功", table.getEntityName());
+        log.info("生成{}UpdateRequest成功", table.getEntityName());
     }
 
 }

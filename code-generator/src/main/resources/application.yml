@@ -23,6 +23,8 @@ generator:
       - enum
       - info
       - page_request
+      - create_request
+      - update_request
       - mapper
       - mapper_xml
       - service

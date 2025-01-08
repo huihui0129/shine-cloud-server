@@ -11,6 +11,8 @@ public enum GeneratorEnum {
     ENUM,
     INFO,
     PAGE_REQUEST,
+    CREATE_REQUEST,
+    UPDATE_REQUEST,
     MAPPER,
     MAPPER_XML,
     SERVICE,
