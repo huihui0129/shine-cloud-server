@@ -45,7 +45,7 @@ public class SecurityAuthentication {
      * @param permission
      * @return
      */
-    public boolean hasPermission(String permission) {
+    public boolean hasAuthority(String permission) {
         Principal user = getCurrentUser();
         List<String> permissionList = user.getPermissionList();
         if (CollectionUtils.isEmpty(permissionList) || StringUtils.isBlank(permission)) {
