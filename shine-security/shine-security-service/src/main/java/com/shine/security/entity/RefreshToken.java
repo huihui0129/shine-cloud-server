@@ -30,6 +30,12 @@ public class RefreshToken extends BaseEntity {
     private Long userId;
 
     /**
+     * 重定向地址
+     */
+    @TableField(value = "redirect_uri")
+    private String redirectUri;
+
+    /**
      * 令牌过期时间
      */
     @TableField(value = "expire_time")
@@ -40,5 +46,11 @@ public class RefreshToken extends BaseEntity {
      */
     @TableField(value = "used")
     private Boolean used;
+
+    /**
+     * 授权范围
+     */
+    @TableField(value = "scope")
+    private String scope;
 
 }

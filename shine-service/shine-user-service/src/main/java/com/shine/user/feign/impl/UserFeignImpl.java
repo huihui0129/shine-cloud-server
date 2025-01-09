@@ -3,7 +3,9 @@ package com.shine.user.feign.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.shine.common.exception.BaseException;
 import com.shine.common.response.Result;
+import com.shine.common.status.ResponseStatus;
 import com.shine.user.entity.User;
 import com.shine.user.feign.UserFeign;
 import com.shine.user.info.UserInfo;
@@ -42,6 +44,9 @@ public class UserFeignImpl implements UserFeign {
 
     @Override
     public Result<UserPermissionResponse> getUser(UserRequest request) {
+        if (request.getUserId() == null && StringUtils.isBlank(request.getUsername())) {
+            throw new BaseException(ResponseStatus.PARAMS_ERROR, "缺少用户ID或用户名");
+        }
         User user = userService.getOne(
                 Wrappers.<User>lambdaQuery()
                         .eq(request.getUserId() != null, User::getId, request.getUserId())

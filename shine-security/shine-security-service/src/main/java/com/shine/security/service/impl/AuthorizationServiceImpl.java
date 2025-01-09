@@ -6,7 +6,7 @@ import com.shine.rabbitmq.constant.RabbitConstant;
 import com.shine.security.entity.AuthorizationCode;
 import com.shine.security.enums.AuthorizationCodeStatusEnum;
 import com.shine.security.enums.AuthorizationResponseTypeEnum;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 import com.shine.security.mapper.AuthorizationCodeMapper;
 import com.shine.security.request.AccessTokenRequest;
 import com.shine.security.response.AccessTokenResponse;
@@ -125,7 +125,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
             case REFRESH_TOKEN: // 刷新令牌模式
                 return new AuthorizationContext(refreshTokenStrategy);
             default:
-                throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
+                throw new BaseException(SecurityStatus.AUTH_MODE_ERROR);
         }
     }
 }

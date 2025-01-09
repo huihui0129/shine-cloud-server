@@ -7,7 +7,7 @@ import com.shine.common.enums.IEnum;
  * @date 2024/11/7 11:38
  * @description AuthorityStatus 200000 开头
  */
-public enum AuthorityStatus implements IEnum<String> {
+public enum SecurityStatus implements IEnum<String> {
 
     AUTH_MODE_ERROR("200001", "我不知道这个授权模式是什么呢"),
 
@@ -37,13 +37,15 @@ public enum AuthorityStatus implements IEnum<String> {
 
     CREATE_USER_MISMATCH("210012", "不是你获取的用什么用"),
 
+    NO_REFRESH_TOKEN("210013", "没找到你的续约令牌耶"),
+
     ;
 
     private final String code;
 
     private final String name;
 
-    AuthorityStatus(String code, String name) {
+    SecurityStatus(String code, String name) {
         this.code = code;
         this.name = name;
     }

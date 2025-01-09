@@ -2,7 +2,7 @@ package com.shine.security.enums;
 
 import com.shine.common.enums.IEnum;
 import com.shine.common.exception.BaseException;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 import lombok.AllArgsConstructor;
 
 /**
@@ -39,7 +39,7 @@ public enum AuthorizationResponseTypeEnum implements IEnum<String> {
                 return item;
             }
         }
-        throw new BaseException(AuthorityStatus.AUTH_MODE_ERROR);
+        throw new BaseException(SecurityStatus.AUTH_MODE_ERROR);
     }
 
 }

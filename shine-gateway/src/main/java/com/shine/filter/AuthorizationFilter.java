@@ -6,7 +6,7 @@ import com.shine.common.enums.IEnum;
 import com.shine.properties.GatewayCustomizeProperties;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.constant.SecurityConstant;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 import com.shine.security.token.TokenManager;
 import com.shine.security.utils.PathMatchUtil;
 import com.shine.common.response.Result;
@@ -60,7 +60,7 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
             log.info("请求地址：{}，需要验证Token", path);
             if (StringUtils.isBlank(token)) {
                 response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                return getVoidMono(response, AuthorityStatus.NO_TOKEN);
+                return getVoidMono(response, SecurityStatus.NO_TOKEN);
             } else {
                 token = token.replace(SecurityConstant.HEADER_TOKEN_PREFIX, "");
                 try {
@@ -70,18 +70,18 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
                     // 没有就是过期
                     if (StringUtils.isBlank(redisToken)) {
                         response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                        return getVoidMono(response, AuthorityStatus.EXPIRED_TOKEN);
+                        return getVoidMono(response, SecurityStatus.EXPIRED_TOKEN);
                     }
                     // 有不匹配就是下线
                     if (!StringUtils.equals(redisToken, token)) {
                         log.error("不匹配RedisToken，下线");
                         response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                        return getVoidMono(response, AuthorityStatus.OFFLINE);
+                        return getVoidMono(response, SecurityStatus.OFFLINE);
                     }
                 } catch (Exception e) {
                     log.error("解析Token异常：", e);
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                    return getVoidMono(response, AuthorityStatus.EXPIRED_TOKEN);
+                    return getVoidMono(response, SecurityStatus.EXPIRED_TOKEN);
                 }
             }
         } else {

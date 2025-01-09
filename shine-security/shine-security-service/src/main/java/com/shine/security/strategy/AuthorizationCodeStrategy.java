@@ -7,13 +7,14 @@ import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
 import com.shine.rabbitmq.constant.RabbitConstant;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
+import com.shine.security.constant.SecurityConstant;
 import com.shine.security.context.SecurityContextHolder;
 import com.shine.security.entity.AccessToken;
 import com.shine.security.entity.AuthorizationCode;
 import com.shine.security.entity.Client;
 import com.shine.security.entity.RefreshToken;
 import com.shine.security.enums.AuthorizationCodeStatusEnum;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 import com.shine.security.manager.AsyncManager;
 import com.shine.security.mapper.AuthorizationCodeMapper;
 import com.shine.security.mapper.ClientMapper;
@@ -32,10 +33,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author huihui
@@ -67,6 +70,9 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
     @Resource
     private UserFeign userFeign;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     @Override
     public AuthorizeResponse authorize(String responseType, String clientId, String redirectUri, String scope, String state) {
         log.info("获取授权码：{}", clientId);
@@ -78,7 +84,7 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
                         .eq(Client::getClientId, clientId)
         );
         if (client == null) {
-            throw new BaseException(AuthorityStatus.NOT_EXISTS_CLIENT);
+            throw new BaseException(SecurityStatus.NOT_EXISTS_CLIENT);
         }
         AuthorizeCodeResponse response = new AuthorizeCodeResponse();
         String code = UUID.randomUUID().toString().replaceAll("-", "");
@@ -122,10 +128,10 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         Client client = clientMapper.selectOne(Wrappers.<Client>lambdaQuery().eq(Client::getClientId, clientId));
         // 验证客户端
         if (client == null) {
-            throw new BaseException(AuthorityStatus.NOT_EXISTS_CLIENT);
+            throw new BaseException(SecurityStatus.NOT_EXISTS_CLIENT);
         }
         if (!passwordEncoder.matches(clientSecret, client.getClientSecret())) {
-            throw new BaseException(AuthorityStatus.CLIENT_ID_MISMATCH);
+            throw new BaseException(SecurityStatus.CLIENT_ID_MISMATCH);
         }
         // 验证授权码
         AuthorizationCode authorizationCode = authorizationCodeMapper.selectOne(
@@ -135,24 +141,24 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         );
         // 不存在
         if (authorizationCode == null) {
-            throw new BaseException(AuthorityStatus.NO_AUTHORIZATION_CODE);
+            throw new BaseException(SecurityStatus.NO_AUTHORIZATION_CODE);
         }
         // 已使用
         if (AuthorizationCodeStatusEnum.S2.getCode().equals(authorizationCode.getStatus())) {
-            throw new BaseException(AuthorityStatus.AUTHORIZATION_CODE_USED);
+            throw new BaseException(SecurityStatus.AUTHORIZATION_CODE_USED);
         }
         // 已过期
         if (AuthorizationCodeStatusEnum.S3.getCode().equals(authorizationCode.getStatus())) {
-            throw new BaseException(AuthorityStatus.AUTHORIZATION_CODE_EXPIRE);
+            throw new BaseException(SecurityStatus.AUTHORIZATION_CODE_EXPIRE);
         }
         // 错误的授权码
         if (!StringUtils.equals(authorizationCode.getAuthorizationCode(), code)) {
-            throw new BaseException(AuthorityStatus.INCORRECT_AUTHORIZATION_CODE);
+            throw new BaseException(SecurityStatus.INCORRECT_AUTHORIZATION_CODE);
         }
         // 非本人获取
         Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
         if (!authorizationCode.getCreateUser().equals(userId)) {
-            throw new BaseException(AuthorityStatus.CREATE_USER_MISMATCH);
+            throw new BaseException(SecurityStatus.CREATE_USER_MISMATCH);
         }
         // 生成token
         String token = ShineRequestContext.getToken();
@@ -210,13 +216,19 @@ public class AuthorizationCodeStrategy implements AuthorizationStrategy<Authoriz
         RefreshToken saveRefreshToken = new RefreshToken();
         saveRefreshToken.setClientId(clientId);
         saveRefreshToken.setRefreshToken(refreshToken);
+        saveRefreshToken.setRedirectUri(authorizationCode.getRedirectUri());
         saveRefreshToken.setUserId(userId);
         saveRefreshToken.setExpireTime(LocalDateTime.now().plusSeconds(refreshExpireIn));
         saveRefreshToken.setUsed(false);
+        saveRefreshToken.setScope(authorizationCode.getScope());
         saveRefreshToken.setCreateTime(LocalDateTime.now());
         saveRefreshToken.setCreateUser(userId);
         saveRefreshToken.setUpdateTime(LocalDateTime.now());
         saveRefreshToken.setUpdateUser(userId);
+
+        // 保存令牌到Redis
+        redisTemplate.opsForValue().set(SecurityConstant.ACCESS_TOKEN_REDIS_PREFIX + userId, accessToken, properties.getClientAccessTokenExpireSeconds(), TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(SecurityConstant.REFRESH_TOKEN_REDIS_PREFIX + userId, refreshToken, properties.getClientRefreshTokenExpireSeconds(), TimeUnit.SECONDS);
 
         // 保存令牌
         asyncManager.saveToken(saveToken, saveRefreshToken);

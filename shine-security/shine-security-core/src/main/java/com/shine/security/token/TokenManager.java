@@ -1,11 +1,11 @@
 package com.shine.security.token;
 
-import com.shine.common.exception.AuthException;
+import com.shine.common.exception.SecurityException;
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.authorization.Principal;
 import com.shine.security.authorization.impl.AuthorityPrincipal;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 import com.shine.security.utils.RsaUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
@@ -42,7 +42,7 @@ public class TokenManager {
      */
     public static String generate(Principal principal, Integer expireSeconds, PrivateKey privateKey) {
         if (principal == null) {
-            throw new BaseException(AuthorityStatus.ENC_DATA_NULL);
+            throw new BaseException(SecurityStatus.ENC_DATA_NULL);
         }
         if (expireSeconds == null) {
             expireSeconds = TOKEN_EXPIRE_SECONDS;
@@ -119,7 +119,7 @@ public class TokenManager {
             PublicKey publicKey = RsaUtils.getPublicKey(bytes);
             return TokenManager.parse(publicKey, token);
         } catch (Exception e) {
-            throw new AuthException(ResponseStatus.UNAUTHORIZED);
+            throw new SecurityException(ResponseStatus.UNAUTHORIZED);
         }
     }
 

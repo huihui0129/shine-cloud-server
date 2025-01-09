@@ -5,7 +5,7 @@ import com.shine.security.authorization.impl.AuthorityPrincipal;
 import com.shine.security.constant.SecurityConstant;
 import com.shine.security.context.SecurityContext;
 import com.shine.security.context.SecurityContextHolder;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 import com.shine.security.token.TokenManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -32,7 +32,7 @@ public class SecurityContextInterceptor implements HandlerInterceptor {
                     context.setPrincipal(principal);
                     SecurityContextHolder.setContext(context);
                 } catch (Exception e) {
-                    throw new BaseException(AuthorityStatus.EXPIRED_TOKEN);
+                    throw new BaseException(SecurityStatus.EXPIRED_TOKEN);
                 }
             }
         }

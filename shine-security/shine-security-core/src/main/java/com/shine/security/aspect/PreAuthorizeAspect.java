@@ -1,6 +1,6 @@
 package com.shine.security.aspect;
 
-import com.shine.common.exception.AuthException;
+import com.shine.common.exception.SecurityException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.annotation.PreAuthorize;
 import com.shine.security.utils.SecurityAuthentication;
@@ -39,7 +39,7 @@ public class PreAuthorizeAspect {
         boolean hasPermission = (Boolean) parser.parseExpression(expression).getValue(context);
         if (!hasPermission) {
             log.error("无权：{}", expression);
-            throw new AuthException(ResponseStatus.UNAUTHORIZED);
+            throw new SecurityException(ResponseStatus.UNAUTHORIZED);
         }
     }
 

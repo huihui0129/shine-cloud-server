@@ -8,16 +8,16 @@ import com.shine.common.enums.IEnum;
  * @description AuthException
  */
 
-public class AuthException extends RuntimeException implements IException {
+public class SecurityException extends RuntimeException implements IException {
 
     private final IEnum<String> iEnum;
 
-    public AuthException(IEnum<String> iEnum) {
+    public SecurityException(IEnum<String> iEnum) {
         super(iEnum.getName());
         this.iEnum = iEnum;
     }
 
-    public AuthException(IEnum<String> iEnum, String message) {
+    public SecurityException(IEnum<String> iEnum, String message) {
         super(message);
         this.iEnum = iEnum;
     }

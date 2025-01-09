@@ -16,6 +16,10 @@
     <dependencies>
         <dependency>
             <groupId>com.shine</groupId>
+            <artifactId>shine-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.shine</groupId>
             <artifactId>shine-security-core</artifactId>
         </dependency>
         <dependency>

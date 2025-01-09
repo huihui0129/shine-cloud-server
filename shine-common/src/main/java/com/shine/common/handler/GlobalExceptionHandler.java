@@ -1,6 +1,6 @@
 package com.shine.common.handler;
 
-import com.shine.common.exception.AuthException;
+import com.shine.common.exception.SecurityException;
 import com.shine.common.exception.BaseException;
 import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(value = AuthException.class)
+    @ExceptionHandler(value = SecurityException.class)
     @org.springframework.web.bind.annotation.ResponseStatus(code = HttpStatus.UNAUTHORIZED, value = HttpStatus.UNAUTHORIZED)
-    public Result<?> authExceptionHandler(AuthException e) {
+    public Result<?> authExceptionHandler(SecurityException e) {
         log.error("权限处理异常：[{}]|[{}]|[{}]", e.getEnum().getCode(), e.getEnum().getName(), e.getMessage());
         e.printStackTrace();
         return Result.error(e.getEnum().getCode(), e.getMessage());

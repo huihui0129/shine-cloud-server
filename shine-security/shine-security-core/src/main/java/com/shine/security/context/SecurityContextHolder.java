@@ -1,7 +1,7 @@
 package com.shine.security.context;
 
 import com.shine.common.exception.BaseException;
-import com.shine.security.http.AuthorityStatus;
+import com.shine.security.http.SecurityStatus;
 
 /**
  * @author huihui
@@ -15,7 +15,7 @@ public class SecurityContextHolder {
     public static SecurityContext getContext() {
         SecurityContext context = contextHolder.get();
         if (context == null) {
-            throw new BaseException(AuthorityStatus.EXPIRED_TOKEN);
+            throw new BaseException(SecurityStatus.EXPIRED_TOKEN);
         }
         return context;
     }
