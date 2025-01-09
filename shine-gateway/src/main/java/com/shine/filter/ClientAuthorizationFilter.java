@@ -21,8 +21,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.StandardCharsets;
-
 /**
  * @author huihui
  * @date 2024/11/4 10:39
@@ -30,7 +28,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 @Component
-public class ClientAuthorizationFilter implements GlobalFilter, Ordered {
+public class ClientAuthorizationFilter extends CommonGlobalFilter implements GlobalFilter, Ordered {
 
     @Resource
     private GatewayCustomizeProperties gatewayCustomizeProperties;
@@ -45,7 +43,6 @@ public class ClientAuthorizationFilter implements GlobalFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getPath().value();
         // 不需要认证的路径
-        log.info("执行客户端验证Filter：{}", path);
         if (PathMatchUtil.notMatch(gatewayCustomizeProperties.getAuthorizationExcludePath(), path)) {
             String client = request.getHeaders().getFirst(GatewayConstant.CLIENT_KEY);
             if (StringUtils.isBlank(client)) {
@@ -57,12 +54,6 @@ public class ClientAuthorizationFilter implements GlobalFilter, Ordered {
             }
         }
         return chain.filter(exchange);
-    }
-
-    private Mono<Void> getVoidMono(ServerHttpResponse response, IEnum status) {
-        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        DataBuffer buffer = response.bufferFactory().wrap(JSON.toJSONString(Result.error(status)).getBytes(StandardCharsets.UTF_8));
-        return response.writeWith(Flux.just(buffer));
     }
 
 }

@@ -36,7 +36,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 @Component
-public class ServiceAuthorizationFilter implements GlobalFilter, Ordered {
+public class ServiceAuthorizationFilter extends CommonGlobalFilter implements GlobalFilter, Ordered {
 
     @Resource
     private GatewayCustomizeProperties gatewayCustomizeProperties;
@@ -56,10 +56,8 @@ public class ServiceAuthorizationFilter implements GlobalFilter, Ordered {
         String path = request.getPath().value();
         String client = request.getHeaders().getFirst(GatewayConstant.CLIENT_KEY);
         // 不需要认证的路径
-        log.info("执行服务验证Filter：{}", path);
         if ("service".equals(client)) {
             if (PathMatchUtil.notMatch(gatewayCustomizeProperties.getAuthorizationExcludePath(), path)) {
-                log.info("请求地址：{}，需要验证Token", path);
                 String token = request.getHeaders().getFirst(SecurityConstant.HEADER_TOKEN_KEY);
                 if (StringUtils.isBlank(token)) {
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -90,12 +88,6 @@ public class ServiceAuthorizationFilter implements GlobalFilter, Ordered {
             }
         }
         return chain.filter(exchange);
-    }
-
-    private Mono<Void> getVoidMono(ServerHttpResponse response, IEnum status) {
-        response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
-        DataBuffer buffer = response.bufferFactory().wrap(JSON.toJSONString(Result.error(status)).getBytes(StandardCharsets.UTF_8));
-        return response.writeWith(Flux.just(buffer));
     }
 
 }

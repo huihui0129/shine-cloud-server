@@ -16,7 +16,6 @@
         <dependency>
             <groupId>com.shine</groupId>
             <artifactId>shine-common</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>

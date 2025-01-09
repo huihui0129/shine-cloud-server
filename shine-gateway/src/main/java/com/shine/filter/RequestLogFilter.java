@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
  */
 @Slf4j
 @Component
-public class RequestLogFilter implements GlobalFilter, Ordered {
+public class RequestLogFilter extends CommonGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
