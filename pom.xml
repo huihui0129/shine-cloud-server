@@ -11,14 +11,14 @@
     <description>父工程</description>
 
     <modules>
-        <module>gateway</module>
-        <module>api</module>
-        <module>common</module>
-        <module>service</module>
-        <module>components</module>
-        <module>framework</module>
-        <module>security</module>
-        <module>monitor</module>
+        <module>shine-gateway</module>
+        <module>shine-api</module>
+        <module>shine-common</module>
+        <module>shine-service</module>
+        <module>shine-components</module>
+        <module>shine-framework</module>
+        <module>shine-security</module>
+        <module>shine-monitor</module>
     </modules>
 
     <properties>
@@ -158,72 +158,72 @@
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>shine-common</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>swagger-starter</artifactId>
+                <artifactId>shine-swagger-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>openfeign-starter</artifactId>
+                <artifactId>shine-openfeign-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>mybatis-plus-starter</artifactId>
+                <artifactId>shine-mybatis-plus-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>redis-starter</artifactId>
+                <artifactId>shine-redis-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>rabbitmq-starter</artifactId>
+                <artifactId>shine-rabbitmq-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>log-starter</artifactId>
+                <artifactId>shine-log-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>file-component</artifactId>
+                <artifactId>shine-file-component</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>user-api</artifactId>
+                <artifactId>shine-user-api</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>article-api</artifactId>
+                <artifactId>shine-article-api</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>security-api</artifactId>
+                <artifactId>shine-security-api</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>async-starter</artifactId>
+                <artifactId>shine-async-starter</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>security-core</artifactId>
+                <artifactId>shine-security-core</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>security-web</artifactId>
+                <artifactId>shine-security-web</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>
             <dependency>
