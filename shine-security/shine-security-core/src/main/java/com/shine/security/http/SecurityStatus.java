@@ -19,7 +19,7 @@ public enum SecurityStatus implements IEnum<String> {
 
     ENC_DATA_NULL("210003", "加密数据不能为空"),
 
-    OFFLINE("210004", "你被人踢下线啦！快改密码！！！"),
+    OFFLINE("210004", "你的账号被顶掉啦！快改密码！！！"),
 
     NOT_EXISTS_CLIENT("210005", "没有找到这个客户端呢，请先联系管理员注册客户端吧"),
 
@@ -38,6 +38,8 @@ public enum SecurityStatus implements IEnum<String> {
     CREATE_USER_MISMATCH("210012", "不是你获取的用什么用"),
 
     NO_REFRESH_TOKEN("210013", "没找到你的续约令牌耶"),
+
+    ADMIN_OFFLINE("210014", "你被踢下线啦"),
 
     ;
 

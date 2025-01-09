@@ -19,6 +19,8 @@ public interface SecurityConstant extends BaseConstant {
 
     String REFRESH_TOKEN_REDIS_PREFIX = SECURITY_SERVICE + "refresh:token:";
 
+    String OFFLINE_REDIS_PREFIX = SECURITY_SERVICE + "status:offline:";
+
     String USER_REDIS_PREFIX = SECURITY_SERVICE + "user:";
 
     long AUTH_EXPIRE_TIME_SECONDS = 1440L;

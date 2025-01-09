@@ -53,6 +53,7 @@ public class SecurityAuthorizationFilter extends CommonGlobalFilter implements G
             String token = request.getHeaders().getFirst(SecurityConstant.HEADER_TOKEN_KEY);
             if (PathMatchUtil.notMatch(gatewayCustomizeProperties.getAuthorizationExcludePath(), path)) {
                 if (StringUtils.isBlank(token)) {
+                    log.error("没有Token");
                     response.setStatusCode(HttpStatus.UNAUTHORIZED);
                     return getVoidMono(response, SecurityStatus.NO_TOKEN);
                 } else {
@@ -62,15 +63,24 @@ public class SecurityAuthorizationFilter extends CommonGlobalFilter implements G
                         // 查询redis是否有key
                         String redisToken = redisTemplate.opsForValue().get(SecurityConstant.TOKEN_REDIS_PREFIX + principal.getId());
                         // 没有就是过期
+                        Boolean hasKey = redisTemplate.hasKey(SecurityConstant.OFFLINE_REDIS_PREFIX + principal.getId());
                         if (StringUtils.isBlank(redisToken)) {
+                            log.error("没有Token，查看是否被人踢下线");
                             response.setStatusCode(HttpStatus.UNAUTHORIZED);
-                            return getVoidMono(response, SecurityStatus.EXPIRED_TOKEN);
+                            if (hasKey != null && hasKey) {
+                                return getVoidMono(response, SecurityStatus.ADMIN_OFFLINE);
+                            } else {
+                                return getVoidMono(response, SecurityStatus.EXPIRED_TOKEN);
+                            }
                         }
                         // 有不匹配就是下线
                         if (!StringUtils.equals(redisToken, token)) {
                             log.error("不匹配RedisToken，下线");
                             response.setStatusCode(HttpStatus.UNAUTHORIZED);
                             return getVoidMono(response, SecurityStatus.OFFLINE);
+                        }
+                        if (hasKey != null && hasKey) {
+                            redisTemplate.delete(SecurityConstant.OFFLINE_REDIS_PREFIX + principal.getId());
                         }
                     } catch (Exception e) {
                         log.error("解析Token异常：", e);

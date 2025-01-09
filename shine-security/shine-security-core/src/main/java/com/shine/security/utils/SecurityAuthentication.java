@@ -67,7 +67,7 @@ public class SecurityAuthentication {
             return false;
         }
         Principal user = getCurrentUser();
-        if (StringUtils.equals(username, user.getUsername())) {
+        if (!StringUtils.equals(username, user.getUsername())) {
             log.error("用户：{} 非此用户：{}", user.getId(), username);
             return false;
         }

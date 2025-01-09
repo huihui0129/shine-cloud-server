@@ -3,8 +3,9 @@ package com.shine.security.manager;
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.constant.SecurityConstant;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserStatusManager {
 
-    @Resource
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
     /**
@@ -33,6 +34,7 @@ public class UserStatusManager {
             default -> throw new BaseException(ResponseStatus.PARAMS_ERROR, "未找到服务");
         };
         redisTemplate.delete(key);
+        redisTemplate.opsForValue().set(SecurityConstant.OFFLINE_REDIS_PREFIX + userId, "1");
         return true;
     }
 
