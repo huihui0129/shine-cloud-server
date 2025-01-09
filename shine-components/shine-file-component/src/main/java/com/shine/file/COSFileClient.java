@@ -19,7 +19,7 @@ import java.util.UUID;
 /**
  * @author huihui
  * @date 2024/11/5 13:33
- * @description CosClient
+ * @description CosClient COS文件处理
  */
 @Component
 public class COSFileClient {
