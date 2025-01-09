@@ -46,9 +46,11 @@ public class ClientAuthorizationFilter extends CommonGlobalFilter implements Glo
         if (PathMatchUtil.notMatch(gatewayCustomizeProperties.getAuthorizationExcludePath(), path)) {
             String client = request.getHeaders().getFirst(GatewayConstant.CLIENT_KEY);
             if (StringUtils.isBlank(client)) {
-                request.mutate()
+                request = request.mutate()
                         .header(GatewayConstant.CLIENT_KEY, "service")
                         .build();
+                // 创建新的 ServerWebExchange 对象，包含修改后的请求
+                exchange = exchange.mutate().request(request).build();
             } else {
                 log.info("客户端：{}", client);
             }

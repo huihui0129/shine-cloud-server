@@ -55,4 +55,23 @@ public class SecurityAuthentication {
         return permissionList.contains(permission);
     }
 
+    /**
+     * 验证是否是指定用户
+     *
+     * @param username 用户名
+     * @return 是否验证通过
+     */
+    public boolean hasUsername(String username) {
+        if (StringUtils.isBlank(username)) {
+            log.error("需要用户名");
+            return false;
+        }
+        Principal user = getCurrentUser();
+        if (StringUtils.equals(username, user.getUsername())) {
+            log.error("用户：{} 非此用户：{}", user.getId(), username);
+            return false;
+        }
+        return true;
+    }
+
 }

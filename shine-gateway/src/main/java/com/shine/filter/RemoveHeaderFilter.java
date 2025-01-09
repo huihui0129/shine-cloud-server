@@ -52,9 +52,11 @@ public class RemoveHeaderFilter extends CommonGlobalFilter implements GlobalFilt
                     } catch (Exception e) {
                         log.error("解析Token异常，但是这个路径是可以访问的");
                         // 删除这个头以免下游服务误解
-                        request.mutate()
+                        request = request.mutate()
                                 .headers(headers -> headers.remove(SecurityConstant.HEADER_TOKEN_KEY))
                                 .build();
+                        // 创建新的 ServerWebExchange 对象，包含修改后的请求
+                        exchange = exchange.mutate().request(request).build();
                     }
                 }
             }

@@ -9,7 +9,7 @@ import com.shine.common.constant.BaseConstant;
  */
 public interface GatewayConstant extends BaseConstant {
 
-    String CLIENT_KEY = "client";
+    String CLIENT_KEY = "Client";
 
     int FILTER_ORDER_REQUEST_LOG = 3;
 
