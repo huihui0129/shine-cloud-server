@@ -33,4 +33,16 @@ public class UserStatusController {
         return Result.success(userStatusManager.offline(service, userId));
     }
 
+    @Operation(summary = "在线续约")
+    @GetMapping("/line/renew/{service}/{userId}")
+    public Result<Boolean> userLineRenew(@PathVariable("service") String service, @PathVariable("userId") Long userId) {
+        return Result.success(userStatusManager.renew(service, userId));
+    }
+
+    @Operation(summary = "在线续约")
+    @GetMapping("/line/renew/{service}")
+    public Result<Long> getOnlineUserCount(@PathVariable("service") String service) {
+        return Result.success(userStatusManager.getOnlineUserCount(service));
+    }
+
 }

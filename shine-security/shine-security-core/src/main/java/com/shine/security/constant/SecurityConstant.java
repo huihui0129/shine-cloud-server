@@ -21,6 +21,8 @@ public interface SecurityConstant extends BaseConstant {
 
     String OFFLINE_REDIS_PREFIX = SECURITY_SERVICE + "status:offline:";
 
+    String ONLINE_REDIS_PREFIX = SECURITY_SERVICE + "status:online:";
+
     String USER_REDIS_PREFIX = SECURITY_SERVICE + "user:";
 
     long AUTH_EXPIRE_TIME_SECONDS = 1440L;
