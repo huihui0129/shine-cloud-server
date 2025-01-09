@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author huihui
@@ -34,14 +31,14 @@ public class UserStatusController {
     }
 
     @Operation(summary = "在线续约")
-    @GetMapping("/line/renew/{service}/{userId}")
-    public Result<Boolean> userLineRenew(@PathVariable("service") String service, @PathVariable("userId") Long userId) {
-        return Result.success(userStatusManager.renew(service, userId));
+    @GetMapping("/line/renew/{service}")
+    public Result<Boolean> userLineRenew(@PathVariable("service") String service) {
+        return Result.success(userStatusManager.renew(service));
     }
 
     @Operation(summary = "在线续约")
-    @GetMapping("/line/renew/{service}")
-    public Result<Long> getOnlineUserCount(@PathVariable("service") String service) {
+    @GetMapping("/line/renew")
+    public Result<Long> getOnlineUserCount(@RequestParam(required = false) String service) {
         return Result.success(userStatusManager.getOnlineUserCount(service));
     }
 

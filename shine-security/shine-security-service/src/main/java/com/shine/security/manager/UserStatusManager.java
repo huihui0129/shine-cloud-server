@@ -3,6 +3,7 @@ package com.shine.security.manager;
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
 import com.shine.security.constant.SecurityConstant;
+import com.shine.security.context.SecurityContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,20 +52,30 @@ public class UserStatusManager {
      * 用户在线续约
      *
      * @param service
-     * @param userId
      * @return
      */
-    public Boolean renew(String service, Long userId) {
+    public Boolean renew(String service) {
+        if (StringUtils.isBlank(service)) {
+            log.error("未知的续约服务");
+            throw new BaseException(ResponseStatus.PARAMS_ERROR, "你要续约哪个服务呀~");
+        }
+        Long userId = SecurityContextHolder.getContext().getPrincipal().getId();
         String key = SecurityConstant.ONLINE_REDIS_PREFIX + service + ":" + userId;
         Boolean hasKey = redisTemplate.hasKey(key);
         if (hasKey != null && hasKey) {
             redisTemplate.expire(key, TIMEOUT, TimeUnit.MILLISECONDS);
         } else {
-            redisTemplate.opsForValue().set(key, "online", TIMEOUT, TimeUnit.MILLISECONDS);
+            redisTemplate.opsForValue().set(key, String.valueOf(userId), TIMEOUT, TimeUnit.MILLISECONDS);
         }
         return true;
     }
 
+    /**
+     * 获取在线用户数
+     *
+     * @param service
+     * @return
+     */
     public long getOnlineUserCount(String service) {
         Set<String> userKeys = new HashSet<>();
         long cursor;
