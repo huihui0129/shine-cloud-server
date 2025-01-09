@@ -5,19 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.shine</groupId>
-        <artifactId>shine-cloud-server</artifactId>
+        <artifactId>shine-components</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>shine-components</artifactId>
-    <packaging>pom</packaging>
-    <description>组件模块</description>
-
-    <modules>
-        <module>shine-file-component</module>
-        <module>shine-lock-component</module>
-        <module>shine-limiter-component</module>
-        <module>shine-id-component</module>
-    </modules>
+    <artifactId>shine-id-component</artifactId>
 
 </project>
