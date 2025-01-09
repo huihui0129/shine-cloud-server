@@ -20,4 +20,7 @@ public abstract class AccessTokenRequest {
     @Schema(description = "客户端secret")
     private String clientSecret;
 
+    @Schema(description = "请求授权范围")
+    private String scope;
+
 }

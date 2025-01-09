@@ -14,6 +14,7 @@ import com.shine.security.response.AuthorizeResponse;
 import com.shine.security.service.AuthorizationService;
 import com.shine.security.strategy.AuthorizationCodeStrategy;
 import com.shine.security.strategy.AuthorizationContext;
+import com.shine.security.strategy.PasswordStrategy;
 import com.shine.security.strategy.RefreshTokenStrategy;
 import com.rabbitmq.client.Channel;
 import jakarta.annotation.Resource;
@@ -38,6 +39,9 @@ public class AuthorizationServiceImpl implements AuthorizationService {
 
     @Resource
     private RefreshTokenStrategy refreshTokenStrategy;
+
+    @Resource
+    private PasswordStrategy passwordStrategy;
 
     @Resource
     private AuthorizationCodeMapper authorizationCodeMapper;
@@ -124,6 +128,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
                 return new AuthorizationContext(authorizationCodeStrategy);
             case REFRESH_TOKEN: // 刷新令牌模式
                 return new AuthorizationContext(refreshTokenStrategy);
+            case PASSWORD:
+                return new AuthorizationContext(passwordStrategy);
             default:
                 throw new BaseException(SecurityStatus.AUTH_MODE_ERROR);
         }
