@@ -20,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -75,4 +77,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return response;
     }
 
+    @Override
+    public List<UserInfo> listByUserIdList(List<Long> userIdList) {
+        if (CollectionUtils.isEmpty(userIdList)) {
+            return Collections.emptyList();
+        }
+        return this.baseMapper.listByIdList(userIdList);
+    }
 }

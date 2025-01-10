@@ -11,12 +11,6 @@ import lombok.Data;
 public class Role extends BaseEntity {
 
     /**
-    * 应用ID
-    */
-    @TableField(value = "app_id")
-    private Long appId;
-
-    /**
     * 角色编码
     */
     @TableField(value = "code")

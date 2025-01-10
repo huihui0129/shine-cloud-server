@@ -3,11 +3,14 @@ package com.shine.security.controller;
 import com.shine.common.response.Result;
 import com.shine.security.annotation.PreAuthorize;
 import com.shine.security.manager.UserStatusManager;
+import com.shine.security.response.OnlineUserResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author huihui
@@ -17,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Tag(name = "用户状态管理 Controller", description = "用户状态管理 Controller")
 @RestController
-@RequestMapping("/userStatue")
+@RequestMapping("/userStatus")
 public class UserStatusController {
 
     @Resource
@@ -36,10 +39,16 @@ public class UserStatusController {
         return Result.success(userStatusManager.renew(service));
     }
 
-    @Operation(summary = "在线续约")
-    @GetMapping("/line/renew")
+    @Operation(summary = "获取在线用户数")
+    @GetMapping("/line/getOnlineUserCount")
     public Result<Long> getOnlineUserCount(@RequestParam(required = false) String service) {
         return Result.success(userStatusManager.getOnlineUserCount(service));
+    }
+
+    @Operation(summary = "获取在线用户")
+    @GetMapping("/line/getOnlineUser")
+    public Result<List<OnlineUserResponse>> getOnlineUser(@RequestParam(required = false) String service) {
+        return Result.success(userStatusManager.getOnlineUser(service));
     }
 
 }

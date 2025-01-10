@@ -11,10 +11,10 @@ import lombok.Data;
 public class Menu extends BaseEntity {
 
     /**
-    * 应用ID
+    * 客户端ID
     */
-    @TableField(value = "app_id")
-    private Long appId;
+    @TableField(value = "client_id")
+    private String clientId;
 
     /**
     * 父ID

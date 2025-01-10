@@ -78,4 +78,8 @@ public class UserFeignImpl implements UserFeign {
         return Result.success(flag);
     }
 
+    @Override
+    public List<UserInfo> listByUserIdList(List<Long> userIdList) {
+        return userService.listByUserIdList(userIdList);
+    }
 }

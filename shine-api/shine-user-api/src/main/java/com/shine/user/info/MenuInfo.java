@@ -3,6 +3,7 @@ package com.shine.user.info;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 菜单 INFO实体
@@ -23,7 +24,7 @@ public class MenuInfo {
     private Long parentId;
 
     @Schema(description = "菜单名称")
-    private String menuName;
+    private String name;
 
     @Schema(description = "菜单路由")
     private String path;
@@ -57,5 +58,8 @@ public class MenuInfo {
 
     @Schema(description = "备注")
     private String remark;
+
+    @Schema(description = "子菜单")
+    private List<MenuInfo> children;
 
 }

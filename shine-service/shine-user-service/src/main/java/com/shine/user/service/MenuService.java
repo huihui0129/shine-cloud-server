@@ -25,4 +25,6 @@ public interface MenuService extends IService<Menu> {
      */
     List<MenuInfo> getByUserId(Long appId, Long userId);
 
+    List<MenuInfo> listByClient(String clientId);
+
 }

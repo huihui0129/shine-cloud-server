@@ -9,6 +9,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
+
 /**
  * @author huihui
  * @date 2024/10/31 17:11
@@ -22,5 +24,8 @@ public interface UserFeign {
 
     @PostMapping("/save")
     Result<Boolean> saveUser(UserInfo userInfo);
+
+    @PostMapping("/listByUserIdList")
+    List<UserInfo> listByUserIdList(@RequestBody List<Long> userIdList);
 
 }
