@@ -7,6 +7,7 @@
     <groupId>com.shine</groupId>
     <artifactId>shine-code-generator</artifactId>
     <version>1.0.0</version>
+    <description>代码生成器</description>
 
     <dependencies>
         <dependency>

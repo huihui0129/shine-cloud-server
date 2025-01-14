@@ -53,30 +53,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public UserPermissionResponse getPerm(Long appId, Long userId) {
-        UserInfo user = this.getUserById(userId);
-        if (user == null) {
-            throw new BaseException(ResponseStatus.PARAMS_ERROR, "用户不存在");
-        }
-        UserPermissionResponse response = new UserPermissionResponse();
-        BeanUtil.copyProperties(user, response, true);
-        List<MenuInfo> menuInfoList = menuService.getByUserId(appId, userId);
-        if (CollectionUtils.isEmpty(menuInfoList)) {
-            log.error("用户：{}，没有权限", userId);
-            return response;
-        }
-        Map<Integer, List<MenuInfo>> typeMap = menuInfoList.stream().collect(Collectors.groupingBy(MenuInfo::getType));
-        List<MenuInfo> menuList = typeMap.get(MenuTypeEnum.T0.getCode());
-        List<MenuInfo> buttonList = typeMap.get(MenuTypeEnum.T1.getCode());
-        // TODO
-//        response.setMenuList(menuList);
-//        if (CollectionUtils.isNotEmpty(buttonList)) {
-//            response.setButtonList(buttonList.stream().map(MenuInfo::getPermission).collect(Collectors.toList()));
-//        }
-        return response;
-    }
-
-    @Override
     public List<UserInfo> listByUserIdList(List<Long> userIdList) {
         if (CollectionUtils.isEmpty(userIdList)) {
             return Collections.emptyList();

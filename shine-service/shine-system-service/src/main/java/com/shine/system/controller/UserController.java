@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author huihui
@@ -48,12 +45,6 @@ public class UserController {
     public Result<Boolean> deleteUserById(@PathVariable("id") Long id) {
         Boolean flag = userService.deleteById(id);
         return Result.success(flag);
-    }
-
-    @GetMapping("/get/perm/{appId}/{userId}")
-    @Operation(summary = "查询用户以及权限详细信息")
-    public Result<UserPermissionResponse> getUserPermById(@PathVariable("appId") Long appId, @PathVariable("userId") Long userId) {
-        return Result.success(userService.getPerm(appId, userId));
     }
 
 }

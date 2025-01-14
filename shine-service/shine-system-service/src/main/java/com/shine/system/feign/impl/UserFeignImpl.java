@@ -8,6 +8,8 @@ import com.shine.common.response.Result;
 import com.shine.common.status.ResponseStatus;
 import com.shine.system.entity.User;
 import com.shine.system.feign.UserFeign;
+import com.shine.system.info.MenuInfo;
+import com.shine.system.info.RoleInfo;
 import com.shine.system.info.UserInfo;
 import com.shine.system.request.UserRequest;
 import com.shine.system.response.UserPermissionResponse;
@@ -57,15 +59,10 @@ public class UserFeignImpl implements UserFeign {
         }
         UserPermissionResponse userInfo = new UserPermissionResponse();
         BeanUtil.copyProperties(user, userInfo, true);
-        // 角色和按钮
-        List<String> roleList = new ArrayList<>();
-        roleList.add("system_user");
-        roleList.add("system_admin");
-        List<String> permissionList = new ArrayList<>();
-        permissionList.add("system:user:add");
-        permissionList.add("system:user:query");
-        userInfo.setRoleList(roleList);
-        userInfo.setPermissionList(permissionList);
+        List<RoleInfo> roleList = roleService.getByUserId(user.getId());
+        userInfo.setRoleList(roleList.stream().map(RoleInfo::getCode).toList());
+        List<MenuInfo> permissionList = menuService.getPermissionByUserId(request.getClientId(), user.getId());
+        userInfo.setPermissionList(permissionList.stream().map(MenuInfo::getPermission).toList());
         return Result.success(userInfo);
     }
 

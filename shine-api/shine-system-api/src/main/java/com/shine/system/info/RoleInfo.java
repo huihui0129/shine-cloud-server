@@ -16,11 +16,11 @@ public class RoleInfo {
     @Schema(description = "id")
     private Long id;
 
-    @Schema(description = "应用ID")
-    private Long appId;
+    @Schema(description = "角色编码")
+    private String code;
 
     @Schema(description = "角色名称")
-    private String roleName;
+    private String name;
 
     @Schema(description = "创建时间")
     private Date createTime;

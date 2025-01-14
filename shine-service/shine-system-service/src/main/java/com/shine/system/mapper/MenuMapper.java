@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<MenuInfo> selectByUserId(@Param("appId") Long appId, @Param("userId") Long userId);
+    List<MenuInfo> selectByUserId(@Param("clientId") Long clientId, @Param("userId") Long userId);
 
     List<MenuInfo> listByClientId(@Param("clientId") String clientId, @Param("userId") Long userId);
 

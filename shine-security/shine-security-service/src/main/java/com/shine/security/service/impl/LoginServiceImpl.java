@@ -118,6 +118,7 @@ public class LoginServiceImpl implements LoginService {
         // 验证账号密码
         UserRequest userRequest = new UserRequest();
         userRequest.setUsername(request.getUsername());
+        userRequest.setClientId("security");
         Result<UserPermissionResponse> userResult = userFeign.getUser(userRequest);
         if (!userResult.getSuccess()) {
             throw new BaseException(ResponseStatus.FEIGN_ERROR, "用户名不存在哦，请仔细看看呢");

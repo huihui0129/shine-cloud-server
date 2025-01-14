@@ -17,4 +17,7 @@ public class UserRequest {
     @Schema(description = "用户名")
     private String username;
 
+    @Schema(description = "客户端ID")
+    private String clientId;
+
 }

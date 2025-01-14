@@ -27,4 +27,6 @@ public interface MenuService extends IService<Menu> {
 
     List<MenuInfo> listByClient(String clientId);
 
+    List<MenuInfo> getPermissionByUserId(String clientId, Long userId);
+
 }

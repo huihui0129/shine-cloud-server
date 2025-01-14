@@ -40,8 +40,6 @@ public interface UserService extends IService<User> {
      */
     Boolean deleteById(Long id);
 
-    UserPermissionResponse getPerm(Long appId, Long userId);
-
     List<UserInfo> listByUserIdList(List<Long> userIdList);
 
 }

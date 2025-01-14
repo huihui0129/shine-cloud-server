@@ -21,11 +21,11 @@ import java.util.List;
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
 
     @Override
-    public List<RoleInfo> getByUserId(Long appId, Long userId) {
+    public List<RoleInfo> getByUserId(Long userId) {
         if (userId == null) {
             log.error("查询用户角色信息缺失用户ID");
         }
-        return this.baseMapper.selectByUserId(appId, userId);
+        return this.baseMapper.selectByUserId(clientId, userId);
     }
 
 }
