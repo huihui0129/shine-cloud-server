@@ -203,11 +203,6 @@
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>shine-article-api</artifactId>
-                <version>${shine-cloud.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shine</groupId>
                 <artifactId>shine-security-api</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>

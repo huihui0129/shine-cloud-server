@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shine.user.mapper.MenuMapper">
+
+    <select id="selectByUserId" resultType="com.shine.system.info.MenuInfo">
+        select t1.*
+        from hh_user.menu t1
+        join hh_user.role_menu t2 on t1.id = t2.menu_id and t2.deleted = 0
+        join hh_user.role t3 on t2.role_id = t3.id and t3.deleted = 0 and t3.app_id = #{appId}
+        join hh_user.user_role t4 on t3.id = t4.role_id and t4.deleted = 0
+        where t1.deleted = 0
+        <if test="appId != null">
+            and t1.app_id = #{appId}
+        </if>
+        and t4.user_id = #{userId}
+    </select>
+
+    <select id="listByClientId" resultType="com.shine.system.info.MenuInfo">
+        select t1.*
+        from shine_user.menu t1
+        join shine_user.role_menu t2 on t1.id = t2.menu_id and t1.deleted = 0
+        join shine_user.user_role t3 on t2.role_id = t3.role_id and t3.deleted = 0
+        where t1.deleted = 0
+        and t1.client_id = #{clientId}
+        and t3.user_id = #{userId}
+    </select>
+
+</mapper>

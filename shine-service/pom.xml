@@ -16,7 +16,6 @@
 
     <modules>
         <module>shine-system-service</module>
-        <module>shine-article-service</module>
     </modules>
 
 </project>
