@@ -35,6 +35,6 @@ public interface SecurityConstant extends BaseConstant {
     /**
      * 图片验证码前缀
      */
-    String CAPTCHA_CATCH_KEY_PREFIX = USER_SERVICE + "captcha:";
+    String CAPTCHA_CATCH_KEY_PREFIX = SYSTEM_SERVICE + "captcha:";
 
 }

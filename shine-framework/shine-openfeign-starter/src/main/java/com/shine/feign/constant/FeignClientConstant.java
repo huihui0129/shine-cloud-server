@@ -7,8 +7,8 @@ package com.shine.feign.constant;
  */
 public interface FeignClientConstant {
 
-    String USER_NAME = "user-service";
+    String SYSTEM_NAME = "system-service";
 
-    String USER_CONTENT_ID = "user";
+    String SYSTEM_CONTENT_ID = "system";
 
 }

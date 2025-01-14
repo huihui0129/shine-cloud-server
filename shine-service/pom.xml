@@ -15,7 +15,7 @@
     <description>服务模块</description>
 
     <modules>
-        <module>shine-user-service</module>
+        <module>shine-system-service</module>
         <module>shine-article-service</module>
     </modules>
 

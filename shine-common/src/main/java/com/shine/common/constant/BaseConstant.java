@@ -9,7 +9,7 @@ public interface BaseConstant {
 
     String SECURITY_SERVICE = "security:";
 
-    String USER_SERVICE = "user:";
+    String SYSTEM_SERVICE = "system:";
 
     String ARTICLE_SERVICE = "article:";
 

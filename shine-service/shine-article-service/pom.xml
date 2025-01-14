@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>com.shine</groupId>
-            <artifactId>shine-user-api</artifactId>
+            <artifactId>shine-system-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

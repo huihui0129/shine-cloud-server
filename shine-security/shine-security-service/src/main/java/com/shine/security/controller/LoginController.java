@@ -8,7 +8,7 @@ import com.shine.security.request.UserRegisterRequest;
 import com.shine.security.response.CaptchaResponse;
 import com.shine.security.response.UserLoginResponse;
 import com.shine.security.service.LoginService;
-import com.shine.user.info.UserInfo;
+import com.shine.system.info.UserInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
