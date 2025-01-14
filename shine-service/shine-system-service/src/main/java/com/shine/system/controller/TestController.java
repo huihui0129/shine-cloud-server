@@ -43,11 +43,4 @@ public class TestController {
         throw new BaseException(ResponseStatus.ERROR, "我是一个超级牛逼的错误");
     }
 
-    @Operation(summary = "测试配置获取")
-    @GetMapping("/getConfig")
-    @PreAuthorize("hasRole('system_admin')")
-    public Result<String> getConfig() {
-        return Result.success(userProperties.getTest());
-    }
-
 }

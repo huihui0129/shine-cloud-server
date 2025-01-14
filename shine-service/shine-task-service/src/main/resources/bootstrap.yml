@@ -6,7 +6,7 @@ nacos:
   group: DEFAULT_GROUP
 spring:
   application:
-    name: gateway
+    name: task-service
   cloud:
     nacos:
       discovery:
@@ -24,24 +24,15 @@ spring:
         prefix: ${spring.application.name}
         file-extension: yml
         shared-configs[0]:
+          data-id: mybatis-plus.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[1]:
+          data-id: redis.yml
+          group: DEFAULT_GROUP
+          refresh: true
+        shared-configs[2]:
           data-id: admin.yml
           group: DEFAULT_GROUP
           refresh: true
-    gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-      routes:
-        - id: security
-          uri: lb://security-service
-          predicates:
-            - Path=/security/**
-          filters:
-            - StripPrefix=1
-        - id: system
-          uri: lb://system-service
-          predicates:
-            - Path=/system/**
-          filters:
-            - StripPrefix=1
 

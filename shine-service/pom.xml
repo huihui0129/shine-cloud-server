@@ -16,6 +16,7 @@
 
     <modules>
         <module>shine-system-service</module>
+        <module>shine-task-service</module>
     </modules>
 
 </project>

@@ -21,6 +21,7 @@
         <module>shine-redis-starter</module>
         <module>shine-rabbitmq-starter</module>
         <module>shine-async-starter</module>
+        <module>shine-xxl-job</module>
     </modules>
 
 </project>

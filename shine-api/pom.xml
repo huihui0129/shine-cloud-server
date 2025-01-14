@@ -16,6 +16,7 @@
     <modules>
         <module>shine-system-api</module>
         <module>shine-security-api</module>
+        <module>shine-task-api</module>
     </modules>
 
 </project>
