@@ -25,7 +25,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         if (userId == null) {
             log.error("查询用户角色信息缺失用户ID");
         }
-        return this.baseMapper.selectByUserId(clientId, userId);
+        return this.baseMapper.selectByUserId(userId);
     }
 
 }

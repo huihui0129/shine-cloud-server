@@ -73,7 +73,7 @@ public class MapperXmlHandler extends AbstractGeneratorHandler implements Genera
         // 2. 加载模板
         Template template = cfg.getTemplate("mapperXml.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/mapperXml/" + table.getClassName() + ".xml");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/mapperXml/" + table.getClassName() + ".xml");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

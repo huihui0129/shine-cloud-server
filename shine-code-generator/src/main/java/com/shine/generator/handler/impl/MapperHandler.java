@@ -46,7 +46,7 @@ public class MapperHandler extends AbstractGeneratorHandler implements Generator
         // 2. 加载模板
         Template template = cfg.getTemplate("mapper.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/mapper/" + table.getClassName() + ".java");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/mapper/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

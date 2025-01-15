@@ -46,7 +46,7 @@ public class ServiceHandler extends AbstractGeneratorHandler implements Generato
         // 2. 加载模板
         Template template = cfg.getTemplate("service.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/service/" + table.getClassName() + ".java");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/service/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

@@ -71,7 +71,7 @@ public class CreateRequestHandler extends AbstractGeneratorHandler implements Ge
         // 2. 加载模板
         Template template = cfg.getTemplate("createRequest.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/createRequest/" + table.getClassName() + ".java");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/createRequest/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

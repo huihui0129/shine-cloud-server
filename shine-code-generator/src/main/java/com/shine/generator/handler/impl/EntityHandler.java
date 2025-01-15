@@ -73,7 +73,7 @@ public class EntityHandler extends AbstractGeneratorHandler implements Generator
         // 2. 加载模板
         Template template = cfg.getTemplate("entity.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/entity/" + table.getClassName() + ".java");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/entity/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

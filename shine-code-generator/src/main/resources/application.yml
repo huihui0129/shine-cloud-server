@@ -1,6 +1,6 @@
 generator:
   datasource:
-    url: jdbc:mysql://localhost:3306/hh_auth?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true
+    url: jdbc:mysql://localhost:3306/shine_security?useSSL=false&serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true
     username: root
     password: 123456
   # 包配置
@@ -9,9 +9,9 @@ generator:
     base-package: com.shine
   # 生成配置
   generator:
-    database: hh_auth
+    database: shine_security
     table-name:
-      - oauth_refresh_token
+      - oauth_client
 #      - user
 #      - role
 #      - oauth_authorization_code
@@ -31,8 +31,8 @@ generator:
       - service_impl
       - controller
     methods:
-#      - page
-#      - get
+      - page
+      - get
 #      - delete
 
 

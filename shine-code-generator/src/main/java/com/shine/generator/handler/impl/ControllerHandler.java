@@ -46,7 +46,7 @@ public class ControllerHandler extends AbstractGeneratorHandler implements Gener
         // 2. 加载模板
         Template template = cfg.getTemplate("controller.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/controller/" + table.getClassName() + ".java");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/controller/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

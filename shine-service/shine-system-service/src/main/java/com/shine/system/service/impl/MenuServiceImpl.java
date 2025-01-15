@@ -54,8 +54,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             log.error("获取用户权限无客户端ID");
             return Collections.emptyList();
         }
-        Long id = SecurityContextHolder.getContext().getPrincipal().getId();
-        List<MenuInfo> menuInfoList = this.baseMapper.listByClientId(clientId, id);
+        List<MenuInfo> menuInfoList = this.baseMapper.listByClientId(clientId, userId);
         return menuInfoList.stream().filter(item -> item.getParentId().equals(1L)).toList();
     }
 }

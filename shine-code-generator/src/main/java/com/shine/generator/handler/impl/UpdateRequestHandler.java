@@ -68,7 +68,7 @@ public class UpdateRequestHandler extends AbstractGeneratorHandler implements Ge
         // 2. 加载模板
         Template template = cfg.getTemplate("updateRequest.ftl");
         // 4. 生成文件
-        File output = new File("code-generator/target/generator/package/updateRequest/" + table.getClassName() + ".java");
+        File output = new File(super.getProperties().getPackageConfig().getModalName() + "/updateRequest/" + table.getClassName() + ".java");
         File parentDir = output.getParentFile();
         if (!parentDir.exists()) {
             if (parentDir.mkdirs()) {

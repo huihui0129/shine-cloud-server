@@ -107,7 +107,7 @@ public class EnumHandler extends AbstractGeneratorHandler implements GeneratorHa
                     }).collect(Collectors.toList());
             if (CollectionUtils.isNotEmpty(modelList)) {
                 for (EnumModel item : modelList) {
-                    File output = new File("code-generator/target/generator/package/enums/" + item.getClassName() + ".java");
+                    File output = new File(super.getProperties().getPackageConfig().getModalName() + "/enums/" + item.getClassName() + ".java");
                     File parentDir = output.getParentFile();
                     if (!parentDir.exists()) {
                         if (parentDir.mkdirs()) {
