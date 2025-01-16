@@ -16,7 +16,7 @@ import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis 锁切面类
@@ -35,10 +35,18 @@ public class RedisLockAspect {
         String el = redisLock.el();
         long expire = redisLock.expire();
         long waitTime = redisLock.waitTime();
+        String message = redisLock.message();
         if (isEl(el)) {
-            key = key + ":" + getByEl(key, point);
+            key = key + ":" + getByEl(el, point);
         }
-        RLock lock = lockManager.lock(LockConstant.LOCK_KEY_PREFIX + key, expire, waitTime);
+        // 需要转换的
+        TimeUnit timeUnit = redisLock.timeUnit();
+        TimeUnit milliseconds = TimeUnit.MILLISECONDS;
+        // 将milliseconds的时间expire转换为timeUnit
+        // 转换后的毫秒数
+        long expireOfConvert = milliseconds.convert(expire, timeUnit);
+        long waitOfConvert = milliseconds.convert(waitTime, timeUnit);
+        RLock lock = lockManager.lock(LockConstant.LOCK_KEY_PREFIX + key, expireOfConvert, waitOfConvert, message);
         try {
             // 执行业务逻辑
             return point.proceed();

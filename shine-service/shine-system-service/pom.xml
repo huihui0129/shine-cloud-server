@@ -65,6 +65,10 @@
             <groupId>com.shine</groupId>
             <artifactId>shine-lock-component</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.shine</groupId>
+            <artifactId>shine-limiter-component</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

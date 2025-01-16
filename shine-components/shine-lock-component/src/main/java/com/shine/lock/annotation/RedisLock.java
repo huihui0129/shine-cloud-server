@@ -1,6 +1,9 @@
 package com.shine.lock.annotation;
 
+import com.shine.lock.constant.LockConstant;
+
 import java.lang.annotation.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * redis 锁
@@ -40,5 +43,19 @@ public @interface RedisLock {
      * @return
      */
     long waitTime() default 0;
+
+    /**
+     * 时间单位 默认毫秒
+     *
+     * @return
+     */
+    TimeUnit timeUnit() default TimeUnit.MILLISECONDS;
+
+    /**
+     * 错误信息
+     *
+     * @return
+     */
+    String message() default LockConstant.LOCK_ERROR;
 
 }

@@ -22,8 +22,8 @@ public class LockManager {
     @Resource
     private RedissonClient redissonClient;
 
-    public RLock lock(String key, long expireTime, long waitTime) {
-        return lock(key, expireTime, waitTime, () -> new RuntimeException("获取锁错误"));
+    public RLock lock(String key, long expireTime, long waitTime, String message) {
+        return lock(key, expireTime, waitTime, () -> new RuntimeException(message));
     }
 
     private RLock lock(String key, long expireTime, long waitTime, Supplier<RuntimeException> exceptionSupplier) {

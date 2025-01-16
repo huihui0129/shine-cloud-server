@@ -2,7 +2,9 @@ package com.shine.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shine.common.response.Result;
+import com.shine.limit.annotation.RedisLimit;
 import com.shine.lock.annotation.RedisLock;
+import com.shine.security.annotation.PreAuthorize;
 import com.shine.system.info.UserInfo;
 import com.shine.system.request.UserPageRequest;
 import com.shine.system.response.UserPermissionResponse;
@@ -12,6 +14,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author huihui
@@ -29,7 +33,9 @@ public class UserController {
 
     @GetMapping("/page")
     @Operation(summary = "用户分页查询")
-    @RedisLock(key = "system:user:page", waitTime = 50)
+    @PreAuthorize("hasRole('super_admin')")
+    @RedisLock(key = "system:user:page", el = "#request['username']", waitTime = 1000, expire = 5000, timeUnit = TimeUnit.MILLISECONDS, message = "加纳！")
+    @RedisLimit(key = "system:user:page", expire = 1, frequency = 2, timeUnit = TimeUnit.SECONDS, message = "不让你访问啦")
     public Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
         IPage<UserInfo> userPage = userService.pageUser(request);
         return Result.success(userPage);
