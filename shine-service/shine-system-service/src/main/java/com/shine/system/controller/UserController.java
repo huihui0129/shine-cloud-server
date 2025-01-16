@@ -34,7 +34,7 @@ public class UserController {
     @GetMapping("/page")
     @Operation(summary = "用户分页查询")
     @PreAuthorize("hasRole('super_admin')")
-    @RedisLock(key = "system:user:page", el = "#request['username']", waitTime = 1000, expire = 5000, timeUnit = TimeUnit.MILLISECONDS, message = "加纳！")
+    @RedisLock(key = "system:user:page", el = "#request.username", waitTime = 1000, expire = 5000, timeUnit = TimeUnit.MILLISECONDS, message = "加纳！")
     @RedisLimit(key = "system:user:page", expire = 1, frequency = 2, timeUnit = TimeUnit.SECONDS, message = "不让你访问啦")
     public Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
         IPage<UserInfo> userPage = userService.pageUser(request);
