@@ -2,6 +2,7 @@ package com.shine.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.shine.common.response.Result;
+import com.shine.lock.annotation.RedisLock;
 import com.shine.system.info.UserInfo;
 import com.shine.system.request.UserPageRequest;
 import com.shine.system.response.UserPermissionResponse;
@@ -28,6 +29,7 @@ public class UserController {
 
     @GetMapping("/page")
     @Operation(summary = "用户分页查询")
+    @RedisLock(key = "system:user:page", waitTime = 50)
     public Result<IPage<UserInfo>> pageUser(UserPageRequest request) {
         IPage<UserInfo> userPage = userService.pageUser(request);
         return Result.success(userPage);

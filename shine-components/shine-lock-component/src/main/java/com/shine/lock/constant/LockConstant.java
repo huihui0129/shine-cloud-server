@@ -7,8 +7,6 @@ package com.shine.lock.constant;
  */
 public interface LockConstant {
 
-    String LOCK_ERROR = "获取锁错误";
-
-    String LOCK_FAIL = "获取锁失败";
+    String LOCK_KEY_PREFIX = "lock:";
 
 }

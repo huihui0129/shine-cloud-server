@@ -23,7 +23,7 @@ public class LockManager {
     private RedissonClient redissonClient;
 
     public RLock lock(String key, long expireTime, long waitTime) {
-        return lock(key, expireTime, waitTime, () -> new RuntimeException(LockConstant.LOCK_ERROR));
+        return lock(key, expireTime, waitTime, () -> new RuntimeException("获取锁错误"));
     }
 
     private RLock lock(String key, long expireTime, long waitTime, Supplier<RuntimeException> exceptionSupplier) {
@@ -50,15 +50,16 @@ public class LockManager {
                     } else {
                         log.error("尝试加锁失败");
                         rLock = null;
+                        throw new RuntimeException("加锁失败");
                     }
                 }
             } catch (InterruptedException e) {
-                log.error("获取分布式锁失败, key：{}, e：{}", key, e.getMessage());
+                log.error("获取分布式锁失败, key：{}", key, e);
                 rLock.unlock();
             }
         } catch (Exception e) {
-            log.error("获取分布式锁失败, key：{}, e：{}", key, e.getMessage());
-            throw new RuntimeException(LockConstant.LOCK_FAIL);
+            log.error("获取分布式锁失败, key：{}", key, e);
+            throw new RuntimeException("获取锁失败");
         }
         log.info("加锁结果：{}，key：{}", rLock != null ? "成功" : "失败", key);
         return rLock;

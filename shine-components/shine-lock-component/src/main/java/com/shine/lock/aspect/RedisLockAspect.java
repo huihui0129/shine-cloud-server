@@ -1,21 +1,30 @@
 package com.shine.lock.aspect;
 
 import com.shine.lock.annotation.RedisLock;
+import com.shine.lock.constant.LockConstant;
 import com.shine.lock.manager.LockManager;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.redisson.api.RLock;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.stereotype.Component;
+
+import java.util.Arrays;
 
 /**
  * redis 锁切面类
  */
 @Aspect
-// @Component 每个服务都有具体的实现 所以就不用给这个注入到bean 而且这个类还是个抽象类
+@Component
 @Slf4j
-public abstract class RedisLockAspect {
+public class RedisLockAspect {
 
     @Resource
     private LockManager lockManager;
@@ -23,12 +32,13 @@ public abstract class RedisLockAspect {
     @Around(value = "@annotation(com.shine.lock.annotation.RedisLock) && @annotation(redisLock)")
     public Object redisLock(ProceedingJoinPoint point, RedisLock redisLock) throws Throwable {
         String key = redisLock.key();
+        String el = redisLock.el();
         long expire = redisLock.expire();
         long waitTime = redisLock.waitTime();
-        if (isEl(key)) {
-            key = getByEl(key, point);
+        if (isEl(el)) {
+            key = key + ":" + getByEl(key, point);
         }
-        RLock lock = lockManager.lock(getRealLockKey(key), expire, waitTime);
+        RLock lock = lockManager.lock(LockConstant.LOCK_KEY_PREFIX + key, expire, waitTime);
         try {
             // 执行业务逻辑
             return point.proceed();
@@ -46,7 +56,22 @@ public abstract class RedisLockAspect {
      * @param point
      * @return
      */
-    abstract String getByEl(String key, ProceedingJoinPoint point);
+    public String getByEl(String key, ProceedingJoinPoint point) {
+        // 初始化 SpEL 解析上下文
+        StandardEvaluationContext context = new StandardEvaluationContext();
+        Object[] args = point.getArgs();
+        MethodSignature methodSignature = (MethodSignature) point.getSignature();
+        String[] parameterNames = methodSignature.getParameterNames();
+        // 将整个参数对象绑定到上下文中
+        if (parameterNames != null && args != null) {
+            for (int i = 0; i < parameterNames.length; i++) {
+                context.setVariable(parameterNames[i], args[i]);
+            }
+        }
+        // 解析表达式
+        ExpressionParser parser = new SpelExpressionParser();
+        return parser.parseExpression(key).getValue(context, String.class);
+    }
 
     /**
      * 锁的键
@@ -61,11 +86,11 @@ public abstract class RedisLockAspect {
     /**
      * 解析spEl表达式
      *
-     * @param key
+     * @param el
      * @return
      */
-    private boolean isEl(String key) {
-        return key.contains("#");
+    private boolean isEl(String el) {
+        return StringUtils.isNotBlank(el) && el.contains("#");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.shine.system.request;
 
 import com.shine.mybatis.request.BaseQueryRequest;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -10,4 +11,8 @@ import lombok.Data;
  */
 @Data
 public class UserPageRequest extends BaseQueryRequest {
+
+    @Schema(description = "用户名")
+    private String username;
+
 }

@@ -9,7 +9,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME) // 运行时
 @Documented
 @Inherited
-// @RedisLock(key = "system:userId:#userId", expire = 5000, waitTime = 100)
 public @interface RedisLock {
 
     /**
@@ -18,6 +17,13 @@ public @interface RedisLock {
      * @return
      */
     String key();
+
+    /**
+     * el表达式 动态Key必须
+     *
+     * @return
+     */
+    String el() default "";
 
     /**
      * 锁超时时间

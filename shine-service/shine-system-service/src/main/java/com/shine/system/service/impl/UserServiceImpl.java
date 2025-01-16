@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.shine.common.exception.BaseException;
 import com.shine.common.status.ResponseStatus;
+import com.shine.lock.annotation.RedisLock;
 import com.shine.mybatis.utils.PageUtil;
 import com.shine.system.entity.User;
 import com.shine.system.enums.MenuTypeEnum;
@@ -39,6 +40,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public IPage<UserInfo> pageUser(UserPageRequest request) {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         return this.baseMapper.pageUser(PageUtil.buildPage(request), request);
     }
 

@@ -61,6 +61,10 @@
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.shine</groupId>
+            <artifactId>shine-lock-component</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
