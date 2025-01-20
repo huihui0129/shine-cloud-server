@@ -260,11 +260,6 @@
             </dependency>
             <dependency>
                 <groupId>com.shine</groupId>
-                <artifactId>shine-file-component</artifactId>
-                <version>${shine-cloud.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.shine</groupId>
                 <artifactId>shine-id-component</artifactId>
                 <version>${shine-cloud.version}</version>
             </dependency>

@@ -7,7 +7,7 @@ import com.shine.common.enums.IEnum;
  * @date 2024/11/8 14:04
  * @description BaseException
  */
-public class BaseException extends RuntimeException implements IException {
+public class BaseException extends RuntimeException implements IException<String> {
 
     private final IEnum<String> iEnum;
 

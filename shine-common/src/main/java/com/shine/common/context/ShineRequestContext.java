@@ -1,5 +1,6 @@
 package com.shine.common.context;
 
+import com.shine.common.constant.BaseConstant;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -11,8 +12,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  * @description ShineRequestContext
  */
 public class ShineRequestContext {
-
-    private static final String TOKEN_HEADER_KEY = "Authorization";
 
     /**
      * 获取当前的请求
@@ -31,7 +30,7 @@ public class ShineRequestContext {
      */
     public static String getToken() {
         HttpServletRequest request = getRequest();
-        String token = request.getHeader(TOKEN_HEADER_KEY);
+        String token = request.getHeader(BaseConstant.TOKEN_HEADER_KEY);
         if (StringUtils.isBlank(token)) {
             return null;
         }

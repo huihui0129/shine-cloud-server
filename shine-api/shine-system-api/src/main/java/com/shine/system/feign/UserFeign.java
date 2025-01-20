@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2024/10/31 17:11
  * @description UserFeign
  */
-@FeignClient(name = FeignClientConstant.SYSTEM_NAME, contextId = FeignClientConstant.SYSTEM_CONTENT_ID, path = "/user")
+@FeignClient(name = FeignClientConstant.SYSTEM_NAME, contextId = "user", path = "/user")
 public interface UserFeign {
 
     @PostMapping("/getUser")

@@ -18,25 +18,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * 处理安全相关异常
+     *
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = SecurityException.class)
     @org.springframework.web.bind.annotation.ResponseStatus(code = HttpStatus.UNAUTHORIZED, value = HttpStatus.UNAUTHORIZED)
     public Result<?> authExceptionHandler(SecurityException e) {
         log.error("权限处理异常：[{}]|[{}]|[{}]", e.getEnum().getCode(), e.getEnum().getName(), e.getMessage());
         e.printStackTrace();
         return Result.error(e.getEnum().getCode(), e.getMessage());
-    }
-
-    /**
-     * 统一处理未知错误
-     *
-     * @param e
-     * @return
-     */
-    @ExceptionHandler(value = RuntimeException.class)
-    public Result<?> runtimeExceptionHandler(RuntimeException e) {
-        log.error("运行异常：{}", e.getMessage());
-        e.printStackTrace();
-        return Result.error(ResponseStatus.ERROR, e.getMessage());
     }
 
     /**
@@ -50,6 +43,19 @@ public class GlobalExceptionHandler {
         log.error("业务处理异常：[{}]|[{}]|[{}]", e.getEnum().getCode(), e.getEnum().getName(), e.getMessage());
         e.printStackTrace();
         return Result.error(e.getEnum().getCode(), e.getMessage());
+    }
+
+    /**
+     * 统一处理运行时异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = RuntimeException.class)
+    public Result<?> runtimeExceptionHandler(RuntimeException e) {
+        log.error("运行异常：{}", e.getMessage());
+        e.printStackTrace();
+        return Result.error(ResponseStatus.ERROR, e.getMessage());
     }
 
 }

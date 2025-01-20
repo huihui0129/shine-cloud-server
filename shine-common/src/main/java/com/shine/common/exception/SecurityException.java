@@ -7,8 +7,7 @@ import com.shine.common.enums.IEnum;
  * @date 2024/12/9 15:38
  * @description AuthException
  */
-
-public class SecurityException extends RuntimeException implements IException {
+public class SecurityException extends RuntimeException implements IException<String> {
 
     private final IEnum<String> iEnum;
 

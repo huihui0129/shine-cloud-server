@@ -7,10 +7,10 @@ package com.shine.common.constant;
  */
 public interface BaseConstant {
 
+    String TOKEN_HEADER_KEY = "Authorization";
+
     String SECURITY_SERVICE = "security:";
 
     String SYSTEM_SERVICE = "system:";
-
-    String ARTICLE_SERVICE = "article:";
 
 }

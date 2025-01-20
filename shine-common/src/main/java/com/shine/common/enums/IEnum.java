@@ -7,8 +7,18 @@ package com.shine.common.enums;
  */
 public interface IEnum<T> {
 
+    /**
+     * 获取枚举值
+     *
+     * @return
+     */
     T getCode();
 
+    /**
+     * 获取枚举说明
+     *
+     * @return
+     */
     String getName();
 
 }

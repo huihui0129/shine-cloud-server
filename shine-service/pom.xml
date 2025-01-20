@@ -17,6 +17,7 @@
     <modules>
         <module>shine-system-service</module>
         <module>shine-task-service</module>
+        <module>shine-feign-customer-service</module>
     </modules>
 
 </project>
