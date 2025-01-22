@@ -12,6 +12,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Component
 public class FeignRequestTokenInterceptor implements RequestInterceptor {
 
+    /**
+     * 将Token传递给下游服务
+     *
+     * @param template
+     */
     @Override
     public void apply(RequestTemplate template) {
         // 获取当前请求上下文

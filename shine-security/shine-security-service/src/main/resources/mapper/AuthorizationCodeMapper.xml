@@ -4,4 +4,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.shine.security.mapper.AuthorizationCodeMapper">
 
+    <select id="pageQuery" resultType="com.shine.security.info.AuthorizationCodeInfo">
+        select t1.*
+        from shine_security.oauth_authorization_code t1
+        where t1.deleted = 0
+        <if test="request.clientId != null and request.clientId != ''">
+            and t1.client_id like concat('%', #{request.clientId}, '%')
+        </if>
+        <if test="request.authorizationCode != null and request.authorizationCode != ''">
+            and t1.authorization_code like concat('%', #{request.authorizationCode}, '%')
+        </if>
+        <if test="request.redirectUri != null and request.redirectUri != ''">
+            and t1.redirect_uri like concat('%', #{request.redirectUri}, '%')
+        </if>
+        <if test="request.scope != null and request.scope != ''">
+            and t1.scope like concat('%', #{request.scope}, '%')
+        </if>
+        <if test="request.expireAt != null">
+            and t1.expire_at = #{request.expireAt}
+        </if>
+        <if test="request.status != null">
+            and t1.status = #{request.status}
+        </if>
+        <if test="request.remark != null and request.remark != ''">
+            and t1.remark like concat('%', #{request.remark}, '%')
+        </if>
+        order by t1.create_time desc
+    </select>
+
+    <select id="getById" resultType="com.shine.security.info.AuthorizationCodeInfo">
+        select t1.*
+        from shine_security.oauth_authorization_code t1
+        where t1.deleted = 0
+        and t1.id = #{id}
+    </select>
+
 </mapper>
