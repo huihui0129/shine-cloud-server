@@ -11,7 +11,7 @@ generator:
   generator:
     database: shine_security
     table-name:
-      - oauth_client
+      - oauth_authorization_code
 #      - user
 #      - role
 #      - oauth_authorization_code
@@ -33,7 +33,7 @@ generator:
     methods:
       - page
       - get
-#      - delete
+      - delete
 
 
 

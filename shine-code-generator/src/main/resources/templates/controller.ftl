@@ -1,5 +1,7 @@
 package ${packagePath}.${moduleName}.service;
 
+import com.shine.common.response.Result;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,8 +40,8 @@ public class ${className} {
 <#if (hasPage?size > 0)>
     @GetMapping("/page")
     @Operation(summary = "${comment}分页查询")
-    public Result<IPage<${infoName}>> page${entityName}(${entityName}PageRequest request) {
-        IPage<${infoName}> ${lowercaseClassName}Page = ${lowercaseClassName}Service.page${entityName}(request);
+    public Result<IPage<${infoName}>> pageQuery${entityName}(${entityName}PageRequest request) {
+        IPage<${infoName}> ${lowercaseClassName}Page = ${lowercaseClassName}Service.pageQuery(request);
         return Result.success(${lowercaseClassName}Page);
     }
 </#if>
@@ -49,7 +51,7 @@ public class ${className} {
     @GetMapping("/get/{id}")
     @Operation(summary = "${comment}详情查询")
     public Result<${infoName}> get${entityName}ById(@PathVariable("id") Long id) {
-        ${entityName}Info ${lowercaseClassName} = ${lowercaseClassName}Service.getUserById(id);
+        ${entityName}Info ${lowercaseClassName} = ${lowercaseClassName}Service.getById(id);
         return Result.success(${lowercaseClassName});
     }
 </#if>

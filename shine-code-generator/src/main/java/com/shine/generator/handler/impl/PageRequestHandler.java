@@ -56,9 +56,6 @@ public class PageRequestHandler extends AbstractGeneratorHandler implements Gene
             if (StringUtils.equals(item.getColumnName(), "deleted")) {
                 return false;
             }
-            if (StringUtils.equals(item.getColumnName(), "remark")) {
-                return false;
-            }
             return true;
         }).collect(Collectors.toList());
         table.setColumnList(columnList);

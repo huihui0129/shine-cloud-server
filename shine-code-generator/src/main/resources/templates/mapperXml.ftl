@@ -6,7 +6,7 @@
 
     <#assign hasPage = methodList?filter(item -> item?string == "PAGE")>
     <#if (hasPage?size > 0)>
-    <select id="page${entityName}" resultType="${packagePath}.${moduleName}.info.${infoName}">
+    <select id="pageQuery" resultType="${packagePath}.${moduleName}.info.${infoName}">
         select t1.*
         from ${datasourceName}.${tableName} t1
         where t1.deleted = 0

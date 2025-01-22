@@ -29,15 +29,15 @@ public class ${className} extends ServiceImpl<${entityName}Mapper, ${entityName}
 <#assign hasPage = methodList?filter(item -> item?string == "PAGE")>
 <#if (hasPage?size > 0)>
     @Override
-    public IPage<${infoName}> page${entityName}(${entityName}PageRequest request) {
-        return this.baseMapper.page${entityName}(PageUtil.buildPage(request), request);
+    public IPage<${infoName}> pageQuery(${entityName}PageRequest request) {
+        return this.baseMapper.pageQuery(PageUtil.buildPage(request), request);
     }
 </#if>
 
 <#assign hasGet = methodList?filter(item -> item?string == "GET")>
 <#if (hasGet?size > 0)>
     @Override
-    public UserInfo get${entityName}ById(Long id) {
+    public ${infoName} getById(Long id) {
         return this.baseMapper.getById(id);
     }
 </#if>

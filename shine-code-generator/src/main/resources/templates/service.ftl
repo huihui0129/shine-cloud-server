@@ -24,7 +24,7 @@ public interface ${className} extends IService<${entityName}> {
      * @param request
      * @return
      */
-    IPage<${infoName}> page${entityName}(${entityName}PageRequest request);
+    IPage<${infoName}> pageQuery(${entityName}PageRequest request);
 </#if>
 
 <#assign hasGet = methodList?filter(item -> item?string == "GET")>
@@ -35,7 +35,7 @@ public interface ${className} extends IService<${entityName}> {
     * @param id
     * @return
     */
-   UserInfo get${entityName}ById(Long id);
+    ${infoName} getById(Long id);
 </#if>
 
 <#assign hasDelete = methodList?filter(item -> item?string == "DELETE")>
