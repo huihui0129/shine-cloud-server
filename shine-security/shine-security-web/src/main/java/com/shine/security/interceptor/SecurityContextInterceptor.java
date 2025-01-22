@@ -28,7 +28,7 @@ public class SecurityContextInterceptor implements HandlerInterceptor {
             if (StringUtils.isNotBlank(token)) {
                 try {
                     AuthorityPrincipal principal = TokenManager.parse(token);
-                    SecurityContext context = new SecurityContext();
+                    SecurityContext<AuthorityPrincipal> context = new SecurityContext<>();
                     context.setPrincipal(principal);
                     SecurityContextHolder.setContext(context);
                 } catch (Exception e) {

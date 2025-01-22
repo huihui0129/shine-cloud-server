@@ -30,7 +30,7 @@ public class SecurityTest {
 
     @Before
     public void before() {
-        SecurityContext context = new SecurityContext();
+        SecurityContext<AuthorityPrincipal> context = new SecurityContext<>();
         context.setPrincipal(getCurrentPrincipal());
         SecurityContextHolder.setContext(context);
     }
